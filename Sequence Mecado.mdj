@@ -33,7 +33,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFfkOFPDnoFmNc="
 									},
-									"name": "SequenceDiagram1",
+									"name": "Mecado",
 									"visible": true,
 									"defaultDiagram": false,
 									"ownedViews": [
@@ -62,13 +62,13 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 167,
+													"left": 175,
 													"top": 5,
-													"width": 114,
+													"width": 47,
 													"height": 13,
 													"autoResize": false,
 													"underline": false,
-													"text": "SequenceDiagram1",
+													"text": "Mecado",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -88,7 +88,7 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 101,
+													"left": 109,
 													"top": 5,
 													"width": 61,
 													"height": 13,
@@ -109,7 +109,7 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 96,
+											"left": 104,
 											"top": 0,
 											"width": 1041,
 											"height": 737,
