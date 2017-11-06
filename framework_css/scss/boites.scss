@@ -1,0 +1,58 @@
+/*boites*/
+
+.block {
+	display: block;
+	box-sizing: border-box;
+}
+
+.inlineblock {
+	display: inline-block;
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+.dnone {
+	display: none;
+}
+
+.floatl {
+	float: left;
+}
+
+.clearl {
+	clear: left;
+	overflow: auto;
+}
+
+.floatr {
+	float: right;
+}
+
+.clearl {
+
+	clear: right;
+	overflow: auto;
+}
+
+.floatb {
+	float: both;
+}
+
+.clearb {
+	clear: both;
+	overflow : auto;
+}
+
+.floatn {
+	float: none
+}
+
+.flex {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.bsize {
+	box-sizing: border-box;
+	overflow: auto;
+}

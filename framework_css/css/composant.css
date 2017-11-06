@@ -1,0 +1,39 @@
+/*jumbotron*/
+.thumb {
+  width: 25%;
+  padding: 3%;
+  border: 2px solid grey;
+  box-sizing: border-box;
+  display: inline-block; }
+  .thumb img {
+    max-width: 100%; }
+  .thumb h3 {
+    margin: 3%;
+    font-size: 1.5em;
+    font-weight: normal; }
+  .thumb p {
+    width: 100%; }
+    .thumb p a {
+      margin: 1%;
+      width: 100%;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: black;
+      background-color: blue;
+      box-sizing: border-box;
+      border-radius: 5px; }
+      .thumb p a:hover {
+        background-color: #3333ff; }
+
+/*header*/
+header {
+  display: block;
+  background-color: grey;
+  overflow: hidden; }
+
+header h1 {
+  text-align: center;
+  padding: 25px; }
+
+/*# sourceMappingURL=composant.css.map */

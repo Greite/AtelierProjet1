@@ -1,0 +1,5 @@
+@mixin grille($nbcol, $lgcol, $decal, $lgbt){
+	$lggut: (100-($nbcol*$lgcol))/($nbcol+1);
+	width: (($lgbt*$lgcol)+(($lgbt - 1)*$lggut));
+	margin-left: (($decal+1)*$lggut)+($decal*$lgcol);
+}

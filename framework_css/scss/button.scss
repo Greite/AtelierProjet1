@@ -1,0 +1,82 @@
+/*Boutons*/
+
+.btn {
+	font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+	font-size: 1em;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 20px;
+	padding: 5px 20px 5px 20px;
+	border-radius:7.5px;
+	background-color: $colbutton;
+	color: black;
+}
+
+.btn:hover{
+	background-color: lighten($colbutton, 20%);
+	cursor: pointer;
+}
+
+/*Bouton de couleur*/
+
+.btnblue {	
+	background-color: #0f78e0;
+}
+
+.btnblue:hover{
+	background-color: lighten(#0f78e0, 20%);
+}
+
+.btngreen {	
+	background-color: #14c549;
+}
+
+.btngreen:hover{
+	background-color: lighten(#14c549, 20%);
+}
+
+.btnorange {	
+	background-color: #ffbc00;
+}
+
+.btnorange:hover{
+	background-color: lighten(#ffbc00, 20%);
+}
+
+/*Bouton large*/
+
+.btnlarge {	
+	width: 200px;
+	font-size: 1.25em;	
+}
+
+.btnsmall {
+	width: 75px;
+	height: 30px;
+	font-size: 0.75em;
+	padding: 5px;
+}
+
+.btnextralarge {
+	width: 100%;
+	font-size: 1.25em;
+}
+
+.fancy{
+
+    -webkit-box-shadow: 10px 10px 5px #888888; 
+    -cursormoz-box-shadow: 10px 10px 5px #888888;
+    -webkit-transform:skewX(5deg);
+    -moz-transform: skewX(5deg);
+    transform: skewX(5deg);
+}
+
+
+.fancy:hover{
+	background: red; 
+    background: -webkit-linear-gradient(red, yellow); 
+    background: -o-linear-gradient(red, yellow); 
+    background: -moz-linear-gradient(red, yellow); 
+    background: linear-gradient(red, yellow);
+}

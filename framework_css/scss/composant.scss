@@ -1,0 +1,52 @@
+/*jumbotron*/
+
+@mixin thumb($largeur, $colorbutton, $colorfont) {
+	
+	width: $largeur;
+	padding: 3%;
+	border: 2px solid grey;
+	box-sizing: border-box;
+	display: inline-block;
+	img {
+		max-width: 100%;
+	}
+	h3 {
+		margin: 3%;
+		font-size: 1.5em;
+		font-weight: normal;
+	}
+	p {
+		width: 100%;
+		a {
+			margin: 1%;
+			width: 100%;
+			display: block;
+			text-align: center;
+			text-decoration: none;
+			color: $colorfont;
+			background-color: $colorbutton;
+			box-sizing: border-box;
+			border-radius: 5px;
+			&:hover{
+				background-color: lighten($colorbutton, 10%);
+			}
+		}
+	}
+}
+
+.thumb {
+	@include thumb(25%, blue, black);
+}
+
+/*header*/
+
+header {
+    display: block;
+    background-color:  grey;
+    overflow: hidden;
+}
+
+header h1 {
+    text-align: center;
+    padding: 25px;
+} 
