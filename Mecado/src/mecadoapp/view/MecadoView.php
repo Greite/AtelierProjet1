@@ -159,10 +159,10 @@ EOT;
 			${header}
 			${nav}
 		</header>
-		<section>
+		<section class='aligncenter'>
 			${main}
 		</section>
-		<footer>
+		<footer class='aligncenter'>
 			${footer}
 		</footer>
 EOT;
