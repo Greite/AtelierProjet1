@@ -553,9 +553,9 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 240,
+													"left": 239,
 													"top": 107,
-													"width": 79,
+													"width": 80,
 													"height": 13,
 													"autoResize": false,
 													"alpha": 1.5946003473142456,
@@ -565,7 +565,7 @@
 													},
 													"edgePosition": 1,
 													"underline": false,
-													"text": "1 : connexion",
+													"text": "1 : Connexion",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -723,19 +723,19 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 248,
-													"top": 147,
-													"width": 125,
+													"left": 247,
+													"top": 144,
+													"width": 127,
 													"height": 13,
 													"autoResize": false,
-													"alpha": 1.5857195895578104,
-													"distance": 67.00746227100382,
+													"alpha": 1.630426031047044,
+													"distance": 67.11929677819934,
 													"hostEdge": {
 														"$ref": "AAAAAAFfkTe6KP79LzM="
 													},
 													"edgePosition": 1,
 													"underline": false,
-													"text": "2 : creation de la liste",
+													"text": "2 : Création de la liste",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -1107,7 +1107,7 @@
 													},
 													"edgePosition": 1,
 													"underline": false,
-													"text": "3 : Generation URL",
+													"text": "3 : Génération URL",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -1749,176 +1749,6 @@
 										},
 										{
 											"_type": "UMLSeqMessageView",
-											"_id": "AAAAAAFfkUnUoQqDEjg=",
-											"_parent": {
-												"$ref": "AAAAAAFfkOFPDnoGK6I="
-											},
-											"model": {
-												"$ref": "AAAAAAFfkUnUoAqCgZk="
-											},
-											"subViews": [
-												{
-													"_type": "EdgeLabelView",
-													"_id": "AAAAAAFfkUnUogqEddk=",
-													"_parent": {
-														"$ref": "AAAAAAFfkUnUoQqDEjg="
-													},
-													"model": {
-														"$ref": "AAAAAAFfkUnUoAqCgZk="
-													},
-													"visible": true,
-													"enabled": true,
-													"lineColor": "#000000",
-													"fillColor": "#ffffff",
-													"fontColor": "#000000",
-													"font": "Arial;13;0",
-													"showShadow": true,
-													"containerChangeable": false,
-													"containerExtending": false,
-													"left": 247,
-													"top": 360,
-													"width": 116,
-													"height": 13,
-													"autoResize": false,
-													"alpha": 1.6352221558577575,
-													"distance": 62.12889826803627,
-													"hostEdge": {
-														"$ref": "AAAAAAFfkUnUoQqDEjg="
-													},
-													"edgePosition": 1,
-													"underline": false,
-													"text": "7 : Reserver un item",
-													"horizontalAlignment": 2,
-													"verticalAlignment": 5,
-													"wordWrap": false
-												},
-												{
-													"_type": "EdgeLabelView",
-													"_id": "AAAAAAFfkUnUogqF6No=",
-													"_parent": {
-														"$ref": "AAAAAAFfkUnUoQqDEjg="
-													},
-													"model": {
-														"$ref": "AAAAAAFfkUnUoAqCgZk="
-													},
-													"visible": false,
-													"enabled": true,
-													"lineColor": "#000000",
-													"fillColor": "#ffffff",
-													"fontColor": "#000000",
-													"font": "Arial;13;0",
-													"showShadow": true,
-													"containerChangeable": false,
-													"containerExtending": false,
-													"left": 267,
-													"top": 363,
-													"width": 0,
-													"height": 13,
-													"autoResize": false,
-													"alpha": 1.5707963267948966,
-													"distance": 25,
-													"hostEdge": {
-														"$ref": "AAAAAAFfkUnUoQqDEjg="
-													},
-													"edgePosition": 1,
-													"underline": false,
-													"horizontalAlignment": 2,
-													"verticalAlignment": 5,
-													"wordWrap": false
-												},
-												{
-													"_type": "EdgeLabelView",
-													"_id": "AAAAAAFfkUnUogqG7cc=",
-													"_parent": {
-														"$ref": "AAAAAAFfkUnUoQqDEjg="
-													},
-													"model": {
-														"$ref": "AAAAAAFfkUnUoAqCgZk="
-													},
-													"visible": false,
-													"enabled": true,
-													"lineColor": "#000000",
-													"fillColor": "#ffffff",
-													"fontColor": "#000000",
-													"font": "Arial;13;0",
-													"showShadow": true,
-													"containerChangeable": false,
-													"containerExtending": false,
-													"left": 233,
-													"top": 364,
-													"width": 0,
-													"height": 13,
-													"autoResize": false,
-													"alpha": -1.5707963267948966,
-													"distance": 10,
-													"hostEdge": {
-														"$ref": "AAAAAAFfkUnUoQqDEjg="
-													},
-													"edgePosition": 1,
-													"underline": false,
-													"horizontalAlignment": 2,
-													"verticalAlignment": 5,
-													"wordWrap": false
-												},
-												{
-													"_type": "UMLActivationView",
-													"_id": "AAAAAAFfkUnUogqH4lo=",
-													"_parent": {
-														"$ref": "AAAAAAFfkUnUoQqDEjg="
-													},
-													"model": {
-														"$ref": "AAAAAAFfkUnUoAqCgZk="
-													},
-													"visible": true,
-													"enabled": true,
-													"lineColor": "#000000",
-													"fillColor": "#ffffff",
-													"fontColor": "#000000",
-													"font": "Arial;13;0",
-													"showShadow": true,
-													"containerChangeable": false,
-													"containerExtending": false,
-													"left": 207,
-													"top": 380,
-													"width": 14,
-													"height": 29,
-													"autoResize": false
-												}
-											],
-											"visible": true,
-											"enabled": true,
-											"lineColor": "#000000",
-											"fillColor": "#ffffff",
-											"fontColor": "#000000",
-											"font": "Arial;13;0",
-											"showShadow": true,
-											"containerChangeable": false,
-											"containerExtending": false,
-											"head": {
-												"$ref": "AAAAAAFfkOOz93pctGM="
-											},
-											"tail": {
-												"$ref": "AAAAAAFfkOOz93pctGM="
-											},
-											"lineStyle": 0,
-											"points": "213:360;243:360;243:380;220:380",
-											"nameLabel": {
-												"$ref": "AAAAAAFfkUnUogqEddk="
-											},
-											"stereotypeLabel": {
-												"$ref": "AAAAAAFfkUnUogqF6No="
-											},
-											"propertyLabel": {
-												"$ref": "AAAAAAFfkUnUogqG7cc="
-											},
-											"activation": {
-												"$ref": "AAAAAAFfkUnUogqH4lo="
-											},
-											"showProperty": true,
-											"showType": true
-										},
-										{
-											"_type": "UMLSeqMessageView",
 											"_id": "AAAAAAFfkUdmMwpE4yQ=",
 											"_parent": {
 												"$ref": "AAAAAAFfkOFPDnoGK6I="
@@ -1957,7 +1787,7 @@
 													},
 													"edgePosition": 1,
 													"underline": false,
-													"text": "8 : Reserver un item",
+													"text": "7 : Réserver un item",
 													"horizontalAlignment": 2,
 													"verticalAlignment": 5,
 													"wordWrap": false
@@ -2102,7 +1932,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFfkOFPDnoFmNc="
 									},
-									"name": "connexion",
+									"name": "Connexion",
 									"source": {
 										"$ref": "AAAAAAFfkOOz9npVkB0="
 									},
@@ -2119,7 +1949,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFfkOFPDnoFmNc="
 									},
-									"name": "creation de la liste",
+									"name": "Création de la liste",
 									"source": {
 										"$ref": "AAAAAAFfkOOz9npVkB0="
 									},
@@ -2136,7 +1966,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFfkOFPDnoFmNc="
 									},
-									"name": "Generation URL",
+									"name": "Génération URL",
 									"source": {
 										"$ref": "AAAAAAFfkOOz9npVkB0="
 									},
@@ -2200,28 +2030,11 @@
 								},
 								{
 									"_type": "UMLMessage",
-									"_id": "AAAAAAFfkUnUoAqCgZk=",
-									"_parent": {
-										"$ref": "AAAAAAFfkOFPDnoFmNc="
-									},
-									"name": "Reserver un item",
-									"source": {
-										"$ref": "AAAAAAFfkOOz9npVkB0="
-									},
-									"target": {
-										"$ref": "AAAAAAFfkOOz9npVkB0="
-									},
-									"visibility": "public",
-									"messageSort": "synchCall",
-									"isConcurrentIteration": false
-								},
-								{
-									"_type": "UMLMessage",
 									"_id": "AAAAAAFfkUdmMwpDb7s=",
 									"_parent": {
 										"$ref": "AAAAAAFfkOFPDnoFmNc="
 									},
-									"name": "Reserver un item",
+									"name": "Réserver un item",
 									"source": {
 										"$ref": "AAAAAAFfkOjAo3p76bE="
 									},
