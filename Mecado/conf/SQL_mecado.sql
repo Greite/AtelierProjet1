@@ -75,7 +75,7 @@ CREATE TABLE contenir(
         PRIMARY KEY (id ,id_Item )
 )ENGINE=InnoDB;
 
-ALTER TABLE Liste ADD CONSTRAINT FK_Liste_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Message ADD CONSTRAINT FK_Message_id_Liste FOREIGN KEY (id_Liste) REFERENCES Liste(id);
-ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id FOREIGN KEY (id) REFERENCES Liste(id);
-ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id_Item FOREIGN KEY (id_Item) REFERENCES Item(id);
+ALTER TABLE liste ADD CONSTRAINT FK_liste_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE message ADD CONSTRAINT FK_message_id_liste FOREIGN KEY (id_liste) REFERENCES liste(id);
+ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id FOREIGN KEY (id) REFERENCES liste(id);
+ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id_item FOREIGN KEY (id_item) REFERENCES item(id);
