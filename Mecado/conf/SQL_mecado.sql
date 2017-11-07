@@ -7,14 +7,14 @@
 # Table: Liste
 #------------------------------------------------------------
 
-CREATE TABLE Liste(
+CREATE TABLE liste(
         id           int (11) Auto_increment  NOT NULL ,
         titre        Varchar (100) NOT NULL ,
         description  Varchar (500) NOT NULL ,
         date_limite  Date NOT NULL ,
         destinataire Varchar (100) NOT NULL ,
         for_him      Bool NOT NULL ,
-        id_User      Int NOT NULL ,
+        id_user      Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -23,7 +23,7 @@ CREATE TABLE Liste(
 # Table: Item
 #------------------------------------------------------------
 
-CREATE TABLE Item(
+CREATE TABLE item(
         id          int (11) Auto_increment  NOT NULL ,
         nom         Varchar (250) NOT NULL ,
         description Varchar (500) NOT NULL ,
@@ -38,7 +38,7 @@ CREATE TABLE Item(
 # Table: User
 #------------------------------------------------------------
 
-CREATE TABLE User(
+CREATE TABLE user(
         id     int (11) Auto_increment  NOT NULL ,
         nom    Varchar (250) ,
         prenom Varchar (250) ,
@@ -52,13 +52,13 @@ CREATE TABLE User(
 # Table: Message
 #------------------------------------------------------------
 
-CREATE TABLE Message(
+CREATE TABLE message(
         id          int (11) Auto_increment  NOT NULL ,
         auteur      Varchar (250) NOT NULL ,
         description Varchar (500) NOT NULL ,
         type        Bool NOT NULL ,
         date_create Date NOT NULL ,
-        id_Liste    Int NOT NULL ,
+        id_liste    Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -71,7 +71,7 @@ CREATE TABLE contenir(
         reserver   Bool NOT NULL ,
         reserviste Varchar (250) ,
         id         Int NOT NULL ,
-        id_Item    Int NOT NULL ,
+        id_item    Int NOT NULL ,
         PRIMARY KEY (id ,id_Item )
 )ENGINE=InnoDB;
 
