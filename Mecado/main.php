@@ -8,7 +8,9 @@ require_once 'src/mf/utils/ClassLoader.php';
 $loader = new \mf\utils\ClassLoader("src");
 $loader -> register();
 
-$config = parse_ini_file("conf\bdd.ini");
+use mecadoapp\model\Item as Item;
+
+$config = parse_ini_file("conf/bdd.ini");
 
 $db = new Illuminate\Database\Capsule\Manager();
 
@@ -17,7 +19,21 @@ $db->setAsGlobal();
 $db->bootEloquent();
 
 //MecadoView::setStyleSheet(['html/style.css']);
-MecadoView::setAppTitle('Mecado');
+//MecadoView::setAppTitle('Mecado');
+
+//TEST -----------------------------------
+
+$velo = Item::select()->get();
+
+foreach ($velo as $value) {
+	echo $value;
+}
+
+
+
+
+
+
 
 $router = new Router();
 
