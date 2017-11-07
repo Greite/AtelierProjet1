@@ -19,18 +19,22 @@ class MecadoView extends \mf\view\AbstractView {
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
-				<nav>
-					<a href='$linkhome'>Accueil</a>
-					<a href='#'>Se déconnecter</a>
-					<a href='#'>Mon Profil</a>
+				<nav class='navbar'>
+				<ul>
+					<li><a href='$linkhome'>Accueil</a></li>
+					<li><a href='#'>Se déconnecter</a></li>
+					<li><a href='#'>Mon Profil</a></li>
+				</ul>
 				</nav>
 EOT;
 		}else{
 			$nav = <<<EOT
-			<nav>
-				<a href='$linkhome'>Accueil</a>
-				<a href='$linksignup'>Inscription</a>
-				<a href='$linklogin'>Connexion</a>
+			<nav class='navbar'>
+			<ul>
+				<li><a href='$linkhome'>Accueil</a></li>
+				<li><a href='$linksignup'>Inscription</a></li>
+				<li><a href='$linklogin'>Connexion</a></li>
+			</ul>
 			</nav>
 EOT;
 		}
@@ -62,11 +66,15 @@ EOT;
 		return $signup;
 	}
 
-	private function renderPost(){
+	private function renderCreateList(){
 		$post = <<<EOT
 			<article>
-				<form class='forms' action='$this->script_name/send/' method='post'>
-					<textarea id='tweet-form' name='text' placeholder='Entrez un tweet...' maxlength='140'></textarea>
+				<h2>Créez votre liste : </h2>
+				<form class='forms' action='$this->script_name/createlist/' method='post'>
+					<input name='titre' placeholder='Titre' type='text'>
+					<input name='desc' placeholder='Description' type='text'>
+					<input name='validite' placeholder='Date de validité' type='text'>
+					<input name='autre' placeholder='Autre personne' type='text'>
 					<div>
 						<input id='send-button' name='send_button' type='submit' value='Envoyer'>
 					<div>
@@ -135,6 +143,10 @@ EOT;
 
 			case 'post':
 				$main = $this->renderPost();
+				break;
+
+			case 'createlist':
+				$main = $this->renderCreateList();
 				break;
 
 			default:

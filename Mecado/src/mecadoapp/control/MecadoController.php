@@ -32,7 +32,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewSignUp(){
 		$v = new \mecadoapp\view\MecadoView('');
-		$v ->render('signup');  
+		$v ->render('signup');
 	}
 
 	function viewLogin(){
@@ -44,6 +44,11 @@ class MecadoController extends \mf\control\AbstractController {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
 		$v->createUser($_POST['username'], $_POST['password'], $_POST['fullname']);
 		self::viewHome();
+	}
+
+	function viewCreateList() {
+		$v = new \mecadoapp\auth\MecadoView('');		
+		$v ->render('createlist');
 	}
 
 	function viewCheckLogin() {
