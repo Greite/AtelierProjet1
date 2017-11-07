@@ -10,7 +10,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewHome(){
 
-		$v = new \mecadoapp\view\MecadoView();
+		$v = new \mecadoapp\view\MecadoView('');
 		$v ->render('home');  
 	}
 
@@ -47,7 +47,7 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewCreateList() {
-		$v = new \mecadoapp\auth\MecadoView('');		
+		$v = new \mecadoapp\view\MecadoView('');		
 		$v ->render('createlist');
 	}
 

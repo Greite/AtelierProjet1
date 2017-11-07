@@ -8,6 +8,7 @@ require_once 'src/mf/utils/ClassLoader.php';
 $loader = new \mf\utils\ClassLoader("src");
 $loader -> register();
 
+use mecadoapp\model\Item as Item;
 use \mecadoapp\view\MecadoView as MecadoView;
 use \mf\router\Router as Router;
 
@@ -21,6 +22,7 @@ $db->bootEloquent();
 
 MecadoView::setStyleSheet(['framework_css/css/framework.css']);
 MecadoView::setAppTitle('Mecado');
+
 
 $router = new Router();
 
