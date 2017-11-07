@@ -26,8 +26,7 @@ class MecadoAuthentification extends \mf\auth\Authentification {
 		parent::__construct();
 	}
 
-	public function createUser($username, $pass, $fullname,
-							   $level=self::ACCESS_LEVEL_USER) {
+	public function createUser($username, $pass, $fullname, $level=self::ACCESS_LEVEL_USER) {
 
 		$name = \mecadoapp\model\User::where('username', '=', $username)->first();
 
