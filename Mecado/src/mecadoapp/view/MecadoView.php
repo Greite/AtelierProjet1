@@ -19,18 +19,22 @@ class MecadoView extends \mf\view\AbstractView {
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
-				<nav>
-					<a href='$linkhome'>Accueil</a>
-					<a href='#'>Se déconnecter</a>
-					<a href='#'>Mon Profil</a>
+				<nav class='navbar'>
+				<ul>
+					<li><a href='$linkhome'>Accueil</a></li>
+					<li><a href='#'>Se déconnecter</a></li>
+					<li><a href='#'>Mon Profil</a></li>
+				</ul>
 				</nav>
 EOT;
 		}else{
 			$nav = <<<EOT
-			<nav>
-				<a href='$linkhome'>Accueil</a>
-				<a href='$linksignup'>Inscription</a>
-				<a href='$linklogin'>Connexion</a>
+			<nav class='navbar'>
+			<ul>
+				<li><a href='$linkhome'>Accueil</a></li>
+				<li><a href='$linksignup'>Inscription</a></li>
+				<li><a href='$linklogin'>Connexion</a></li>
+			</ul>
 			</nav>
 EOT;
 		}
@@ -139,6 +143,10 @@ EOT;
 
 			case 'post':
 				$main = $this->renderPost();
+				break;
+
+			case 'createlist':
+				$main = $this->renderCreateList();
 				break;
 
 			default:
