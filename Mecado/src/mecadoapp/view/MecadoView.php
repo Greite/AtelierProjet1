@@ -20,7 +20,7 @@ class MecadoView extends \mf\view\AbstractView {
 			<nav>
 				<a href='$linkhome'>Accueil</a>
 				<a href='#'>Inscription</a>
-				<a href='#'>Connexion</a>
+				<a href='#'>Connexion</a>	
 			</nav>
 EOT;
 		}else{
@@ -76,17 +76,6 @@ EOT;
 		return $post;
 	}
 
-	private function renderFollowing(){
-		$following = <<<EOT
-			<article>
-				<h2>Currently following</h2>
-			</article>
-
-EOT;
-
-		return $following;
-	}
-
 	private function renderLogin(){
 		$login = <<<EOT
 			<article>
@@ -123,86 +112,6 @@ EOT;
 		$home.="</article>";
 		return $home;
 	}
-	
-	private function renderUserTweets(){
-		$user = "<article>";
-		$fullname = $this->data->fullname;
-		$username = $this->data->username;
-		$followers = $this->data->followers;
-
-		$user .= <<<EOT
-			<h2>$fullname</h2>
-			<h3>$username</h3>
-			<h3>$followers</h3>
-EOT;
-		$usertweets = $this->data->tweets()->orderBy('updated_at', 'DESC')->get();
-		foreach ($usertweets as $key => $value) {
-			$text = $value->text;
-			$author = $this->data->username;
-			$date = $value->created_at;
-			$linktweet=$this->script_name."/view/?id=$value->id";
-			
-			$user .= <<<EOT
-				<div class='tweet'>
-					<a class='tweet-text' href='$linktweet'>$text</a>
-					<div class='tweet-footer'>
-						<span class='tweet-author'>$author</span>
-						<span class='tweet-timestamp'>$date</span>
-					</div>
-				</div>
-EOT;
-	   }
-		$user.="</article>";
-		return $user;
-	}
-
-	private function renderViewTweet(){  
-		$view = "<article>";
-		$tweetauthor = $this->data->author()->first();
-		$text = $this->data->text;
-		$author = $tweetauthor->username;
-		$date = $this->data->created_at;
-		$score = $this->data->score;
-		$linkauthor=$this->script_name."/user/?id=".$this->data->author;
-		
-		$view .= <<<EOT
-			<div class='tweet'>
-				<p class='tweet-text'>$text</p>
-				<div class='tweet-footer'>
-					<span class='tweet-author'><a href='$linkauthor'>$author</a></span>
-					<span class='tweet-timestamp'>$date</span>
-				</div>
-EOT;
-		$log = new \tweeterapp\auth\TweeterAuthentification();
-		if ($log->logged_in) {
-			$view.= <<<EOT
-						<div class='tweet-footer'>
-							<hr>
-							<span class='tweet-score tweet-control'>$score</span>
-							<a class='tweet-control' href='#'>
-								<img alt='Like' src='/tweeter/html/like.png'>
-							</a>
-							<a class='tweet-control' href='#'>
-								<img alt='Dislike' src='/tweeter/html/dislike.png'>
-							</a>
-							<a class='tweet-control' href='#'>
-								<img alt='Follow' src='/tweeter/html/follow.png'>
-							</a>
-						</div>
-					</div>
-EOT;
-		}else{
-			$view.= <<<EOT
-				<div class='tweet-footer'>
-					<hr>
-					<span class='tweet-score tweet-control'>$score</span>
-				</div>
-			</div>
-EOT;
-		}
-		$view.="</article>";
-		return $view;
-	}
 
 	protected function renderBody($selector=null){
 		
@@ -212,14 +121,6 @@ EOT;
 		switch ($selector) {
 			case 'home':
 				$main = $this->renderHome();
-				break;
-
-			case 'user':
-				$main = $this->renderUserTweets();
-				break;
-
-			case 'view':
-				$main = $this->renderViewTweet();
 				break;
 
 			case 'signup':
@@ -234,28 +135,24 @@ EOT;
 				$main = $this->renderPost();
 				break;
 
-			case 'following':
-				$main = $this->renderFollowing();
-				break;
-
 			default:
 				$main = $this->renderHome();
 				break;
 		}
 
 		$html = <<<EOT
-		<header class='theme-backcolor1'>
+		<header>
 			${header}
 			${nav}
 		</header>
-		<section class='theme-backcolor2'>
+		<section>
 			${main}
 		</section>
-		<footer class='theme-backcolor1'>
+		<footer>
 			${footer}
 		</footer>
 EOT;
-		return  $html;
+		return $html;
 		
 	}
 

@@ -19,7 +19,7 @@ $db->addConnection( $config );
 $db->setAsGlobal();
 $db->bootEloquent();
 
-//MecadoView::setStyleSheet(['html/style.css']);
+MecadoView::setStyleSheet(['framework_css/css/framework.css']);
 MecadoView::setAppTitle('Mecado');
 
 $router = new Router();
