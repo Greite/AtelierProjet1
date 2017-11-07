@@ -14,22 +14,24 @@ class MecadoView extends \mf\view\AbstractView {
 
 	private function renderNav(){
 		$linkhome=$this->script_name."/home/";
+		$linklogin=$this->script_name."/login/";
+		$linksignup=$this->script_name."/signup/";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
-			$nav = <<<EOT
-			<nav>
-				<a href='$linkhome'>Accueil</a>
-				<a href='#'>Inscription</a>
-				<a href='#'>Connexion</a>	
-			</nav>
-EOT;
-		}else{
 			$nav = <<<EOT
 				<nav>
 					<a href='$linkhome'>Accueil</a>
 					<a href='#'>Se déconnecter</a>
 					<a href='#'>Mon Profil</a>
 				</nav>
+EOT;
+		}else{
+			$nav = <<<EOT
+			<nav>
+				<a href='$linkhome'>Accueil</a>
+				<a href='$linksignup'>Inscription</a>
+				<a href='$linklogin'>Connexion</a>
+			</nav>
 EOT;
 		}
 		return $nav;
@@ -40,7 +42,7 @@ EOT;
 	}
 
 	private function renderSignUp(){
-		
+		$linklogin=$this->script_name."/login/";
 		$signup = <<<EOT
 			<article>
 				<h2>Créez votre compte</h2>
@@ -52,7 +54,7 @@ EOT;
 					<button name='signup_button' type='submit'>S'inscrire</button>
 				</form>
 				<h2>Vous avez déjà un compte ?</h2>
-				<h2><a href='#'>Connectez-vous ! </a></h2>
+				<h2><a href='$linklogin'>Connectez-vous ! </a></h2>
 			</article>
 
 EOT;
@@ -79,10 +81,10 @@ EOT;
 	private function renderLogin(){
 		$login = <<<EOT
 			<article>
-				<form class='forms' action='$this->script_name/check_login/' method='post'>
-					<input class='forms-text' name='username' placeholder='Pseudo' type='text'>
-					<input class='forms-text' name='password' placeholder='Mot de passe' type='password'>
-					<button class='forms-button' name='login_button' type='submit'>Se connecter</button>
+				<form action='$this->script_name/check_login/' method='post'>
+					<input name='mail' placeholder='E-mail' type='text'>
+					<input name='password' placeholder='Mot de passe' type='password'>
+					<button name='login_button' type='submit'>Se connecter</button>
 				</form>
 			</article>
 
