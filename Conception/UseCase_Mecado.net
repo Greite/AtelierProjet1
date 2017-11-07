@@ -5811,7 +5811,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Consulter item réserver",
+											"text": "Consulter item réservé",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -5879,7 +5879,7 @@
 									"containerExtending": false,
 									"left": 769,
 									"top": 84.5,
-									"width": 158,
+									"width": 157,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -7399,7 +7399,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Consulter item réserver",
+					"name": "Consulter item réservé",
 					"visibility": "public",
 					"isAbstract": false,
 					"isFinalSpecialization": false,
