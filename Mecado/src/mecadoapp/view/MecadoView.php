@@ -9,27 +9,33 @@ class MecadoView extends \mf\view\AbstractView {
 	}
 
 	private function renderHeader(){
-		return '<h1><img alt="Logo" src="/tweeter/img/logo.png"></h1>';
+		return '<h1><img alt="Logo" src="/Mecado/img/logo.png"></h1>';
 	}
 
 	private function renderNav(){
 		$linkhome=$this->script_name."/home/";
+		$linklogin=$this->script_name."/login/";
+		$linksignup=$this->script_name."/signup/";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
-			<nav>
-				<a href='$linkhome'>Accueil</a>
-				<a href='#'>Inscription</a>
-				<a href='#'>Connexion</a>
-			</nav>
+				<nav class='navbar'>
+				<ul>
+					<li><a href='$linkhome'>Accueil</a></li>
+					<li><a href='#'>Se déconnecter</a></li>
+					<li><a href='#'>Mon Profil</a></li>
+				</ul>
+				</nav>
 EOT;
 		}else{
 			$nav = <<<EOT
-				<nav>
-					<a href='$linkhome'>Accueil</a>
-					<a href='#'>Se déconnecter</a>
-					<a href='#'>Mon Profil</a>
-				</nav>
+			<nav class='navbar'>
+			<ul>
+				<li><a href='$linkhome'>Accueil</a></li>
+				<li><a href='$linksignup'>Inscription</a></li>
+				<li><a href='$linklogin'>Connexion</a></li>
+			</ul>
+			</nav>
 EOT;
 		}
 		return $nav;
@@ -40,7 +46,7 @@ EOT;
 	}
 
 	private function renderSignUp(){
-		
+		$linklogin=$this->script_name."/login/";
 		$signup = <<<EOT
 			<article>
 				<h2>Créez votre compte</h2>
@@ -52,7 +58,7 @@ EOT;
 					<button name='signup_button' type='submit'>S'inscrire</button>
 				</form>
 				<h2>Vous avez déjà un compte ?</h2>
-				<h2><a href='#'>Connectez-vous ! </a></h2>
+				<h2><a href='$linklogin'>Connectez-vous ! </a></h2>
 			</article>
 
 EOT;
@@ -60,11 +66,15 @@ EOT;
 		return $signup;
 	}
 
-	private function renderPost(){
+	private function renderCreateList(){
 		$post = <<<EOT
 			<article>
-				<form class='forms' action='$this->script_name/send/' method='post'>
-					<textarea id='tweet-form' name='text' placeholder='Entrez un tweet...' maxlength='140'></textarea>
+				<h2>Créez votre liste : </h2>
+				<form class='forms' action='$this->script_name/createlist/' method='post'>
+					<input name='titre' placeholder='Titre' type='text'>
+					<input name='desc' placeholder='Description' type='text'>
+					<input name='validite' placeholder='Date de validité' type='text'>
+					<input name='autre' placeholder='Autre personne' type='text'>
 					<div>
 						<input id='send-button' name='send_button' type='submit' value='Envoyer'>
 					<div>
@@ -76,24 +86,13 @@ EOT;
 		return $post;
 	}
 
-	private function renderFollowing(){
-		$following = <<<EOT
-			<article>
-				<h2>Currently following</h2>
-			</article>
-
-EOT;
-
-		return $following;
-	}
-
 	private function renderLogin(){
 		$login = <<<EOT
 			<article>
-				<form class='forms' action='$this->script_name/check_login/' method='post'>
-					<input class='forms-text' name='username' placeholder='Pseudo' type='text'>
-					<input class='forms-text' name='password' placeholder='Mot de passe' type='password'>
-					<button class='forms-button' name='login_button' type='submit'>Se connecter</button>
+				<form action='$this->script_name/check_login/' method='post'>
+					<input name='mail' placeholder='E-mail' type='text'>
+					<input name='password' placeholder='Mot de passe' type='password'>
+					<button name='login_button' type='submit'>Se connecter</button>
 				</form>
 			</article>
 
@@ -102,25 +101,6 @@ EOT;
 		return $login;
 	}
 
-	private function renderNew(){
-		$new="";
-        $linkpost=$this->script_name."/post/";
-        $log = new \tweeterapp\auth\TweeterAuthentification;
-        if ($log->logged_in && $_SERVER['REQUEST_URI']<> $linkpost) {
-
-            $new.= <<<EOT
-                <nav id='menu' class='theme-backcolor1'>
-                    <div id='nav-menu'>
-                        <div class='button theme-backcolor2'>
-                            <a href='$linkpost'>New</a>
-                        </div>
-                    </div>
-                </nav>
-EOT;
-       }
-        return $new;
-	}
-	
 	private function renderHome(){ 
 		if ($log->logged_in) {
 			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
@@ -142,104 +122,15 @@ EOT;
 		$home.="</article>";
 		return $home;
 	}
-	
-	private function renderUserTweets(){
-		$user = "<article>";
-		$fullname = $this->data->fullname;
-		$username = $this->data->username;
-		$followers = $this->data->followers;
-
-		$user .= <<<EOT
-			<h2>$fullname</h2>
-			<h3>$username</h3>
-			<h3>$followers</h3>
-EOT;
-		$usertweets = $this->data->tweets()->orderBy('updated_at', 'DESC')->get();
-		foreach ($usertweets as $key => $value) {
-			$text = $value->text;
-			$author = $this->data->username;
-			$date = $value->created_at;
-			$linktweet=$this->script_name."/view/?id=$value->id";
-			
-			$user .= <<<EOT
-				<div class='tweet'>
-					<a class='tweet-text' href='$linktweet'>$text</a>
-					<div class='tweet-footer'>
-						<span class='tweet-author'>$author</span>
-						<span class='tweet-timestamp'>$date</span>
-					</div>
-				</div>
-EOT;
-	   }
-		$user.="</article>";
-		return $user;
-	}
-
-	private function renderViewTweet(){  
-		$view = "<article>";
-		$tweetauthor = $this->data->author()->first();
-		$text = $this->data->text;
-		$author = $tweetauthor->username;
-		$date = $this->data->created_at;
-		$score = $this->data->score;
-		$linkauthor=$this->script_name."/user/?id=".$this->data->author;
-		
-		$view .= <<<EOT
-			<div class='tweet'>
-				<p class='tweet-text'>$text</p>
-				<div class='tweet-footer'>
-					<span class='tweet-author'><a href='$linkauthor'>$author</a></span>
-					<span class='tweet-timestamp'>$date</span>
-				</div>
-EOT;
-		$log = new \tweeterapp\auth\TweeterAuthentification();
-		if ($log->logged_in) {
-			$view.= <<<EOT
-						<div class='tweet-footer'>
-							<hr>
-							<span class='tweet-score tweet-control'>$score</span>
-							<a class='tweet-control' href='#'>
-								<img alt='Like' src='/tweeter/html/like.png'>
-							</a>
-							<a class='tweet-control' href='#'>
-								<img alt='Dislike' src='/tweeter/html/dislike.png'>
-							</a>
-							<a class='tweet-control' href='#'>
-								<img alt='Follow' src='/tweeter/html/follow.png'>
-							</a>
-						</div>
-					</div>
-EOT;
-		}else{
-			$view.= <<<EOT
-				<div class='tweet-footer'>
-					<hr>
-					<span class='tweet-score tweet-control'>$score</span>
-				</div>
-			</div>
-EOT;
-		}
-		$view.="</article>";
-		return $view;
-	}
 
 	protected function renderBody($selector=null){
 		
 		$header = $this->renderHeader();
 		$nav = $this->renderNav();
 		$footer = $this->renderFooter();
-		$new = $this->renderNew();
 		switch ($selector) {
 			case 'home':
 				$main = $this->renderHome();
-				break;
-
-			case 'user':
-				$main = $this->renderUserTweets();
-				break;
-
-			case 'view':
-				$main = $this->renderViewTweet();
 				break;
 
 			case 'signup':
@@ -254,8 +145,8 @@ EOT;
 				$main = $this->renderPost();
 				break;
 
-			case 'following':
-				$main = $this->renderFollowing();
+			case 'createlist':
+				$main = $this->renderCreateList();
 				break;
 
 			default:
@@ -264,19 +155,18 @@ EOT;
 		}
 
 		$html = <<<EOT
-		<header class='theme-backcolor1'>
+		<header>
 			${header}
 			${nav}
 		</header>
-		<section class='theme-backcolor2'>
+		<section>
 			${main}
-			${new}
 		</section>
-		<footer class='theme-backcolor1'>
+		<footer>
 			${footer}
 		</footer>
 EOT;
-		return  $html;
+		return $html;
 		
 	}
 

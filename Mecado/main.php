@@ -9,6 +9,8 @@ $loader = new \mf\utils\ClassLoader("src");
 $loader -> register();
 
 use mecadoapp\model\Item as Item;
+use \mecadoapp\view\MecadoView as MecadoView;
+use \mf\router\Router as Router;
 
 $config = parse_ini_file("conf/bdd.ini");
 
@@ -18,21 +20,8 @@ $db->addConnection( $config );
 $db->setAsGlobal();
 $db->bootEloquent();
 
-//MecadoView::setStyleSheet(['html/style.css']);
-//MecadoView::setAppTitle('Mecado');
-
-//TEST -----------------------------------
-
-$velo = Item::select()->get();
-
-foreach ($velo as $value) {
-	echo $value;
-}
-
-
-
-
-
+MecadoView::setStyleSheet(['framework_css/css/framework.css']);
+MecadoView::setAppTitle('Mecado');
 
 
 $router = new Router();
@@ -54,5 +43,7 @@ $router->addRoute('signup', '/signup/',  '\mecadoapp\control\MecadoController', 
 $router->addRoute('logout', '/logout/',  '\mecadoapp\control\MecadoController', 'viewlogout');
 
 $router->addRoute('send', '/send/',  '\mecadoapp\control\MecadoController', 'viewSend');
+
+$router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateList');
 
 $router->run();
