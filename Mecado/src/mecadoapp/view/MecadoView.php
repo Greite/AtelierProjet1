@@ -9,7 +9,7 @@ class MecadoView extends \mf\view\AbstractView {
 	}
 
 	private function renderHeader(){
-		return '<h1><img alt="Logo" src="/tweeter/img/logo.png"></h1>';
+		return '<h1><img alt="Logo" src="/Mecado/img/logo.png"></h1>';
 	}
 
 	private function renderNav(){
@@ -102,25 +102,6 @@ EOT;
 		return $login;
 	}
 
-	private function renderNew(){
-		$new="";
-        $linkpost=$this->script_name."/post/";
-        $log = new \tweeterapp\auth\TweeterAuthentification;
-        if ($log->logged_in && $_SERVER['REQUEST_URI']<> $linkpost) {
-
-            $new.= <<<EOT
-                <nav id='menu' class='theme-backcolor1'>
-                    <div id='nav-menu'>
-                        <div class='button theme-backcolor2'>
-                            <a href='$linkpost'>New</a>
-                        </div>
-                    </div>
-                </nav>
-EOT;
-       }
-        return $new;
-	}
-	
 	private function renderHome(){ 
 		if ($log->logged_in) {
 			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
@@ -228,7 +209,6 @@ EOT;
 		$header = $this->renderHeader();
 		$nav = $this->renderNav();
 		$footer = $this->renderFooter();
-		$new = $this->renderNew();
 		switch ($selector) {
 			case 'home':
 				$main = $this->renderHome();
@@ -270,7 +250,6 @@ EOT;
 		</header>
 		<section class='theme-backcolor2'>
 			${main}
-			${new}
 		</section>
 		<footer class='theme-backcolor1'>
 			${footer}
