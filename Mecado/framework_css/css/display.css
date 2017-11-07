@@ -1,18 +1,18 @@
 /*placement avec display*/
-.breadcrumb {
+.navbar {
   width: 800px;
   margin: auto;
   background: orange;
   padding: 5px; }
 
-.breadcrumb ul {
+.navbar ul {
   text-align: center; }
 
-.breadcrumb ul li {
+.navbar ul li {
   display: inline-block;
   padding: 5px; }
 
-.breadcrumb ul li a {
+.navbar ul li a {
   text-decoration: none;
   color: red; }
 
