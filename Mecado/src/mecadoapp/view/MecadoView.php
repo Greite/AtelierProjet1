@@ -66,11 +66,15 @@ EOT;
 		return $signup;
 	}
 
-	private function renderPost(){
+	private function renderCreateList(){
 		$post = <<<EOT
 			<article>
-				<form class='forms' action='$this->script_name/send/' method='post'>
-					<textarea id='tweet-form' name='text' placeholder='Entrez un tweet...' maxlength='140'></textarea>
+				<h2>Créez votre liste : </h2>
+				<form class='forms' action='$this->script_name/createlist/' method='post'>
+					<input name='titre' placeholder='Titre' type='text'>
+					<input name='desc' placeholder='Description' type='text'>
+					<input name='validite' placeholder='Date de validité' type='text'>
+					<input name='autre' placeholder='Autre personne' type='text'>
 					<div>
 						<input id='send-button' name='send_button' type='submit' value='Envoyer'>
 					<div>
