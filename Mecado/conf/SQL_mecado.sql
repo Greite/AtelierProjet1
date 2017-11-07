@@ -7,14 +7,14 @@
 # Table: Liste
 #------------------------------------------------------------
 
-CREATE TABLE Liste(
+CREATE TABLE liste(
         id           int (11) Auto_increment  NOT NULL ,
         titre        Varchar (100) NOT NULL ,
         description  Varchar (500) NOT NULL ,
         date_limite  Date NOT NULL ,
         destinataire Varchar (100) NOT NULL ,
         for_him      Bool NOT NULL ,
-        id_User      Int NOT NULL ,
+        id_user      Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -23,7 +23,7 @@ CREATE TABLE Liste(
 # Table: Item
 #------------------------------------------------------------
 
-CREATE TABLE Item(
+CREATE TABLE item(
         id          int (11) Auto_increment  NOT NULL ,
         nom         Varchar (250) NOT NULL ,
         description Varchar (500) NOT NULL ,
@@ -38,7 +38,7 @@ CREATE TABLE Item(
 # Table: User
 #------------------------------------------------------------
 
-CREATE TABLE User(
+CREATE TABLE user(
         id     int (11) Auto_increment  NOT NULL ,
         nom    Varchar (250) ,
         prenom Varchar (250) ,
@@ -52,13 +52,13 @@ CREATE TABLE User(
 # Table: Message
 #------------------------------------------------------------
 
-CREATE TABLE Message(
+CREATE TABLE message(
         id          int (11) Auto_increment  NOT NULL ,
         auteur      Varchar (250) NOT NULL ,
         description Varchar (500) NOT NULL ,
         type        Bool NOT NULL ,
         date_create Date NOT NULL ,
-        id_Liste    Int NOT NULL ,
+        id_liste    Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -71,11 +71,11 @@ CREATE TABLE contenir(
         reserver   Bool NOT NULL ,
         reserviste Varchar (250) ,
         id         Int NOT NULL ,
-        id_Item    Int NOT NULL ,
+        id_item    Int NOT NULL ,
         PRIMARY KEY (id ,id_Item )
 )ENGINE=InnoDB;
 
-ALTER TABLE Liste ADD CONSTRAINT FK_Liste_id_User FOREIGN KEY (id_User) REFERENCES User(id);
-ALTER TABLE Message ADD CONSTRAINT FK_Message_id_Liste FOREIGN KEY (id_Liste) REFERENCES Liste(id);
-ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id FOREIGN KEY (id) REFERENCES Liste(id);
-ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id_Item FOREIGN KEY (id_Item) REFERENCES Item(id);
+ALTER TABLE liste ADD CONSTRAINT FK_liste_id_user FOREIGN KEY (id_user) REFERENCES user(id);
+ALTER TABLE message ADD CONSTRAINT FK_message_id_liste FOREIGN KEY (id_liste) REFERENCES liste(id);
+ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id FOREIGN KEY (id) REFERENCES liste(id);
+ALTER TABLE contenir ADD CONSTRAINT FK_contenir_id_item FOREIGN KEY (id_item) REFERENCES item(id);
