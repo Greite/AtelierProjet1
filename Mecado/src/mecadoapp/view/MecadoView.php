@@ -122,12 +122,21 @@ EOT;
 	}
 	
 	private function renderHome(){ 
-		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
-		$home .= <<<EOT
-			<div>
-				<p>Ce site vous propose la création d'une liste de cadeau pour vous ou vos proche</p>
-				<p>Pour créer votre liste, connectez-vous ou alors créez vous un compte</p>
-			</div>
+		if ($log->logged_in) {
+			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+			$home.= <<<EOT
+				<div>
+					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
+					<p><a href='#'>Créez votre liste de cadeau</a></p>
+				</div>
+EOT;
+		}else{
+			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+			$home .= <<<EOT
+				<div>
+					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
+					<p>Pour créer votre liste, connectez-vous ou alors créez vous un compte</p>
+				</div>
 EOT;
 		}
 		$home.="</article>";
