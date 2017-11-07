@@ -9,7 +9,7 @@ class MecadoView extends \mf\view\AbstractView {
 	}
 
 	private function renderHeader(){
-		return '<h1><img alt="Logo" src="/Mecado/img/logo.png"></h1>';
+		return '<h1><img alt="Logo" src="/AtelierProjet1/Mecado/img/logo.png"></h1>';
 	}
 
 	private function renderNav(){
