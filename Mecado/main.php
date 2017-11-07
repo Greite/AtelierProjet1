@@ -8,15 +8,7 @@ require_once 'src/mf/utils/ClassLoader.php';
 $loader = new \mf\utils\ClassLoader("src");
 $loader -> register();
 
-$config = [
-       'driver'    => 'mysql',
-       'host'      => 'localhost',
-       'database'  => 'mecado',
-       'username'  => 'root',
-       'password'  => 'root',
-       'charset'   => 'utf8',
-       'collation' => 'utf8_unicode_ci',
-       'prefix'    => '' ];
+$config = parse_ini_file("conf\bdd.ini");
 
 $db = new Illuminate\Database\Capsule\Manager();
 
