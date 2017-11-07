@@ -141,6 +141,10 @@ EOT;
 				$main = $this->renderPost();
 				break;
 
+			case 'createlist':
+				$main = $this->renderCreateList();
+				break;
+
 			default:
 				$main = $this->renderHome();
 				break;
