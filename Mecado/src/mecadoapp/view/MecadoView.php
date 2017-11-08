@@ -71,8 +71,7 @@ EOT;
 		$profile = "<article>";
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
-		$mail = $this->data->mail;
-		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
+		$mail = $this->data->mail;	
 		$profile .= <<<EOT
 				<h2>Profil</h2>	
 				<ul>
@@ -82,8 +81,7 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
-
-		//print_r($userlists);
+		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
 		foreach ($userlists as $key => $value) {
 			$urllist = $value->url;
 			$namelist = $value->titre;
