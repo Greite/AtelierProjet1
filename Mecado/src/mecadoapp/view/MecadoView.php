@@ -64,6 +64,7 @@ EOT;
 			</article>
 
 EOT;
+	return $signup;
 	}
 
 	private function renderProfile(){
@@ -118,8 +119,7 @@ EOT;
 
 EOT;
 		return $list;
-}
-
+	}
 
 	private function renderAffichageList(){
 
@@ -171,6 +171,10 @@ EOT;
 					</article>
 EOT;
 		return $ajoutItem;
+	}
+
+	private function renderMessages() {
+		$messages="<article>";
 	}
 
 	private function renderHome(){

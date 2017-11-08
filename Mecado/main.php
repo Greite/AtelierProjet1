@@ -42,7 +42,9 @@ $router->addRoute('signup', '/signup/',  '\mecadoapp\control\MecadoController', 
 
 $router->addRoute('logout', '/logout/',  '\mecadoapp\control\MecadoController', 'viewlogout');
 
-$router->addRoute('send', '/send/',  '\mecadoapp\control\MecadoController', 'viewSend');
+$router->addRoute('send', '/send/',  '\mecadoapp\control\MecadoController', 'viewSendMessage');
+
+$router->addRoute('messages', '/messages/',  '\mecadoapp\control\MecadoController', 'viewMessages');
 
 $router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateList');
 
@@ -50,10 +52,8 @@ $router->addRoute('profile', '/profile/',  '\mecadoapp\control\MecadoController'
 
 $router->addRoute('check_createlist', '/check_createlist/',  '\mecadoapp\control\MecadoController', 'viewCheckCreateList');
 
-$router->addRoute('AjoutItem', '/ajoutitem/',  '\mecadoapp\control\MecadoController', 'viewAjoutItem');
+$router->addRoute('ajoutitem', '/ajoutitem/',  '\mecadoapp\control\MecadoController', 'viewAjoutItem');
 
-$router->addRoute('createURL', '/createURL/',  '\mecadoapp\control\MecadoController', 'viewCreateURL');
-
-$router->addRoute('affichagelist', '/affichagelist/',  '\mecadoapp\control\MecadoController', 'viewaffichagelist');
+$router->addRoute('affichagelist', '/affichagelist/',  '\mecadoapp\control\MecadoController', 'viewAffichageList');
 
 $router->run();
