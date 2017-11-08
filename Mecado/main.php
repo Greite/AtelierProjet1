@@ -46,4 +46,6 @@ $router->addRoute('send', '/send/',  '\mecadoapp\control\MecadoController', 'vie
 
 $router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateList');
 
+$router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateURL');
+
 $router->run();

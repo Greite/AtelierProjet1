@@ -83,7 +83,18 @@ EOT;
 
 EOT;
 
+if (isset($_POST['send_button'])) {
+	$post .= <<<EOT
+	<div class = "info">URL A METTRE</div>
+
+EOT;
+
+}
+
+
 		return $post;
+
+
 	}
 
 	private function renderLogin(){
