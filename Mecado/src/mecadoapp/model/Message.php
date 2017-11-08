@@ -8,7 +8,7 @@ class Message extends \Illuminate\Database\Eloquent\Model {
        protected $primaryKey = 'id';  
        public    $timestamps = true;  
        
-	public function liste(){
+	public function listes(){
 		return $this->belongsTo(Liste::class,'id_List');
 	}   
 }

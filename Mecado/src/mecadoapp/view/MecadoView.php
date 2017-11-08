@@ -73,7 +73,6 @@ EOT;
 		$prenom = $this->data->prenom;
 		$mail = $this->data->mail;
 		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
-		print_r($userlists);
 		$profile .= <<<EOT
 				<h2>Profil</h2>	
 				<ul>
@@ -114,8 +113,7 @@ EOT;
 
 EOT;
 		return $list;
-}
-
+	}
 
 	private function renderAffichageList(){
 			if($_GET['nom']==NULL||$_GET['id']==NULL){
@@ -167,8 +165,6 @@ EOT;
 
 	private function renderAjoutItem(){
 
-		echo $this->app_root;
-
 		$ajoutItem = <<<EOT
 					<article>
 						<form action ='$this->script_name/saveitem/' method='post'>
@@ -185,6 +181,23 @@ EOT;
 		return $ajoutItem;
 	}
 
+
+	private function renderMessages() {
+		$messages="<article><h2>Derniers messages</h2>";
+		foreach ($this->data as $key => $value) {
+			$author = $_POST['auteur'];
+			$text=$value->description;
+			$date=$value->date_create;
+		   
+			$messages .= <<<EOT
+				<div>
+					<label>$author</label><p>$text</p>
+				</div>
+EOT;
+		}
+		return $messages;
+	}
+	
 	private function renderCheckedCreatedList(){
 			$list = <<<EOT
 			<article>
@@ -260,6 +273,10 @@ EOT;
 
 			case 'affichage_list':
 				$main = $this->renderAffichageList();
+				break;
+
+			case 'messages':
+				$main = $this->renderMessages();
 				break;
 
 			default:
