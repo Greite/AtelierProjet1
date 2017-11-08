@@ -16,13 +16,14 @@ class MecadoView extends \mf\view\AbstractView {
 		$linkhome=$this->script_name."/home/";
 		$linklogin=$this->script_name."/login/";
 		$linksignup=$this->script_name."/signup/";
+		$linklogout=$this->script_name."/logout/";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
 				<nav class='navbar'>
 				<ul>
 					<li><a href='$linkhome'>Accueil</a></li>
-					<li><a href='#'>Se déconnecter</a></li>
+					<li><a href='$linklogout'>Se déconnecter</a></li>
 					<li><a href='#'>Mon Profil</a></li>
 				</ul>
 				</nav>
@@ -51,8 +52,8 @@ EOT;
 			<article>
 				<h2>Créez votre compte</h2>
 				<form action='$this->script_name/check_signup/' method='post'>
-					<input name='fullname' placeholder='Nom' type='text'>
-					<input name='name' placeholder='Prénom' type='text'>
+					<input name='nom' placeholder='Nom' type='text'>
+					<input name='prenom' placeholder='Prénom' type='text'>
 					<input name='mail' placeholder='E-mail' type='text'>
 					<input name='password' placeholder='Mot de passe' type='password'>
 					<button name='signup_button' type='submit'>S'inscrire</button>
@@ -67,7 +68,7 @@ EOT;
 	}
 
 	private function renderCreateList(){
-		$post = <<<EOT
+		$list = <<<EOT
 			<article>
 				<h2>Créez votre liste : </h2>
 				<form class='forms' action='$this->script_name/createlist/' method='post'>
@@ -82,8 +83,10 @@ EOT;
 			</article>
 
 EOT;
+}
 
-		return $post;
+return $list;
+
 	}
 
 	private function renderLogin(){
@@ -117,9 +120,11 @@ EOT;
 		return $ajoutItem;
 	}
 
-	private function renderHome(){ 
+	private function renderHome(){
+		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+
 		if ($log->logged_in) {
-			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+
 			$home.= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
@@ -127,7 +132,6 @@ EOT;
 				</div>
 EOT;
 		}else{
-			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 			$home .= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
