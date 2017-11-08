@@ -60,7 +60,8 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewaffichagelist(){
 		
-		$v = new \mecadoapp\view\MecadoView('');		
+		$v = new \mecadoapp\view\MecadoView('');
+		
 		$v ->render('affichagelist');
 		
 	}

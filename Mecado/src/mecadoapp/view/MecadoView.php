@@ -90,20 +90,36 @@ return $list;
 
 
 	private function renderAffichageList(){
-
-			$list = <<<EOT
-			<article>
-				<h2>Votre liste </h2>
-				<ul>
-				<li>aaaaaaa</li>
-				<li>bbbbbbb</li>
-				<li>ccccccc</li>
-				</ul>
-			</article>
-
+			if($_GET['nom']==NULL||$_GET['id']==NULL){
+				throw new \Exception("URL invalide");
+			}else{
+				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
+				if($l!=NULL){
+					//$i=\mecadoapp\model\Liste;
+					$i=$l->items()->get();			
+					var_dump('marche');
+					$liste= <<<EOT
+					<article>
+						<div>$l->titre</div><br>
+						<div>$l->description</div><br>
+						<div>$l->date_limite</div><br>
+						<div>$l->destinataire</div>
+					</article>
 EOT;
+					foreach($i as $d){
+						$liste.= <<<EOT
+						<div></div>
+						<div>$d->tarif</div>
+EOT;
+					}
+					
 
-return $list;
+
+return $liste;
+				}else{
+					var_dump('marchepas');
+				}
+			}
 	}
 
 	private function renderLogin(){
