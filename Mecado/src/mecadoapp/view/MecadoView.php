@@ -71,29 +71,27 @@ EOT;
 		$list = <<<EOT
 			<article>
 				<h2>Créez votre liste : </h2>
-				<form class='forms' action='$this->script_name/createlist/' method='post'>
-					<input name='titre' placeholder='Titre' type='text'>
-					<input name='desc' placeholder='Description' type='text'>
-					<input name='validite' placeholder='Date de validité' type='text'>
-					<input name='autre' placeholder='Autre personne' type='text'>
+				<form action='$this->script_name/check_createlist/' method='post'>
 					<div>
-						<input id='send-button' name='send_button' type='submit' value='Envoyer'>
-					<div>
+						<span>Titre : </span>
+						<input name='titre' placeholder='Titre' type='text'>
+						<span>Description : </span>
+						<input name='desc' placeholder='Description' type='text'>
+						<span>Date de validité : </span>
+						<input name='validite' placeholder='AAAA-MM-JJ' type='text'>
+						<span>Liste destinée à une autre personne : </span>
+						<input name='for_him' type='checkbox' value='1'>
+						<span>Prénom du destinataire : </span>
+						<input name='destinataire' placeholder='Prénom du destinataire' type='text'>
+						<div>
+							<input id='send-button' name='send_button' type='submit' value='Envoyer'>
+						</div>
+					</div>
 				</form>
 			</article>
 
 EOT;
-
-if (isset($_POST['send_button'])) {
-	$list .= <<<EOT
-	<div class = "info">URL A METTRE</div>
-
-EOT;
-
-}
-
-return $list;
-
+		return $list;
 	}
 
 	private function renderLogin(){
