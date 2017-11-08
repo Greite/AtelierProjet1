@@ -122,14 +122,14 @@ EOT;
 
 	private function renderAjoutItem(){
 
-		$this->app_root;
+		echo $this->app_root;
 
 		$ajoutItem = <<<EOT
 					<article>
 						<form action ='$this->script_name//' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
-							<input name='img' placeholder='Image' type='file'>
+							<input name='img' placeholder='Image' type='text'>
 							<input name='url' placeholder='URL' type='text'>
 							<input name='tarif' placeholder='Tarif' type='text'>
 							<a href="ajoutitem"><img src="$this->app_root/img/plus.jpg" height="20" width="20"><a>
@@ -191,6 +191,7 @@ EOT;
 
 			case 'ajoutItem':
 				$main =$this->renderAjoutItem();
+				break;
 
 			case 'affichagelist':
 				$main = $this->renderAffichageList();
