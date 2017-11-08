@@ -256,7 +256,7 @@ pre {
 /*header*/
 header {
   display: block;
-  background-color: #eeffff;
+  background-color: #5271ff;
   overflow: hidden; }
 
 header h1 {
@@ -426,5 +426,11 @@ html, body {
   background-color: teal;
   padding: 10px;
   color: white; }
+
+section {
+  background-color: #eeffff; }
+
+footer {
+  background-color: #5271ff; }
 
 /*# sourceMappingURL=framework.css.map */
