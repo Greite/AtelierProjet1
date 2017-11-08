@@ -121,7 +121,6 @@ EOT;
 			}else{
 				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
 				if($l!=NULL){
-					//$i=\mecadoapp\model\Liste;
 					$i=$l->items()->get();			
 					var_dump('marche');
 					$liste= <<<EOT
@@ -134,8 +133,12 @@ EOT;
 EOT;
 					foreach($i as $d){
 						$liste.= <<<EOT
-						<div></div>
+						<div>$d->nom</div>
+						<div>$d->description</div>
 						<div>$d->tarif</div>
+						<div><a href='$d->url'>Petit lien au calme</a></div>
+						<div><img src='$d->image'></div>
+						<div></div>
 EOT;
 					}
 					
