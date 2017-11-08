@@ -101,7 +101,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewAjoutItem(){
 
-		$itm = Item::select()->get();
+		$itm = Item::select()->WHERE("id_liste","=",$_GET["id"])->first();
 		$listeItem = new MecadoView($itm);
 
 		$v = new MecadoView('');
