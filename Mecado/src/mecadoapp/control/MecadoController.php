@@ -74,7 +74,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewAffichageList(){
 		$v = new \mecadoapp\view\MecadoView('');		
-		$v ->render('affichagelist');
+		$v ->render('affichage_list');
 	}
 
 	function viewCheckLogin() {
@@ -91,6 +91,6 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewAjoutItem(){
 		$v = new \mecadoapp\view\MecadoView('');
-		$v-> render('ajoutitem');
+		$v-> render('ajout_item');
 	}
 }
