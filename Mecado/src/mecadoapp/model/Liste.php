@@ -9,7 +9,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model {
     public    $timestamps = false; 
 
     public function messages(){
-    	return $this->hasMany(Message::class,'id_List');
+    	return $this->hasMany(Message::class,'id_list');
     }
 
     public function user(){
@@ -17,7 +17,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model {
     }
 
     public function items(){
-    	return $this->hasMany(Item::class,'id_list');
+    	return $this->hasMany(Item::class,'id_liste');
     }
        
 }

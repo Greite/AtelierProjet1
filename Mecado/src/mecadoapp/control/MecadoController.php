@@ -92,13 +92,20 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewAjoutItem(){
+
+		$itm = Item::select()->WHERE("id_liste","=",1)->get();
+
+		foreach ($itm as $value) {
+			echo $value;
+		}
+
 		$v = new \mecadoapp\view\MecadoView('');
 		$v-> render('ajout_item');
 	}
 
 	function viewSaveItem(){
 		//enregistre l'item dans la bdd et renvoie sur la meme page /ajoutitem/
-		
+
 		$cadeau = new Item;
 		$cadeau->nom = $_POST['nom'];
 		$cadeau->description = $_POST['description'];
