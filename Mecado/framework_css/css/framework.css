@@ -401,6 +401,11 @@ html, body {
   display: inline-block;
   padding: 5px; }
 
+.navbar ul li:hover {
+  display: inline-block;
+  padding: 5px;
+  background-color: #b8c5ff; }
+
 .navbar ul li a {
   text-decoration: none;
   color: black; }

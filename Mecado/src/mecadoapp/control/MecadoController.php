@@ -21,13 +21,20 @@ class MecadoController extends \mf\control\AbstractController {
 		$v ->render('post');  
 	}
 
-	function viewSend() {
-		$tweet = new \mecadoapp\model\Message();
+	function viewSendMessage() {
+		$message = new \mecadoapp\model\Message();
 		$user = \mecadoapp\model\User::where('username', '=', $_SESSION['user_login'])->first();
-		$tweet->text = filter_var($_POST['text'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$tweet->author = $user->id;
+		$message->description = filter_var($_POST['text'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$message->author = $user->id;
 		$tweet->save();
 		self::viewHome();
+	}
+
+	function viewMessages() {
+		$messages = \mecadoapp\model\Message::orderBy('date_create', 'DESC')->limit(5)->get();
+
+		$v = new \mecadoapp\view\MecadoView($messages);
+		$v ->render('messages');
 	}
 
 	function viewSignUp(){
@@ -73,7 +80,7 @@ class MecadoController extends \mf\control\AbstractController {
 		$list->save();
 		self::viewHome();
 	}
-	
+
 	function viewAffichageList(){
 		$v = new \mecadoapp\view\MecadoView('');		
 		$v ->render('affichage_list');

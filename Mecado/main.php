@@ -42,7 +42,9 @@ $router->addRoute('signup', '/signup/',  '\mecadoapp\control\MecadoController', 
 
 $router->addRoute('logout', '/logout/',  '\mecadoapp\control\MecadoController', 'viewlogout');
 
-$router->addRoute('send', '/send/',  '\mecadoapp\control\MecadoController', 'viewSend');
+$router->addRoute('send', '/send/',  '\mecadoapp\control\MecadoController', 'viewSendMessage');
+
+$router->addRoute('messages', '/messages/',  '\mecadoapp\control\MecadoController', 'viewMessages');
 
 $router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateList');
 
