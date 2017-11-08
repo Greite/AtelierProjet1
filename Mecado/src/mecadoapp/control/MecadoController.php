@@ -54,9 +54,17 @@ class MecadoController extends \mf\control\AbstractController {
 	function viewCreateURL(){
 		
 		$v = new \mecadoapp\view\MecadoView('');		
-		$v ->render('createlist');
+		$v ->render('createURL');
 		
 	}
+
+	function viewaffichagelist(){
+		
+		$v = new \mecadoapp\view\MecadoView('');		
+		$v ->render('affichagelist');
+		
+	}
+
 
 	function viewCheckLogin() {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
