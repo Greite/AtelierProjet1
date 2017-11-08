@@ -101,29 +101,45 @@ EOT;
 		$list = <<<EOT
 			<article>
 				<h2>Créez votre liste : </h2>
-				<form class='forms' action='$this->script_name/createlist/' method='post'>
-					<input name='titre' placeholder='Titre' type='text'>
-					<input name='desc' placeholder='Description' type='text'>
-					<input name='validite' placeholder='Date de validité' type='text'>
-					<input name='autre' placeholder='Autre personne' type='text'>
+				<form action='$this->script_name/check_createlist/' method='post'>
 					<div>
-						<input id='send-button' name='send_button' type='submit' value='Envoyer'>
-					<div>
+						<span>Titre : </span>
+						<input name='titre' placeholder='Titre' type='text'>
+						<span>Description : </span>
+						<input name='desc' placeholder='Description' type='text'>
+						<span>Date de validité : </span>
+						<input name='validite' placeholder='AAAA-MM-JJ' type='text'>
+						<span>Liste destinée à une autre personne : </span>
+						<input name='for_him' type='checkbox' value='1'>
+						<span>Prénom du destinataire : </span>
+						<input name='destinataire' placeholder='Prénom du destinataire' type='text'>
+						<div>
+							<input id='send-button' name='send_button' type='submit' value='Envoyer'>
+						</div>
+					</div>
 				</form>
 			</article>
 
 EOT;
+		return $list;
+}
 
-if (isset($_POST['send_button'])) {
-	$list .= <<<EOT
-	<div class = "info">URL A METTRE</div>
+
+	private function renderAffichageList(){
+
+			$list = <<<EOT
+			<article>
+				<h2>Votre liste </h2>
+				<ul>
+				<li>aaaaaaa</li>
+				<li>bbbbbbb</li>
+				<li>ccccccc</li>
+				</ul>
+			</article>
 
 EOT;
 
-}
-
 return $list;
-
 	}
 
 	private function renderLogin(){
@@ -141,8 +157,29 @@ EOT;
 		return $login;
 	}
 
+	private function renderAjoutItem(){
+
+		$this->app_root;
+
+		$ajoutItem = <<<EOT
+					<article>
+						<form action ='$this->script_name//' method='post'>
+							<input name='nom' placeholder='Nom' type='text'>
+							<input name='description' placeholder='Description' type='textarea'>
+							<input name='img' placeholder='Image' type='file'>
+							<input name='url' placeholder='URL' type='text'>
+							<input name='tarif' placeholder='Tarif' type='text'>
+							<a href="ajoutitem"><img src="$this->app_root/img/plus.jpg" height="20" width="20"><a>
+							<input type="submit" name="Envoyer">
+						</form>
+					</article>
+EOT;
+		return $ajoutItem;
+	}
+
 	private function renderHome(){
 		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+
 		if ($log->logged_in) {
 
 			$home.= <<<EOT
@@ -191,6 +228,14 @@ EOT;
 
 			case 'profile':
 				$main = $this->renderProfile();
+				break;
+
+			case 'ajoutItem':
+				$main =$this->renderAjoutItem();
+				break;
+
+			case 'affichagelist':
+				$main = $this->renderAffichageList();
 				break;
 
 			default:
