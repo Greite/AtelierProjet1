@@ -42,7 +42,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewCreateUser() {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
-		$v->createUser($_POST['username'], $_POST['password'], $_POST['fullname']);
+		$v->createUser($_POST['mail'], $_POST['password'], $_POST['nom'], $_POST['prenom']);
 		self::viewHome();
 	}
 

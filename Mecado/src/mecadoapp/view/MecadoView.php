@@ -51,8 +51,8 @@ EOT;
 			<article>
 				<h2>Créez votre compte</h2>
 				<form action='$this->script_name/check_signup/' method='post'>
-					<input name='fullname' placeholder='Nom' type='text'>
-					<input name='name' placeholder='Prénom' type='text'>
+					<input name='nom' placeholder='Nom' type='text'>
+					<input name='prenom' placeholder='Prénom' type='text'>
 					<input name='mail' placeholder='E-mail' type='text'>
 					<input name='password' placeholder='Mot de passe' type='password'>
 					<button name='signup_button' type='submit'>S'inscrire</button>
@@ -67,7 +67,7 @@ EOT;
 	}
 
 	private function renderCreateList(){
-		$post = <<<EOT
+		$list = <<<EOT
 			<article>
 				<h2>Créez votre liste : </h2>
 				<form class='forms' action='$this->script_name/createlist/' method='post'>
@@ -83,7 +83,7 @@ EOT;
 
 EOT;
 
-		return $post;
+		return $list;
 	}
 
 	private function renderLogin(){
