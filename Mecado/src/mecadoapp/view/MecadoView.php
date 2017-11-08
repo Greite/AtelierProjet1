@@ -72,8 +72,8 @@ EOT;
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
 		$mail = $this->data->mail;
-		$userlists = $this->data->liste()->orderBy('date_limite', 'DESC')->get();
-
+		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
+		print_r($userlists);
 		$profile .= <<<EOT
 				<h2>Profil</h2>	
 				<ul>
@@ -100,16 +100,11 @@ EOT;
 				<h2>Créez votre liste : </h2>
 				<form action='$this->script_name/check_createlist/' method='post'>
 					<div>
-						<span>Titre : </span>
-						<input name='titre' placeholder='Titre' type='text'>
-						<span>Description : </span>
-						<input name='desc' placeholder='Description' type='text'>
-						<span>Date de validité : </span>
-						<input name='validite' placeholder='AAAA-MM-JJ' type='text'>
-						<span>Liste destinée à une autre personne : </span>
-						<input name='for_him' type='checkbox' value='1'>
-						<span>Prénom du destinataire : </span>
-						<input name='destinataire' placeholder='Prénom du destinataire' type='text'>
+						<label>Titre : <input name='titre' placeholder='Titre' type='text'></label>
+						<label>Description : <input name='desc' placeholder='Description' type='text'></label>
+						<label>Date de validité : <input name='validite' placeholder='AAAA-MM-JJ' type='text'></label>
+						<label>Liste destinée à une autre personne : <input name='for_him' type='checkbox' value='1'></label>
+						<label>Prénom du destinataire : <input name='destinataire' placeholder='Prénom du destinataire' type='text'></label>
 						<div>
 							<input id='send-button' name='send_button' type='submit' value='Envoyer'>
 						</div>
