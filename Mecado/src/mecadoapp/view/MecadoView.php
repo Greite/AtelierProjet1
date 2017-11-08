@@ -211,7 +211,7 @@ EOT;
 	$bytes = bin2hex($bytes);
 
 	$list = <<<EOT
-	<div>$bytes</div>
+	<div name ='url'>$this->script_name/affichagelist/?id=$bytes</div>
 EOT;
 return $list;
 

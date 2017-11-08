@@ -3,6 +3,7 @@
 namespace mecadoapp\control;
 
 use mecadoapp\model\Item as Item;
+use mecadoapp\model\Liste as Liste;
 
 class MecadoController extends \mf\control\AbstractController {
 
@@ -53,8 +54,13 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewCreateUrl(){
 
+		
+		$liste = new \mecadoapp\model\Liste();
+		echo $liste->url;
+		$liste->save();
 		$v = new \mecadoapp\view\MecadoView('');		
 		$v ->render('createurl');
+
 
 	}
 
