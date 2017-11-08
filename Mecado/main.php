@@ -50,12 +50,10 @@ $router->addRoute('profile', '/profile/',  '\mecadoapp\control\MecadoController'
 
 $router->addRoute('check_createlist', '/check_createlist/',  '\mecadoapp\control\MecadoController', 'viewCheckCreateList');
 
-$router->addRoute('ajoutitem', '/ajoutitem/',  '\mecadoapp\control\MecadoController', 'viewAjoutItem');
+$router->addRoute('ajout_item', '/ajoutitem/',  '\mecadoapp\control\MecadoController', 'viewAjoutItem');
 
-$router->addRoute('createURL', '/createURL/',  '\mecadoapp\control\MecadoController', 'viewCreateURL');
+$router->addRoute('affichage_list', '/affichagelist/',  '\mecadoapp\control\MecadoController', 'viewAffichageList');
 
-$router->addRoute('affichagelist', '/affichagelist/',  '\mecadoapp\control\MecadoController', 'viewaffichagelist');
-
-$router->addRoute('saveitem','/saveitem/', '\mecadoapp\control\MecadoController','viewSaveItem');
+$router->addRoute('save_item','/saveitem/', '\mecadoapp\control\MecadoController','viewSaveItem');
 
 $router->run();
