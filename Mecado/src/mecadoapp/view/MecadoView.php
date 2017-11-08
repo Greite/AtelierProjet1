@@ -171,8 +171,6 @@ EOT;
 
 	private function renderAjoutItem(){
 
-		echo $this->app_root;
-
 		$ajoutItem = <<<EOT
 					<article>
 						<form action ='$this->script_name/saveitem/' method='post'>
