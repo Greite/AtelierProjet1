@@ -30,6 +30,13 @@ class MecadoController extends \mf\control\AbstractController {
 		self::viewHome();
 	}
 
+	function viewMessages() {
+		$messages = \mecadoapp\model\Message::orderBy('date_create', 'DESC')->limit(5)->get();
+
+		$v = new \mecadoapp\view\MecadoView($messages);
+		$v ->render('messages');
+	}
+
 	function viewSignUp(){
 		$v = new \mecadoapp\view\MecadoView('');
 		$v ->render('signup');

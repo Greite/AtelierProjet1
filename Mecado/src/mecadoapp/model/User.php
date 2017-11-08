@@ -8,7 +8,7 @@ class User extends \Illuminate\Database\Eloquent\Model {
    	protected $primaryKey = 'id';    
    	public    $timestamps = false; 
 
-   	public function liste(){
+   	public function listes(){
    		return $this->hasMany(Liste::class,"id");
    	} 
 

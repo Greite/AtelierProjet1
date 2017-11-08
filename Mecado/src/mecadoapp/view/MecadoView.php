@@ -72,7 +72,7 @@ EOT;
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
 		$mail = $this->data->mail;
-		$userlists = $this->data->liste()->orderBy('date_limite', 'DESC')->get();
+		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
 
 		$profile .= <<<EOT
 				<h2>Profil</h2>	
@@ -191,7 +191,19 @@ EOT;
 
 
 	private function renderMessages() {
-		$messages="<article>";
+		$messages="<article><h2>Derniers messages</h2>";
+		foreach ($this->data as $key => $value) {
+			$author = $_POST['auteur'];
+			$text=$value->description;
+			$date=$value->date_create;
+		   
+			$messages .= <<<EOT
+				<div>
+					<label>$author</label><p>$text</p>
+				</div>
+EOT;
+		}
+		return $messages;
 	}
 	
 	private function renderCheckedCreatedList(){
@@ -269,6 +281,10 @@ EOT;
 
 			case 'affichage_list':
 				$main = $this->renderAffichageList();
+				break;
+
+			case 'messages':
+				$main = $this->renderMessages();
 				break;
 
 			default:
