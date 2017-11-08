@@ -64,6 +64,7 @@ EOT;
 			</article>
 
 EOT;
+	return $signup;
 	}
 
 	private function renderProfile(){
