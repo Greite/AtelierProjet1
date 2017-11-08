@@ -167,6 +167,8 @@ EOT;
 	}
 
 	private function renderAjoutItem(){
+		
+		print_r($this->data);
 
 		$ajoutItem = <<<EOT
 					<article>

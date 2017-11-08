@@ -3,6 +3,7 @@
 namespace mecadoapp\control;
 
 use mecadoapp\model\Item as Item;
+use mecadoapp\view\MecadoView as MecadoView;
 
 class MecadoController extends \mf\control\AbstractController {
 
@@ -12,12 +13,12 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewHome(){
 
-		$v = new \mecadoapp\view\MecadoView('');
+		$v = new MecadoView('');
 		$v ->render('home');  
 	}
 
 	function viewPost(){
-		$v = new \mecadoapp\view\MecadoView('');
+		$v = new MecadoView('');
 		$v ->render('post');  
 	}
 
@@ -33,17 +34,17 @@ class MecadoController extends \mf\control\AbstractController {
 	function viewMessages() {
 		$messages = \mecadoapp\model\Message::orderBy('date_create', 'DESC')->limit(5)->get();
 
-		$v = new \mecadoapp\view\MecadoView($messages);
+		$v = new MecadoView($messages);
 		$v ->render('messages');
 	}
 
 	function viewSignUp(){
-		$v = new \mecadoapp\view\MecadoView('');
+		$v = new MecadoView('');
 		$v ->render('signup');
 	}
 
 	function viewLogin(){
-		$v = new \mecadoapp\view\MecadoView('');
+		$v = new MecadoView('');
 		$v ->render('login');  
 	}
 
@@ -54,13 +55,13 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewCreateList() {
-		$v = new \mecadoapp\view\MecadoView('');		
+		$v = new MecadoView('');		
 		$v ->render('createlist');
 	}
 
 	function viewProfile() {
 		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
-		$v = new \mecadoapp\view\MecadoView($user);		
+		$v = new MecadoView($user);		
 		$v ->render('profile');
 	}
 
@@ -82,7 +83,7 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewAffichageList(){
-		$v = new \mecadoapp\view\MecadoView('');		
+		$v = new MecadoView('');		
 		$v ->render('affichage_list');
 	}
 
@@ -100,13 +101,10 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewAjoutItem(){
 
-		$itm = Item::select()->WHERE("id_liste","=",1)->get();
+		$itm = Item::select()->get();
+		$listeItem = new MecadoView($itm);
 
-		foreach ($itm as $value) {
-			echo $value;
-		}
-
-		$v = new \mecadoapp\view\MecadoView('');
+		$v = new MecadoView('');
 		$v-> render('ajout_item');
 	}
 
