@@ -62,4 +62,9 @@ class MecadoController extends \mf\control\AbstractController {
 		$v->logout();
 		self::viewHome();
 	}
+
+	function viewAjoutItem(){
+		$v = new \mecadoapp\view\MecadoView('');
+		$v-> render('ajoutItem');
+	}
 }

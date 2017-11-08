@@ -101,6 +101,22 @@ EOT;
 		return $login;
 	}
 
+	private function renderAjoutItem(){
+		$ajoutItem = <<<EOT
+					<article>
+						<form action ='$this->script_name//' method='post'>
+							<input name='nom' placeholder='Nom' type='text'>
+							<input name='description' placeholder='Description' type='textarea'>
+							<input name='img' placeholder='Image' type='file'>
+							<input name='url' placeholder='URL' type='text'>
+							<input name='tarif' placeholder='Tarif' type='text'>
+							<input type="submit" name="Envoyer">
+						</form>
+					</article>
+EOT;
+		return $ajoutItem;
+	}
+
 	private function renderHome(){ 
 		if ($log->logged_in) {
 			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
@@ -147,6 +163,10 @@ EOT;
 
 			case 'createlist':
 				$main = $this->renderCreateList();
+				break;
+
+			case 'ajoutItem':
+				$main =$this->renderAjoutItem();
 				break;
 
 			default:
