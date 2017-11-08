@@ -83,11 +83,9 @@ EOT;
 			</article>
 
 EOT;
+		return $list;
 }
 
-return $list;
-
-	}
 
 	private function renderLogin(){
 		$login = <<<EOT
@@ -105,6 +103,9 @@ EOT;
 	}
 
 	private function renderAjoutItem(){
+
+		$this->app_root;
+
 		$ajoutItem = <<<EOT
 					<article>
 						<form action ='$this->script_name//' method='post'>
@@ -113,6 +114,7 @@ EOT;
 							<input name='img' placeholder='Image' type='file'>
 							<input name='url' placeholder='URL' type='text'>
 							<input name='tarif' placeholder='Tarif' type='text'>
+							<a href="ajoutitem"><img src="$this->app_root/img/plus.jpg" height="20" width="20"><a>
 							<input type="submit" name="Envoyer">
 						</form>
 					</article>
