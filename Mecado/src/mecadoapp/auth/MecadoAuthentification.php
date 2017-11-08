@@ -30,15 +30,16 @@ class MecadoAuthentification extends \mf\auth\Authentification {
 			}
 	}
 
-	public function login($username, $password){
+	public function login($mail, $password){
 
-		$user = \mecadoapp\model\User::where('username', '=', $username)->first();
-		if (is_null($user->username)) {
+		$user = \mecadoapp\model\User::where('mail', '=', $mail)->first();
+		
+		if (is_null($user->mail)) {
 			throw new \mf\auth\exception\AuthentificationException();	
 		}
 		else {
-			if (self::verifyPassword($password, $user->password)) {
-				self::updateSession($username, self::ACCESS_LEVEL_USER);
+			if (self::verifyPassword($password, $user->mdp)) {
+				self::updateSession($mail, self::ACCESS_LEVEL_USER);
 			}
 			else {
 				throw new \mf\auth\exception\AuthentificationException();
