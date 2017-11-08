@@ -60,6 +60,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewProfile() {
 		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
+		print_r($user);
 		$v = new \mecadoapp\view\MecadoView($user);		
 		$v ->render('profile');
 	}

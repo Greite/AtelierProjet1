@@ -82,6 +82,8 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
+
+		//print_r($userlists);
 		foreach ($userlists as $key => $value) {
 			$urllist = $value->url;
 			$namelist = $value->titre;
