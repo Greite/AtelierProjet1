@@ -82,8 +82,9 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
+		print_r($userlists);
 		foreach ($userlists as $key => $value) {
-			$urllist = $value->url;
+			$urllist = $this->script_name."/affichagelist/?id=".$value->url;
 			$namelist = $value->titre;
 			$profile .= <<<EOT
 						<li><a href='$urllist'>$namelist</a></li>							
@@ -121,8 +122,7 @@ EOT;
 			}else{
 				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
 				if($l!=NULL){
-					$i=$l->items()->get();			
-					var_dump('marche');
+					$i=$l->items()->get();
 					$liste= <<<EOT
 					<article>
 						<div>$l->titre</div><br>
@@ -141,9 +141,6 @@ EOT;
 						<div></div>
 EOT;
 					}
-					
-
-
 return $liste;
 				}else{
 					var_dump('marchepas');
