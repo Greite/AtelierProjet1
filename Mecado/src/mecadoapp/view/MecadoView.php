@@ -16,13 +16,14 @@ class MecadoView extends \mf\view\AbstractView {
 		$linkhome=$this->script_name."/home/";
 		$linklogin=$this->script_name."/login/";
 		$linksignup=$this->script_name."/signup/";
+		$linklogout=$this->script_name."/logout/";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
 				<nav class='navbar'>
 				<ul>
 					<li><a href='$linkhome'>Accueil</a></li>
-					<li><a href='#'>Se déconnecter</a></li>
+					<li><a href='$linklogout'>Se déconnecter</a></li>
 					<li><a href='#'>Mon Profil</a></li>
 				</ul>
 				</nav>
@@ -83,7 +84,16 @@ EOT;
 
 EOT;
 
-		return $list;
+if (isset($_POST['send_button'])) {
+	$list .= <<<EOT
+	<div class = "info">URL A METTRE</div>
+
+EOT;
+
+}
+
+return $list;
+
 	}
 
 	private function renderLogin(){
@@ -101,9 +111,10 @@ EOT;
 		return $login;
 	}
 
-	private function renderHome(){ 
+	private function renderHome(){
+		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 		if ($log->logged_in) {
-			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+
 			$home.= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
@@ -111,7 +122,6 @@ EOT;
 				</div>
 EOT;
 		}else{
-			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 			$home .= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
