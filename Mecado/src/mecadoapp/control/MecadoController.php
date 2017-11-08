@@ -49,12 +49,12 @@ class MecadoController extends \mf\control\AbstractController {
 		$v ->render('createlist');
 	}
 
-<<<<<<< HEAD
 	function viewProfile() {
 		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
 		$v = new \mecadoapp\view\MecadoView($user);		
 		$v ->render('profile');
-=======
+	}
+
 	function viewCheckCreateList() {
 		$list = new \mecadoapp\model\Liste();
 		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
@@ -70,23 +70,18 @@ class MecadoController extends \mf\control\AbstractController {
 		$list->id_user = $user->id;
 		$list->save();
 		self::viewHome();
->>>>>>> 7db2cbd3d6b8abb9ecd8482e5698ee24daf91936
 	}
 
 	function viewCreateURL(){
 		$v = new \mecadoapp\view\MecadoView('');		
-<<<<<<< HEAD
 		$v ->render('createlist');	
-=======
 		$v ->render('createURL');
 	}
 
 	function viewaffichagelist(){
 		$v = new \mecadoapp\view\MecadoView('');		
 		$v ->render('affichagelist');
->>>>>>> 7db2cbd3d6b8abb9ecd8482e5698ee24daf91936
 	}
-
 
 	function viewCheckLogin() {
 		$v = new \mecadoapp\auth\MecadoAuthentification();

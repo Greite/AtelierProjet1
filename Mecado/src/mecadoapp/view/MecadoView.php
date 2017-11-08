@@ -74,7 +74,7 @@ EOT;
 		$mail = $this->data->mail;
 		$userlists = $this->data->liste()->orderBy('date_limite', 'DESC')->get();
 
-		$profile = <<<EOT		
+		$profile = <<<EOT
 				<h2>Profil</h2>	
 				<ul>
 					<li>Nom : $nom</li>
