@@ -12,7 +12,7 @@ class MecadoAuthentification extends \mf\auth\Authentification {
 		parent::__construct();
 	}
 
-	public function createUser($mail, $pass, $nom, $prenom $level=self::ACCESS_LEVEL_USER) {
+	public function createUser($mail, $pass, $nom, $prenom, $level=self::ACCESS_LEVEL_USER) {
 
 		$name = \mecadoapp\model\User::where('mail', '=', $mail)->first();
 
