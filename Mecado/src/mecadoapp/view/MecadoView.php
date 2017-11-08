@@ -186,13 +186,12 @@ EOT;
 				$main = $this->renderCreateList();
 				break;
 
-<<<<<<< HEAD
 			case 'ajoutItem':
 				$main =$this->renderAjoutItem();
-=======
+
 			case 'affichagelist':
 				$main = $this->renderAffichageList();
->>>>>>> Julien
+
 				break;
 
 			default:
