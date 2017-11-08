@@ -20,7 +20,7 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewSend() {
-		$tweet = new \mecadoapp\model\Tweet();
+		$tweet = new \mecadoapp\model\Message();
 		$user = \mecadoapp\model\User::where('username', '=', $_SESSION['user_login'])->first();
 		$tweet->text = filter_var($_POST['text'],FILTER_SANITIZE_SPECIAL_CHARS);
 		$tweet->author = $user->id;
@@ -66,6 +66,17 @@ class MecadoController extends \mf\control\AbstractController {
 		self::viewHome();
 	}
 
+	function viewCreateURL(){
+		$v = new \mecadoapp\view\MecadoView('');		
+		$v ->render('createURL');
+	}
+
+	function viewaffichagelist(){
+		$v = new \mecadoapp\view\MecadoView('');		
+		$v ->render('affichagelist');
+	}
+
+
 	function viewCheckLogin() {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
 		$v->login($_POST['mail'], $_POST['password']);
@@ -76,5 +87,10 @@ class MecadoController extends \mf\control\AbstractController {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
 		$v->logout();
 		self::viewHome();
+	}
+
+	function viewAjoutItem(){
+		$v = new \mecadoapp\view\MecadoView('');
+		$v-> render('ajoutItem');
 	}
 }

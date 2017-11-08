@@ -92,6 +92,24 @@ EOT;
 
 EOT;
 		return $list;
+}
+
+
+	private function renderAffichageList(){
+
+			$list = <<<EOT
+			<article>
+				<h2>Votre liste </h2>
+				<ul>
+				<li>aaaaaaa</li>
+				<li>bbbbbbb</li>
+				<li>ccccccc</li>
+				</ul>
+			</article>
+
+EOT;
+
+return $list;
 	}
 
 	private function renderLogin(){
@@ -109,8 +127,29 @@ EOT;
 		return $login;
 	}
 
+	private function renderAjoutItem(){
+
+		$this->app_root;
+
+		$ajoutItem = <<<EOT
+					<article>
+						<form action ='$this->script_name//' method='post'>
+							<input name='nom' placeholder='Nom' type='text'>
+							<input name='description' placeholder='Description' type='textarea'>
+							<input name='img' placeholder='Image' type='file'>
+							<input name='url' placeholder='URL' type='text'>
+							<input name='tarif' placeholder='Tarif' type='text'>
+							<a href="ajoutitem"><img src="$this->app_root/img/plus.jpg" height="20" width="20"><a>
+							<input type="submit" name="Envoyer">
+						</form>
+					</article>
+EOT;
+		return $ajoutItem;
+	}
+
 	private function renderHome(){
 		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+
 		if ($log->logged_in) {
 
 			$home.= <<<EOT
@@ -155,6 +194,14 @@ EOT;
 
 			case 'createlist':
 				$main = $this->renderCreateList();
+				break;
+
+			case 'ajoutItem':
+				$main =$this->renderAjoutItem();
+
+			case 'affichagelist':
+				$main = $this->renderAffichageList();
+
 				break;
 
 			default:

@@ -48,4 +48,10 @@ $router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoContr
 
 $router->addRoute('check_createlist', '/check_createlist/',  '\mecadoapp\control\MecadoController', 'viewCheckCreateList');
 
+$router->addRoute('AjoutItem', '/ajoutitem/',  '\mecadoapp\control\MecadoController', 'viewAjoutItem');
+
+$router->addRoute('createURL', '/createURL/',  '\mecadoapp\control\MecadoController', 'viewCreateURL');
+
+$router->addRoute('affichagelist', '/affichagelist/',  '\mecadoapp\control\MecadoController', 'viewaffichagelist');
+
 $router->run();
