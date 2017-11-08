@@ -149,13 +149,14 @@ EOT;
 
 	private function renderHome(){
 		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
-
+		$log = new \mecadoapp\auth\MecadoAuthentification();
+		$linkcreatelist = $this->script_name."/createlist/";
 		if ($log->logged_in) {
 
 			$home.= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
-					<p><a href='#'>Créez votre liste de cadeau</a></p>
+					<p><a href='$linkcreatelist'>Créez votre liste de cadeau</a></p>
 				</div>
 EOT;
 		}else{
