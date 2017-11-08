@@ -68,13 +68,12 @@ EOT;
 
 	private function renderProfile(){
 		$profile = "<article>";
-
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
 		$mail = $this->data->mail;
 		$userlists = $this->data->liste()->orderBy('date_limite', 'DESC')->get();
 
-		$profile = <<<EOT
+		$profile .= <<<EOT
 				<h2>Profil</h2>	
 				<ul>
 					<li>Nom : $nom</li>
@@ -86,14 +85,11 @@ EOT;
 		foreach ($userlists as $key => $value) {
 			$urllist = $value->url;
 			$namelist = $value->titre;
-			$profile = <<<EOT
+			$profile .= <<<EOT
 						<li><a href='$urllist'>$namelist</a></li>							
 EOT;
 		}
-
-		
-		
-		$profile = "</ul></ul></article>";
+		$profile .= "</ul></ul></article>";
 		return $profile;
 	}
 
