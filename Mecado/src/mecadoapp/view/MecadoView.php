@@ -83,9 +83,27 @@ EOT;
 			</article>
 
 EOT;
+
 		return $list;
 }
 
+
+	private function renderAffichageList(){
+
+			$list = <<<EOT
+			<article>
+				<h2>Votre liste </h2>
+				<ul>
+				<li>aaaaaaa</li>
+				<li>bbbbbbb</li>
+				<li>ccccccc</li>
+				</ul>
+			</article>
+
+EOT;
+
+return $list;
+	}
 
 	private function renderLogin(){
 		$login = <<<EOT
@@ -173,6 +191,10 @@ EOT;
 
 			case 'ajoutItem':
 				$main =$this->renderAjoutItem();
+
+			case 'affichagelist':
+				$main = $this->renderAffichageList();
+
 				break;
 
 			default:
