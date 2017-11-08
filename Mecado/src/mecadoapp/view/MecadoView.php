@@ -64,6 +64,7 @@ EOT;
 			</article>
 
 EOT;
+	return $signup;
 	}
 
 	private function renderProfile(){
@@ -175,10 +176,10 @@ EOT;
 
 		$ajoutItem = <<<EOT
 					<article>
-						<form action ='$this->script_name//' method='post'>
+						<form action ='$this->script_name/saveitem/' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
-							<input name='img' placeholder='Image' type='text'>
+							<input name='image' placeholder='Image' type='text'>
 							<input name='url' placeholder='URL' type='text'>
 							<input name='tarif' placeholder='Tarif' type='text'>
 							<a href="ajoutitem"><img src="$this->app_root/img/plus.jpg" height="20" width="20"><a>
