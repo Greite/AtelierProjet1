@@ -21,7 +21,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewSend() {
 
-		$tweet = new \mecadoapp\model\Tweet();
+		$tweet = new \mecadoapp\model\Message();
 		$user = \mecadoapp\model\User::where('username', '=', $_SESSION['user_login'])->first();
 		$tweet->text = filter_var($_POST['text'],FILTER_SANITIZE_SPECIAL_CHARS);
 		$tweet->author = $user->id;
