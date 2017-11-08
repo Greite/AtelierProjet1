@@ -71,16 +71,10 @@ class MecadoController extends \mf\control\AbstractController {
 		$list->save();
 		self::viewHome();
 	}
-
-	function viewCreateURL(){
+	
+	function viewAffichageList(){
 		$v = new \mecadoapp\view\MecadoView('');		
-		$v ->render('createlist');	
-		$v ->render('createURL');
-	}
-
-	function viewaffichagelist(){
-		$v = new \mecadoapp\view\MecadoView('');		
-		$v ->render('affichagelist');
+		$v ->render('affichage_list');
 	}
 
 	function viewCheckLogin() {
@@ -97,6 +91,6 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewAjoutItem(){
 		$v = new \mecadoapp\view\MecadoView('');
-		$v-> render('ajoutItem');
+		$v-> render('ajout_item');
 	}
 }

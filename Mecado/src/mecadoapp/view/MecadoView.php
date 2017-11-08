@@ -173,6 +173,21 @@ EOT;
 		return $ajoutItem;
 	}
 
+	private function renderCheckedCreatedList(){
+			$list = <<<EOT
+			<article>
+				<h2></h2>
+				<ul>
+				<li>aaaaaaa</li>
+				<li>bbbbbbb</li>
+				<li>ccccccc</li>
+				</ul>
+			</article>
+
+EOT;
+		return $list;
+	}
+
 	private function renderHome(){
 		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
@@ -227,11 +242,11 @@ EOT;
 				$main = $this->renderProfile();
 				break;
 
-			case 'ajoutItem':
+			case 'ajout_item':
 				$main =$this->renderAjoutItem();
 				break;
 
-			case 'affichagelist':
+			case 'affichage_list':
 				$main = $this->renderAffichageList();
 				break;
 
