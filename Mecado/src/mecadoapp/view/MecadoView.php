@@ -101,9 +101,10 @@ EOT;
 		return $login;
 	}
 
-	private function renderHome(){ 
+	private function renderHome(){
+		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 		if ($log->logged_in) {
-			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+
 			$home.= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
@@ -111,7 +112,6 @@ EOT;
 				</div>
 EOT;
 		}else{
-			$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 			$home .= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
