@@ -53,8 +53,9 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewCheckLogin() {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
-		$v->login($_POST['username'], $_POST['password']);
-		self::viewFollowing();
+
+		$v->login($_POST['mail'], $_POST['password']);
+		self::viewHome();
 	}
 
 	function viewLogout() {
