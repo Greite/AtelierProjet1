@@ -16,13 +16,14 @@ class MecadoView extends \mf\view\AbstractView {
 		$linkhome=$this->script_name."/home/";
 		$linklogin=$this->script_name."/login/";
 		$linksignup=$this->script_name."/signup/";
+		$linklogout=$this->script_name."/logout/";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
 				<nav class='navbar'>
 				<ul>
 					<li><a href='$linkhome'>Accueil</a></li>
-					<li><a href='#'>Se déconnecter</a></li>
+					<li><a href='$linklogout'>Se déconnecter</a></li>
 					<li><a href='#'>Mon Profil</a></li>
 				</ul>
 				</nav>
