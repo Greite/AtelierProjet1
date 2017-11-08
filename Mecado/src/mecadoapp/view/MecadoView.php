@@ -204,6 +204,18 @@ EOT;
 		return $list;
 	}
 
+	private function renderCreateUrl(){
+
+	$bytes = random_bytes(5);
+	$bytes = bin2hex($bytes);
+
+	$list = <<<EOT
+	<div>$bytes</div>
+EOT;
+return $list;
+
+	}
+
 	private function renderHome(){
 		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
@@ -252,6 +264,10 @@ EOT;
 
 			case 'createlist':
 				$main = $this->renderCreateList();
+				break;
+
+			case 'createurl':
+				$main = $this->renderCreateUrl();
 				break;
 
 			case 'profile':
