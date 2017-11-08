@@ -2,6 +2,8 @@
 
 namespace mecadoapp\control;
 
+use mecadoapp\model\Item as Item;
+
 class MecadoController extends \mf\control\AbstractController {
 
 	function __construct(){
@@ -98,5 +100,20 @@ class MecadoController extends \mf\control\AbstractController {
 	function viewAjoutItem(){
 		$v = new \mecadoapp\view\MecadoView('');
 		$v-> render('ajoutItem');
+	}
+
+	function viewSaveItem(){
+		//enregistre l'item dans la bdd et renvoie sur la meme page /ajoutitem/
+		
+		$cadeau = new Item;
+		$cadeau->nom = $_POST['nom'];
+		$cadeau->description = $_POST['description'];
+		$cadeau->image = $_POST['image'];
+		$cadeau->url = $_POST['url'];
+		$cadeau->tarif = $_POST['tarif'];
+		$cadeau->save();
+
+		self::viewAjoutItem();
+
 	}
 }
