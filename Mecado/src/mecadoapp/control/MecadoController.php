@@ -2,6 +2,8 @@
 
 namespace mecadoapp\control;
 
+use mecadoapp\model\Item as Item;
+
 class MecadoController extends \mf\control\AbstractController {
 
 	function __construct(){
@@ -20,13 +22,11 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewSend() {
-
-		$tweet = new \mecadoapp\model\Tweet();
+		$tweet = new \mecadoapp\model\Message();
 		$user = \mecadoapp\model\User::where('username', '=', $_SESSION['user_login'])->first();
 		$tweet->text = filter_var($_POST['text'],FILTER_SANITIZE_SPECIAL_CHARS);
 		$tweet->author = $user->id;
 		$tweet->save();
-			
 		self::viewHome();
 	}
 
@@ -51,9 +51,36 @@ class MecadoController extends \mf\control\AbstractController {
 		$v ->render('createlist');
 	}
 
+	function viewProfile() {
+		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
+		$v = new \mecadoapp\view\MecadoView($user);		
+		$v ->render('profile');
+	}
+
+	function viewCheckCreateList() {
+		$list = new \mecadoapp\model\Liste();
+		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
+		$list->titre = filter_var($_POST['titre'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$list->description = filter_var($_POST['desc'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$list->date_limite = $_POST['validite'];
+		$list->destinataire = filter_var($_POST['destinataire'],FILTER_SANITIZE_SPECIAL_CHARS);
+		if ($_POST['for_him']) {
+			$list->for_him = $_POST['for_him'];
+		}else{
+			$list->for_him = 0;
+		}
+		$list->id_user = $user->id;
+		$list->save();
+		self::viewHome();
+	}
+	
+	function viewAffichageList(){
+		$v = new \mecadoapp\view\MecadoView('');		
+		$v ->render('affichage_list');
+	}
+
 	function viewCheckLogin() {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
-
 		$v->login($_POST['mail'], $_POST['password']);
 		self::viewHome();
 	}
@@ -62,5 +89,25 @@ class MecadoController extends \mf\control\AbstractController {
 		$v = new \mecadoapp\auth\MecadoAuthentification();
 		$v->logout();
 		self::viewHome();
+	}
+
+	function viewAjoutItem(){
+		$v = new \mecadoapp\view\MecadoView('');
+		$v-> render('ajout_item');
+	}
+
+	function viewSaveItem(){
+		//enregistre l'item dans la bdd et renvoie sur la meme page /ajoutitem/
+		
+		$cadeau = new Item;
+		$cadeau->nom = $_POST['nom'];
+		$cadeau->description = $_POST['description'];
+		$cadeau->image = $_POST['image'];
+		$cadeau->url = $_POST['url'];
+		$cadeau->tarif = $_POST['tarif'];
+		$cadeau->save();
+
+		self::viewAjoutItem();
+
 	}
 }

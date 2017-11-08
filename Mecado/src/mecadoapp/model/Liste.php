@@ -6,7 +6,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model {
 
     protected $table      = 'liste'; 
     protected $primaryKey = 'id';   
-    public    $timestamps = true; 
+    public    $timestamps = false; 
 
     public function messages(){
     	return $this->hasMany(Message::class,'id_List');
@@ -17,7 +17,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model {
     }
 
     public function items(){
-    	return $this->belongsToMany(Liste::class,'contenir','id','id_item');
+    	return $this->hasMany(Item::class,'id_list');
     }
        
 }
