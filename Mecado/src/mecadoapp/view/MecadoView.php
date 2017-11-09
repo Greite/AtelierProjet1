@@ -71,9 +71,7 @@ EOT;
 		$profile = "<article>";
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
-		$mail = $this->data->mail;
-		$userlists = $this->data->liste()->orderBy('date_limite', 'DESC')->get();
-
+		$mail = $this->data->mail;	
 		$profile .= <<<EOT
 				<h2>Profil</h2>	
 				<ul>
@@ -83,8 +81,9 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
+		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
 		foreach ($userlists as $key => $value) {
-			$urllist = $value->url;
+			$urllist = $this->script_name."/affichagelist/?id=".$value->url;
 			$namelist = $value->titre;
 			$profile .= <<<EOT
 						<li><a href='$urllist'>$namelist</a></li>							
@@ -100,16 +99,11 @@ EOT;
 				<h2>Créez votre liste : </h2>
 				<form action='$this->script_name/check_createlist/' method='post'>
 					<div>
-						<span>Titre : </span>
-						<input name='titre' placeholder='Titre' type='text'>
-						<span>Description : </span>
-						<input name='desc' placeholder='Description' type='text'>
-						<span>Date de validité : </span>
-						<input name='validite' placeholder='AAAA-MM-JJ' type='text'>
-						<span>Liste destinée à une autre personne : </span>
-						<input name='for_him' type='checkbox' value='1'>
-						<span>Prénom du destinataire : </span>
-						<input name='destinataire' placeholder='Prénom du destinataire' type='text'>
+						<label>Titre : <input name='titre' placeholder='Titre' type='text'></label>
+						<label>Description : <input name='desc' placeholder='Description' type='text'></label>
+						<label>Date de validité : <input name='validite' placeholder='AAAA-MM-JJ' type='text'></label>
+						<label>Liste destinée à une autre personne : <input name='for_him' type='checkbox' value='1'></label>
+						<label>Prénom du destinataire : <input name='destinataire' placeholder='Prénom du destinataire' type='text'></label>
 						<div>
 							<input id='send-button' name='send_button' type='submit' value='Envoyer'>
 						</div>
@@ -119,8 +113,7 @@ EOT;
 
 EOT;
 		return $list;
-}
-
+	}
 
 	private function renderAffichageList(){
 			if($_GET['nom']==NULL||$_GET['id']==NULL){
@@ -128,9 +121,7 @@ EOT;
 			}else{
 				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
 				if($l!=NULL){
-					//$i=\mecadoapp\model\Liste;
-					$i=$l->items()->get();			
-					var_dump('marche');
+					$i=$l->items()->get();
 					$liste= <<<EOT
 					<article>
 						<div>$l->titre</div><br>
@@ -141,13 +132,14 @@ EOT;
 EOT;
 					foreach($i as $d){
 						$liste.= <<<EOT
-						<div></div>
+						<div>$d->nom</div>
+						<div>$d->description</div>
 						<div>$d->tarif</div>
+						<div><a href='$d->url'>Petit lien au calme</a></div>
+						<div><img src='$d->image'></div>
+						<div></div>
 EOT;
 					}
-					
-
-
 return $liste;
 				}else{
 					var_dump('marchepas');
@@ -172,8 +164,6 @@ EOT;
 
 	private function renderAjoutItem(){
 
-		echo $this->app_root;
-
 		$ajoutItem = <<<EOT
 					<article>
 						<form action ='$this->script_name/saveitem/' method='post'>
@@ -190,6 +180,23 @@ EOT;
 		return $ajoutItem;
 	}
 
+
+	private function renderMessages() {
+		$messages="<article><h2>Derniers messages</h2>";
+		foreach ($this->data as $key => $value) {
+			$author = $_POST['auteur'];
+			$text=$value->description;
+			$date=$value->date_create;
+		   
+			$messages .= <<<EOT
+				<div>
+					<label>$author</label><p>$text</p>
+				</div>
+EOT;
+		}
+		return $messages;
+	}
+	
 	private function renderCheckedCreatedList(){
 			$list = <<<EOT
 			<article>
@@ -281,6 +288,10 @@ EOT;
 
 			case 'affichage_list':
 				$main = $this->renderAffichageList();
+				break;
+
+			case 'messages':
+				$main = $this->renderMessages();
 				break;
 
 			default:

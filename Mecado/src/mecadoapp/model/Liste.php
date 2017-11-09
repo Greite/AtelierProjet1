@@ -17,7 +17,7 @@ class Liste extends \Illuminate\Database\Eloquent\Model {
     }
 
     public function items(){
-    	return $this->belongsToMany(Item::class,'contenir','id','id_item');
+    	return $this->hasMany(Item::class,'id_liste');
     }
        
 }

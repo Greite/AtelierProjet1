@@ -8,8 +8,8 @@ class Item extends \Illuminate\Database\Eloquent\Model {
     protected $primaryKey = 'id';     
     public    $timestamps = false;
        
-    public function listes(){
-    	return $this->belongsToMany(Liste::class,'contenir','id_item','id');
+    public function liste(){
+    	return $this->belongsTo(Liste::class,'id_liste');
     }
 
 }
