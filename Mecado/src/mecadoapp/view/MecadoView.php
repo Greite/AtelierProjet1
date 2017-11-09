@@ -181,8 +181,6 @@ EOT;
 						<label>Destinataire : <p>$list->destinataire</p></label>
 						<label>Date limite : <p>$list->date_limite</p></label>
 						<label>Description : <p>$list->description</p></label>
-						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" placeholder="Ajouter un item"></a>
-						</article>
 
 EOT;
 						if ($log->logged_in && ($list->id_user == $user->id)) {
