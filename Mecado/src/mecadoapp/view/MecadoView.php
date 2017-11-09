@@ -83,7 +83,7 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
-		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
+		$userlists = $this->data->listes()->orderBy('date_limite', 'ASC')->get();
 		foreach ($userlists as $key => $value) {
 			$urllist = $this->script_name."/affichagelist/?id=".$value->url;
 			$namelist = $value->titre;
@@ -121,8 +121,10 @@ EOT;
 			if(is_null($_GET['id'])){
 				throw new \Exception("URL invalide");
 			}else{
+
 				$l=\mecadoapp\model\Liste::where('url','=', $_GET['id'])->first();
 				if(!is_null($l)){
+					$_SESSION['liste']=$l->id;
 					$i=$l->items()->get();
 					$liste= <<<EOT
 					<article>
@@ -150,12 +152,13 @@ EOT;
 EOT;
 						if($d->reserver==0){
 							$liste.= <<<EOT
-							<form action='' method='post'>
+							<form action='$this->script_name/reserve/' method='post'>
 								<label for="reserviste">Votre nom : </label>
-								<input type="text" id="reserviste" >
+								<input type="text" id="reserviste" name="reserviste">
 								<label for="message">Laisser lui un message : </label>
-								<input type="text" id="message" >
-								<input type="submit" id="send" value="Réserver"
+								<input type="text" id="message" name="message">
+								<input type="hidden" id="id" name="id" value="$d->id">
+								<input type="submit" id="send" value="Réserver">
 							</form>
 EOT;
 						}else{
@@ -236,6 +239,18 @@ EOT;
 		return $list;
 	}
 
+	private function renderCreateUrl(){
+
+	$bytes = random_bytes(5);
+	$bytes = bin2hex($bytes);
+
+	$list = <<<EOT
+	<div name ='url'>$this->script_name/affichagelist/?id=$bytes</div>
+EOT;
+return $list;
+
+	}
+
 	private function renderHome(){
 		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
@@ -284,6 +299,10 @@ EOT;
 
 			case 'createlist':
 				$main = $this->renderCreateList();
+				break;
+
+			case 'createurl':
+				$main = $this->renderCreateUrl();
 				break;
 
 			case 'profile':

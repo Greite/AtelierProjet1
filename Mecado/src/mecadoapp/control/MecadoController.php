@@ -3,6 +3,7 @@
 namespace mecadoapp\control;
 
 use mecadoapp\model\Item as Item;
+use mecadoapp\model\Liste as Liste;
 
 class MecadoController extends \mf\control\AbstractController {
 
@@ -56,6 +57,18 @@ class MecadoController extends \mf\control\AbstractController {
 	function viewCreateList() {
 		$v = new \mecadoapp\view\MecadoView('');		
 		$v ->render('createlist');
+	}
+
+	function viewCreateUrl(){
+
+		
+		$liste = new \mecadoapp\model\Liste();
+		echo $liste->url;
+		$liste->save();
+		$v = new \mecadoapp\view\MecadoView('');		
+		$v ->render('createurl');
+
+
 	}
 
 	function viewProfile() {
@@ -117,5 +130,21 @@ class MecadoController extends \mf\control\AbstractController {
 
 		self::viewAjoutItem();
 
+	}
+
+	function viewReserve(){
+		Item::where('id', $_POST['id'])
+			->update(['reserviste' => $_POST['reserviste'],'reserver' => 1]);
+		
+		if($_POST['message']!=NULL){
+			$m = new \mecadoapp\model\Message;
+			$m->auteur = $_POST['reserviste'];
+			$m->description = $_POST['message'];
+			$m->type = 0;
+			$m->date_create = date("Y/m/d");
+			$m->id_Liste = $_SESSION['liste'];
+			$m->save();
+		}
+		self::viewHome();
 	}
 }
