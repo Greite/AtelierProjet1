@@ -132,7 +132,7 @@ class MecadoController extends \mf\control\AbstractController {
 		$list = \mecadoapp\model\Liste::where("url","=",$this->request->get["id"])->first();
 		$cadeau = new Item;
 
-		if(empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['url'])){
+		if(empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['tarif'])){
 			echo "tamer";
 		}
 

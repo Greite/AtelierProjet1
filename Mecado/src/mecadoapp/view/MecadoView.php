@@ -134,6 +134,9 @@ EOT;
 						<label>Destinataire : <span>$l->destinataire</span></label><br>
 						<label>Date limite : <span>$l->date_limite</span></label><br>
 						<label>Description : <span>$l->description</span></label>
+EOT;
+
+					$liste .= <<<EOT
 						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item"></a>
 					</article>
 EOT;
@@ -193,26 +196,9 @@ EOT;
 	}
 
 	private function renderAjoutItem(){
-		$url = $_GET['id'];
-		$ajoutItem = "<article>";
+		$url = $_GET['id'];					
 
-		if(empty($this->data)){
-			$ajoutItem .="<p> Il n'y a pas encore de cadeau !<p>";
-		}
-
-		else{
-			foreach($this->data as $value){
-						$ajoutItem .="
-						<div>$value->nom</div>
-						<div>$value->description</div>
-						<div>$value->tarif</div>
-						<div><a href='$value->url'>Petit lien au calme</a></div>
-						<div><img src='$value->image'></div>
-						<div></div>";
-			}
-		}			
-
-		$ajoutItem .= <<<EOT
+		$ajoutItem = <<<EOT
 					
 						<form action ='$this->script_name/saveitem/?id=$url' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
