@@ -26,7 +26,7 @@ MecadoView::setAppTitle('Mecado');
 
 $router = new Router();
 
-$router->addRoute('maison', '/home/', '\mecadoapp\control\MecadoController', 'viewHome');
+$router->addRoute('maison', '/home/', '\mecadoapp\control\MecadoController', 'viewHome', \mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_NONE);
 
 $router->addRoute('default', 'DEFAULT_ROUTE',  '\mecadoapp\control\MecadoController', 'viewHome');
 
@@ -46,7 +46,7 @@ $router->addRoute('send', '/send/',  '\mecadoapp\control\MecadoController', 'vie
 
 $router->addRoute('messages', '/messages/',  '\mecadoapp\control\MecadoController', 'viewMessages');
 
-$router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateList');
+$router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateList', \mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_USER);
 
 $router->addRoute('profile', '/profile/',  '\mecadoapp\control\MecadoController', 'viewProfile');
 

@@ -81,7 +81,7 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
-		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
+		$userlists = $this->data->listes()->orderBy('date_limite', 'ASC')->get();
 		foreach ($userlists as $key => $value) {
 			$urllist = $this->script_name."/affichagelist/?id=".$value->url;
 			$namelist = $value->titre;

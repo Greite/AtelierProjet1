@@ -7,17 +7,16 @@ namespace mf\router;
 class Router extends AbstractRouter 
 {
 
-	//Rajouter la vérif d'access level
-	
-	function addRoute($name, $url, $ctrl, $mth) {
-		self::$routes[$url]=[ $ctrl, $mth];
-		self::$routes[$name]=[ $ctrl, $mth];
+	function addRoute($name, $url, $ctrl, $mth, $level) {
+		self::$routes[$url]=[ $ctrl, $mth, $level];
+		self::$routes[$name]=[ $ctrl, $mth, $level];
 	}
 
 	function run() {
+		$auth=new \mecadoapp\auth\MecadoAuthentification();
 		if (!is_null($this->http_req->path_info)) {
 			foreach (self::$routes as $key => $value) {
-				if ($key == $this->http_req->path_info) {
+				if ($key == $this->http_req->path_info && $auth->checkAccessRight($value[2])) {
 					$obj = new $value[0]();
 					$fonc=$value[1];
 					$obj->$fonc();
