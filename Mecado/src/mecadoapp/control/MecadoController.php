@@ -64,18 +64,6 @@ class MecadoController extends \mf\control\AbstractController {
 		$v ->render('createlist');
 	}
 
-	function viewCreateUrl(){
-
-		
-		$liste = new \mecadoapp\model\Liste();
-		echo $liste->url;
-		$liste->save();
-		$v = new \mecadoapp\view\MecadoView('');		
-		$v ->render('createurl');
-
-
-	}
-
 	function viewProfile() {
 		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
 		$v = new MecadoView($user);		

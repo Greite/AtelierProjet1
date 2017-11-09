@@ -134,18 +134,16 @@ EOT;
 						<label>Destinataire : <span>$l->destinataire</span></label><br>
 						<label>Date limite : <span>$l->date_limite</span></label><br>
 						<label>Description : <span>$l->description</span></label>
-EOT;
 
-					$liste .= <<<EOT
-						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item"></a>
+						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" placeholder="Ajouter un item"></a>
 					</article>
 EOT;
 					foreach($i as $d){
 						$liste.= <<<EOT
 						<article>
-							<div>$d->nom</div>
-							<div>$d->description</div>
-							<div>$d->tarif</div>
+							<h2>$d->nom</h2>
+							<span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
+							<label>Description : <p>$d->description</p></label>
 EOT;
 						if (!is_null($d->url)) {
 							$liste.= <<<EOT
@@ -243,18 +241,6 @@ EOT;
 
 EOT;
 		return $list;
-	}
-
-	private function renderCreateUrl(){
-
-	$bytes = random_bytes(5);
-	$bytes = bin2hex($bytes);
-
-	$list = <<<EOT
-	<div name ='url'>$this->script_name/affichagelist/?id=$bytes</div>
-EOT;
-return $list;
-
 	}
 
 	private function renderHome(){
