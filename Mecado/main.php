@@ -48,8 +48,6 @@ $router->addRoute('messages', '/messages/',  '\mecadoapp\control\MecadoControlle
 
 $router->addRoute('createlist', '/createlist/',  '\mecadoapp\control\MecadoController', 'viewCreateList',mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_USER);
 
-$router->addRoute('createurl', '/createurl/',  '\mecadoapp\control\MecadoController', 'viewCreateUrl',mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_USER);
-
 $router->addRoute('profile', '/profile/',  '\mecadoapp\control\MecadoController', 'viewProfile',mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_USER);
 
 $router->addRoute('check_createlist', '/check_createlist/',  '\mecadoapp\control\MecadoController', 'viewCheckCreateList',mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_USER);
