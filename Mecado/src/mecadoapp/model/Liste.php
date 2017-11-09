@@ -9,7 +9,11 @@ class Liste extends \Illuminate\Database\Eloquent\Model {
     public    $timestamps = false; 
 
     public function messages(){
+<<<<<<< HEAD
+    	return $this->hasMany(Message::class,'id_list');
+=======
     	return $this->hasMany(Message::class,'id_liste');
+>>>>>>> b395364f48fdb01cad7a4d2abd5e2fa70384635e
     }
 
     public function user(){
