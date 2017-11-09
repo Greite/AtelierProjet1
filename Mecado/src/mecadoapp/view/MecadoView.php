@@ -71,7 +71,9 @@ EOT;
 		$profile = "<article>";
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
-		$mail = $this->data->mail;	
+
+		$mail = $this->data->mail;
+		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
 		$profile .= <<<EOT
 				<h2>Profil</h2>	
 				<ul>
@@ -146,6 +148,21 @@ EOT;
 						<div><img src='$d->image'></div>
 						</article>
 EOT;
+						if($d->reserver==0){
+							$liste.= <<<EOT
+							<form action='' method='post'>
+								<label for="reserviste">Votre nom : </label>
+								<input type="text" id="reserviste" >
+								<label for="message">Laisser lui un message : </label>
+								<input type="text" id="message" >
+								<input type="submit" id="send" value="Réserver"
+							</form>
+EOT;
+						}else{
+							$liste.= <<<EOT
+							<div>Réserver par $d->reserviste</div>							
+EOT;
+						}
 					}
 				return $liste;
 				}else{
