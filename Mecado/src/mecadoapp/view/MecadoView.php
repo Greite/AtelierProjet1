@@ -104,7 +104,7 @@ EOT;
 						<label>Titre : <input name='titre' placeholder='Titre' type='text'></label>
 						<label>Description : <input name='desc' placeholder='Description' type='text'></label>
 						<label>Date de validité : <input name='validite' placeholder='AAAA-MM-JJ' type='text'></label>
-						<label>Liste destinée à une autre personne : <input name='for_him' type='checkbox' value='1'></label>
+						<label>Liste destinée à une autre personne : <input name='for_other' type='checkbox' value='1'></label>
 						<label>Prénom du destinataire : <input name='destinataire' placeholder='Prénom du destinataire' type='text'></label>
 						<div>
 							<input id='send-button' name='send_button' type='submit' value='Envoyer'>
@@ -153,7 +153,8 @@ EOT;
 						<div><img src='$d->image'></div>
 						</article>
 EOT;
-						if($d->reserver==0){
+						if ($l->for_other) {
+							if($d->reserver==0){
 							$liste.= <<<EOT
 							<form action='$this->script_name/reserve/' method='post'>
 								<label for="reserviste">Votre nom : </label>
@@ -164,10 +165,11 @@ EOT;
 								<input type="submit" id="send" value="Réserver">
 							</form>
 EOT;
-						}else{
-							$liste.= <<<EOT
-							<div>Réserver par $d->reserviste</div>							
+							}else{
+								$liste.= <<<EOT
+								<div>Réserver par $d->reserviste</div>							
 EOT;
+							}
 						}
 					}
 				return $liste;

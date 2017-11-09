@@ -77,10 +77,10 @@ class MecadoController extends \mf\control\AbstractController {
 		$list->description = filter_var($_POST['desc'],FILTER_SANITIZE_SPECIAL_CHARS);
 		$list->date_limite = $_POST['validite'];
 		$list->destinataire = filter_var($_POST['destinataire'],FILTER_SANITIZE_SPECIAL_CHARS);
-		if ($_POST['for_him']) {
-			$list->for_him = $_POST['for_him'];
+		if ($_POST['for_other']) {
+			$list->for_other = $_POST['for_other'];
 		}else{
-			$list->for_him = 0;
+			$list->for_other = 0;
 		}
 		$list->id_user = $user->id;
 		$list->url = bin2hex(random_bytes(5));
