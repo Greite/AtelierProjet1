@@ -183,25 +183,7 @@ EOT;
 						</article>
 EOT;
 						}
-						if ($list->for_other) {
-							if($d->reserver==0){
-							$liste.= <<<EOT
-							<form action='$this->script_name/reserve/?id=$url' method='post'>
-								<label for="reserviste">Votre nom : </label>
-								<input type="text" id="reserviste" name="reserviste">
-								<label for="message">Laisser lui un message : </label>
-								<input type="text" id="message" name="message">
-								<input type="hidden" id="id" name="id" value="$d->id">
-								<input type="submit" id="send" value="Réserver">
-							</form>
-EOT;
-							}else{
-								$liste.= <<<EOT
-								<div>Réserver par $d->reserviste</div>							
-EOT;
-							}
-						}
-						if (!$log->logged_in) {
+						if ($list->for_other || !$log->logged_in) {
 							if($d->reserver==0){
 							$liste.= <<<EOT
 							<form action='$this->script_name/reserve/?id=$url' method='post'>
