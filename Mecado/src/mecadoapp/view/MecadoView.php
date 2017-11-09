@@ -18,6 +18,7 @@ class MecadoView extends \mf\view\AbstractView {
 		$linksignup=$this->script_name."/signup/";
 		$linklogout=$this->script_name."/logout/";
 		$linkprofile=$this->script_name."/profile/";
+		$linkcreatelist=$this->script_name."/createlist/";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
@@ -25,6 +26,7 @@ class MecadoView extends \mf\view\AbstractView {
 				<ul>
 					<li><a href='$linkhome'>Accueil</a></li>
 					<li><a href='$linklogout'>Se déconnecter</a></li>
+					<li><a href='$linkcreatelist'>Créer une liste</a></li>
 					<li><a href='$linkprofile'>Mon Profil</a></li>
 				</ul>
 				</nav>
@@ -143,7 +145,26 @@ EOT;
 EOT;
 					}	
 					$liste .= "</article>";
-
+					$messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
+					$liste.="<article><h2>Derniers messages</h2>";
+					foreach ($messages as $key => $value) {
+						$author=$value->auteur;
+						$text=$value->description;
+						$date=$value->date_create;
+						$liste .= <<<EOT
+										<div>
+											<span>$author : </span><span>$text</span><br>
+										</div>
+EOT;
+					}
+					$liste.= <<<EOT
+							<form action='$this->script_name/send/?id=$url' method='post'>
+								<input type="text" name="nom" placeholder="Votre nom">
+								<input type="text" name="message" placeholder="Votre message">
+								<input type="submit" id="send" value="Envoyer">
+							</form>
+EOT;
+					$liste.="</article>";
 					foreach($i as $d){
 						$liste.= <<<EOT
 						<article>
@@ -236,38 +257,6 @@ EOT;
 					</article>
 EOT;
 		return $ajoutItem;
-	}
-
-
-	private function renderMessages() {
-		$messages="<article><h2>Derniers messages</h2>";
-		foreach ($this->data as $key => $value) {
-			$author = $_POST['auteur'];
-			$text=$value->description;
-			$date=$value->date_create;
-		   
-			$messages .= <<<EOT
-				<div>
-					<label>$author</label><p>$text</p>
-				</div>
-EOT;
-		}
-		return $messages;
-	}
-	
-	private function renderCheckedCreatedList(){
-			$list = <<<EOT
-			<article>
-				<h2></h2>
-				<ul>
-				<li>aaaaaaa</li>
-				<li>bbbbbbb</li>
-				<li>ccccccc</li>
-				</ul>
-			</article>
-
-EOT;
-		return $list;
 	}
 
 	private function renderHome(){
