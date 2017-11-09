@@ -77,10 +77,10 @@ class MecadoController extends \mf\control\AbstractController {
 		$list->description = filter_var($_POST['desc'],FILTER_SANITIZE_SPECIAL_CHARS);
 		$list->date_limite = $_POST['validite'];
 		$list->destinataire = filter_var($_POST['destinataire'],FILTER_SANITIZE_SPECIAL_CHARS);
-		if ($_POST['for_him']) {
-			$list->for_him = $_POST['for_him'];
+		if ($_POST['for_other']) {
+			$list->for_other = $_POST['for_other'];
 		}else{
-			$list->for_him = 0;
+			$list->for_other = 0;
 		}
 		$list->id_user = $user->id;
 		$list->url = bin2hex(random_bytes(5));
@@ -123,17 +123,24 @@ class MecadoController extends \mf\control\AbstractController {
 		if(empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['tarif'])){
 			echo "tamer";
 		}
-
 		else{
 			$cadeau->nom = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
 			$cadeau->description = filter_var($_POST['description'],FILTER_SANITIZE_SPECIAL_CHARS);
-			$cadeau->image =filter_var($_POST['image'],FILTER_SANITIZE_SPECIAL_CHARS);
-			$cadeau->url = filter_var($_POST['url'],FILTER_SANITIZE_SPECIAL_CHARS); 
+			if ($_POST['image'] == "") {
+				$cadeau->image = NULL;
+			}else{
+				$cadeau->image = filter_var($_POST['image'],FILTER_SANITIZE_SPECIAL_CHARS);
+			}
+			if ($_POST['url'] == "") {
+				$cadeau->url = NULL;
+			}
+			else{
+				$cadeau->url = filter_var($_POST['url'],FILTER_SANITIZE_SPECIAL_CHARS); 
+			}
 			$cadeau->tarif = filter_var($_POST['tarif'],FILTER_SANITIZE_SPECIAL_CHARS); 
 			$cadeau->id_liste = $list->id;
 			$cadeau->save();
 		}
-
 		self::viewAffichageList();
 
 	}
@@ -151,6 +158,6 @@ class MecadoController extends \mf\control\AbstractController {
 			$m->id_Liste = $_SESSION['liste'];
 			$m->save();
 		}
-		self::viewHome();
+		self::viewAffichageList();
 	}
 }
