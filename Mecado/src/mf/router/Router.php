@@ -32,7 +32,7 @@ class Router extends AbstractRouter
 							}
 						}
 					}	
-				}
+				}	
 			}
 		}
 		else{ 
