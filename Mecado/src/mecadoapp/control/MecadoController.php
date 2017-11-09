@@ -77,6 +77,7 @@ class MecadoController extends \mf\control\AbstractController {
 			$list->for_him = 0;
 		}
 		$list->id_user = $user->id;
+		$list->url = bin2hex(random_bytes(5));
 		$list->save();
 		self::viewHome();
 	}
