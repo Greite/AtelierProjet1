@@ -195,6 +195,7 @@ EOT;
 EOT;
 							}else{
 								$liste.= <<<EOT
+								<div>Réserver par $d->reserviste</div>
 EOT;
 							}
 						}
