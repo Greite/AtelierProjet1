@@ -43,7 +43,7 @@ abstract class AbstractRouter {
      */
 
 
-    abstract public function addRoute($name, $url, $ctrl, $mth);
+    abstract public function addRoute($name, $url, $ctrl, $mth, $level);
 
     /*
      * Méthode run : execute une route en fonction de la requête 

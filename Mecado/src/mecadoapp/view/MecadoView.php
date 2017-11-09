@@ -83,7 +83,7 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
-		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
+		$userlists = $this->data->listes()->orderBy('date_limite', 'ASC')->get();
 		foreach ($userlists as $key => $value) {
 			$urllist = $this->script_name."/affichagelist/?id=".$value->url;
 			$namelist = $value->titre;
@@ -118,29 +118,42 @@ EOT;
 	}
 
 	private function renderAffichageList(){
-			if($_GET['nom']==NULL||$_GET['id']==NULL){
+			if(is_null($_GET['id'])){
 				throw new \Exception("URL invalide");
 			}else{
+<<<<<<< HEAD
 				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
 				if($l!=NULL){
 					$_SESSION['liste']=$l->id;
 
+=======
+				$l=\mecadoapp\model\Liste::where('url','=', $_GET['id'])->first();
+				if(!is_null($l)){
+>>>>>>> 33de8ebdc878ffc00ebf0521f1da7b821d70cf39
 					$i=$l->items()->get();
 					$liste= <<<EOT
 					<article>
-						<div>$l->titre</div><br>
-						<div>$l->description</div><br>
-						<div>$l->date_limite</div><br>
-						<div>$l->destinataire</div>
+						<h1>$l->titre</h1>
+						<label>Destinataire : <span>$l->destinataire</span></label><br>
+						<label>Date limite : <span>$l->date_limite</span></label><br>
+						<label>Description : <span>$l->description</span></label>
 					</article>
 EOT;
 					foreach($i as $d){
 						$liste.= <<<EOT
-						<div>$d->nom</div>
-						<div>$d->description</div>
-						<div>$d->tarif</div>
-						<div><a href='$d->url'>Petit lien au calme</a></div>
+						<article>
+							<div>$d->nom</div>
+							<div>$d->description</div>
+							<div>$d->tarif</div>
+EOT;
+						if (!is_null($d->url)) {
+							$liste.= <<<EOT
+							<div><a href='$d->url' target = '_blank'>Lien du cadeau</a></div>
+EOT;
+						}
+						$liste.= <<<EOT
 						<div><img src='$d->image'></div>
+						</article>
 EOT;
 						if($d->reserver==0){
 							$liste.= <<<EOT
@@ -159,9 +172,9 @@ EOT;
 EOT;
 						}
 					}
-return $liste;
+				return $liste;
 				}else{
-					var_dump('marchepas');
+					throw new \Exception("URL VIDE !");
 				}
 			}
 	}
@@ -231,6 +244,18 @@ EOT;
 		return $list;
 	}
 
+	private function renderCreateUrl(){
+
+	$bytes = random_bytes(5);
+	$bytes = bin2hex($bytes);
+
+	$list = <<<EOT
+	<div name ='url'>$this->script_name/affichagelist/?id=$bytes</div>
+EOT;
+return $list;
+
+	}
+
 	private function renderHome(){
 		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
@@ -279,6 +304,10 @@ EOT;
 
 			case 'createlist':
 				$main = $this->renderCreateList();
+				break;
+
+			case 'createurl':
+				$main = $this->renderCreateUrl();
 				break;
 
 			case 'profile':
