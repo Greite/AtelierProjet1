@@ -29,8 +29,12 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewSendMessage() {
 		$message = new \mecadoapp\model\Message();
-		$message->description = filter_var($_POST['text'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$message->author = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$liste = \mecadoapp\model\Liste::where('url', '=', $_GET['id'])->first();
+		$message->description = filter_var($_POST['message'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$message->auteur = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$message->type = 1;
+		$message->date_create = date("Y/m/d");
+		$message->id_liste = $liste->id;
 		$message->save();
 		$v = new MecadoView('');
 		$v ->render('affichage_list');

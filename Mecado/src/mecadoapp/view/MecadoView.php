@@ -145,25 +145,27 @@ EOT;
 EOT;
 					}	
 					$liste .= "</article>";
-					$messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
-					$liste.="<article><h2>Derniers messages</h2>";
-					foreach ($messages as $key => $value) {
-						$author=$value->auteur;
-						$text=$value->description;
-						$date=$value->date_create;
-						$liste .= <<<EOT
-										<div>
-											<span>$author : </span><span>$text</span><br>
-										</div>
+					if ($list->for_other || !$log->logged_in) {
+						$messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
+						$liste.="<article><h2>Derniers messages</h2>";
+						foreach ($messages as $key => $value) {
+							$author=$value->auteur;
+							$text=$value->description;
+							$date=$value->date_create;
+							$liste .= <<<EOT
+											<div>
+												<span>$author : </span><span>$text</span><br>
+											</div>
+EOT;
+						}
+						$liste.= <<<EOT
+								<form action='$this->script_name/send/?id=$url' method='post'>
+									<input type="text" name="nom" placeholder="Votre nom">
+									<input type="text" name="message" placeholder="Votre message">
+									<input type="submit" id="send" value="Envoyer">
+								</form>
 EOT;
 					}
-					$liste.= <<<EOT
-							<form action='$this->script_name/send/?id=$url' method='post'>
-								<input type="text" name="nom" placeholder="Votre nom">
-								<input type="text" name="message" placeholder="Votre message">
-								<input type="submit" id="send" value="Envoyer">
-							</form>
-EOT;
 					$liste.="</article>";
 					foreach($i as $d){
 						$liste.= <<<EOT
