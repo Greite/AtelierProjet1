@@ -131,4 +131,20 @@ class MecadoController extends \mf\control\AbstractController {
 		self::viewAjoutItem();
 
 	}
+
+	function viewReserve(){
+		Item::where('id', $_POST['id'])
+			->update(['reserviste' => $_POST['reserviste'],'reserver' => 1]);
+		
+		if($_POST['message']!=NULL){
+			$m = new \mecadoapp\model\Message;
+			$m->auteur = $_POST['reserviste'];
+			$m->description = $_POST['message'];
+			$m->type = 0;
+			$m->date_create = date("Y/m/d");
+			$m->id_Liste = $_SESSION['liste'];
+			$m->save();
+		}
+		self::viewHome();
+	}
 }

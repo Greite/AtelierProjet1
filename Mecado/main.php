@@ -60,4 +60,6 @@ $router->addRoute('affichage_list', '/affichagelist/',  '\mecadoapp\control\Meca
 
 $router->addRoute('save_item','/saveitem/', 'mecadoapp\control\MecadoController','viewSaveItem',mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_USER);
 
+$router->addRoute('reserve','/reserve/', '\mecadoapp\control\MecadoController', 'viewReserve',mecadoapp\auth\MecadoAuthentification::ACCESS_LEVEL_NONE);
+
 $router->run();

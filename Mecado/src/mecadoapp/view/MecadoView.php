@@ -121,8 +121,15 @@ EOT;
 			if(is_null($_GET['id'])){
 				throw new \Exception("URL invalide");
 			}else{
+<<<<<<< HEAD
+				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
+				if($l!=NULL){
+					$_SESSION['liste']=$l->id;
+
+=======
 				$l=\mecadoapp\model\Liste::where('url','=', $_GET['id'])->first();
 				if(!is_null($l)){
+>>>>>>> 33de8ebdc878ffc00ebf0521f1da7b821d70cf39
 					$i=$l->items()->get();
 					$liste= <<<EOT
 					<article>
@@ -150,12 +157,13 @@ EOT;
 EOT;
 						if($d->reserver==0){
 							$liste.= <<<EOT
-							<form action='' method='post'>
+							<form action='$this->script_name/reserve/' method='post'>
 								<label for="reserviste">Votre nom : </label>
-								<input type="text" id="reserviste" >
+								<input type="text" id="reserviste" name="reserviste">
 								<label for="message">Laisser lui un message : </label>
-								<input type="text" id="message" >
-								<input type="submit" id="send" value="Réserver"
+								<input type="text" id="message" name="message">
+								<input type="hidden" id="id" name="id" value="$d->id">
+								<input type="submit" id="send" value="Réserver">
 							</form>
 EOT;
 						}else{
