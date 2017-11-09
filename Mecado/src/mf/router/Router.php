@@ -16,13 +16,26 @@ class Router extends AbstractRouter
 		$auth=new \mecadoapp\auth\MecadoAuthentification();
 		if (!is_null($this->http_req->path_info)) {
 			foreach (self::$routes as $key => $value) {
-				if ($key == $this->http_req->path_info && $auth->checkAccessRight($value[2])) {
-					$obj = new $value[0]();
-					$fonc=$value[1];
-					$obj->$fonc();
+
+				if ($key == $this->http_req->path_info) {
+					if ($auth->checkAccessRight($value[2])){
+						$obj = new $value[0]();
+						$fonc=$value[1];
+						$obj->$fonc();
+					}
+					else{ 
+						foreach (self::$routes as $key => $value) {
+							if ($key == "DEFAULT_ROUTE") {
+								$obj = new $value[0]();
+								$fonc=$value[1];
+								$obj->$fonc();
+							}
+						}
+					}	
 				}
 			}
-		}else{ 
+		}
+		else{ 
 			foreach (self::$routes as $key => $value) {
 				if ($key == "DEFAULT_ROUTE") {
 					$obj = new $value[0]();
