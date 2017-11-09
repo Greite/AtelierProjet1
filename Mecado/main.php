@@ -58,4 +58,6 @@ $router->addRoute('affichage_list', '/affichagelist/',  '\mecadoapp\control\Meca
 
 $router->addRoute('save_item','/saveitem/', '\mecadoapp\control\MecadoController','viewSaveItem');
 
+$router->addRoute('reserve','/reserve/', '\mecadoapp\control\MecadoController', 'viewReserve');
+
 $router->run();
