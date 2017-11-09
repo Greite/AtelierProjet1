@@ -116,33 +116,40 @@ EOT;
 	}
 
 	private function renderAffichageList(){
-			if($_GET['nom']==NULL||$_GET['id']==NULL){
+			if(is_null($_GET['id'])){
 				throw new \Exception("URL invalide");
 			}else{
-				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
-				if($l!=NULL){
+				$l=\mecadoapp\model\Liste::where('url','=', $_GET['id'])->first();
+				if(!is_null($l)){
 					$i=$l->items()->get();
 					$liste= <<<EOT
 					<article>
-						<div>$l->titre</div><br>
-						<div>$l->description</div><br>
-						<div>$l->date_limite</div><br>
-						<div>$l->destinataire</div>
+						<h1>$l->titre</h1>
+						<label>Destinataire : <span>$l->destinataire</span></label><br>
+						<label>Date limite : <span>$l->date_limite</span></label><br>
+						<label>Description : <span>$l->description</span></label>
 					</article>
 EOT;
 					foreach($i as $d){
 						$liste.= <<<EOT
-						<div>$d->nom</div>
-						<div>$d->description</div>
-						<div>$d->tarif</div>
-						<div><a href='$d->url'>Petit lien au calme</a></div>
+						<article>
+							<div>$d->nom</div>
+							<div>$d->description</div>
+							<div>$d->tarif</div>
+EOT;
+						if (!is_null($d->url)) {
+							$liste.= <<<EOT
+							<div><a href='$d->url' target = '_blank'>Lien du cadeau</a></div>
+EOT;
+						}
+						$liste.= <<<EOT
 						<div><img src='$d->image'></div>
-						<div></div>
+						</article>
 EOT;
 					}
-return $liste;
+				return $liste;
 				}else{
-					var_dump('marchepas');
+					throw new \Exception("URL VIDE !");
 				}
 			}
 	}
