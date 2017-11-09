@@ -127,17 +127,17 @@ EOT;
 					$liste= <<<EOT
 					<article>
 						<h1>$l->titre</h1>
-						<label>Destinataire : <span>$l->destinataire</span></label><br>
-						<label>Date limite : <span>$l->date_limite</span></label><br>
-						<label>Description : <span>$l->description</span></label>
+						<label>Destinataire : <p>$l->destinataire</p></label>
+						<label>Date limite : <p>$l->date_limite</p></label>
+						<label>Description : <p>$l->description</p></label>
 					</article>
 EOT;
 					foreach($i as $d){
 						$liste.= <<<EOT
 						<article>
-							<div>$d->nom</div>
-							<div>$d->description</div>
-							<div>$d->tarif</div>
+							<h2>$d->nom</h2>
+							<span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
+							<label>Description : <p>$d->description</p></label>
 EOT;
 						if (!is_null($d->url)) {
 							$liste.= <<<EOT
