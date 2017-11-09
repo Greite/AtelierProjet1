@@ -3,6 +3,7 @@
 namespace mecadoapp\control;
 
 use mecadoapp\model\Item as Item;
+use mecadoapp\model\User as User;
 use mecadoapp\view\MecadoView as MecadoView;
 
 class MecadoController extends \mf\control\AbstractController {
@@ -101,7 +102,7 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewAjoutItem(){
 
-		$itm = Item::select()->WHERE("id_liste","=",$_GET["id"])->first();
+		$itm = Item::select()->WHERE("id_liste","=",$this->request->get["id"]);
 		$listeItem = new MecadoView($itm);
 
 		$v = new MecadoView('');
@@ -110,13 +111,14 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewSaveItem(){
 		//enregistre l'item dans la bdd et renvoie sur la meme page /ajoutitem/
+		$liste = 
 
 		$cadeau = new Item;
-		$cadeau->nom = $_POST['nom'];
-		$cadeau->description = $_POST['description'];
-		$cadeau->image = $_POST['image'];
-		$cadeau->url = $_POST['url'];
-		$cadeau->tarif = $_POST['tarif'];
+		$cadeau->nom = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$cadeau->description = filter_var($_POST['description'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$cadeau->image =filter_var($_POST['image'],FILTER_SANITIZE_SPECIAL_CHARS);
+		$cadeau->url = filter_var($_POST['url'],FILTER_SANITIZE_SPECIAL_CHARS); 
+		$cadeau->tarif = filter_var($_POST['tarif'],FILTER_SANITIZE_SPECIAL_CHARS); 
 		$cadeau->save();
 
 		self::viewAjoutItem();

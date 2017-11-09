@@ -168,10 +168,26 @@ EOT;
 
 	private function renderAjoutItem(){
 		
-		print_r($this->data);
+		$ajoutItem = "<article>";
 
-		$ajoutItem = <<<EOT
-					<article>
+		if(empty($this->data)){
+			$ajoutItem .="<p> Il n'y a pas encore de cadeau !<p>";
+		}
+
+		else{
+			foreach($this->data as $value){
+						$ajoutItem .="
+						<div>$value->nom</div>
+						<div>$value->description</div>
+						<div>$value->tarif</div>
+						<div><a href='$value->url'>Petit lien au calme</a></div>
+						<div><img src='$value->image'></div>
+						<div></div>";
+			}
+		}			
+
+		$ajoutItem .= <<<EOT
+					
 						<form action ='$this->script_name/saveitem/' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
