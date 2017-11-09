@@ -9,7 +9,7 @@ class User extends \Illuminate\Database\Eloquent\Model {
    	public    $timestamps = false; 
 
    	public function listes(){
-   		return $this->hasMany(Liste::class,"id");
+   		return $this->hasMany(Liste::class,'id_user');
    	} 
 
 

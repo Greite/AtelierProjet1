@@ -71,6 +71,7 @@ EOT;
 		$profile = "<article>";
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
+
 		$mail = $this->data->mail;
 		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
 		$profile .= <<<EOT
@@ -82,8 +83,9 @@ EOT;
 					<li>Listes : </li>
 					<ul>
 EOT;
+		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
 		foreach ($userlists as $key => $value) {
-			$urllist = $value->url;
+			$urllist = $this->script_name."/affichagelist/?id=".$value->url;
 			$namelist = $value->titre;
 			$profile .= <<<EOT
 						<li><a href='$urllist'>$namelist</a></li>							
@@ -116,37 +118,55 @@ EOT;
 	}
 
 	private function renderAffichageList(){
-			if($_GET['nom']==NULL||$_GET['id']==NULL){
+			if(is_null($_GET['id'])){
 				throw new \Exception("URL invalide");
 			}else{
-				$l=\mecadoapp\model\Liste::where([['destinataire', '=', $_GET['nom']],['id','=', $_GET['id']]])->first();
-				if($l!=NULL){
-					$i=$l->items()->get();			
-					var_dump('marche');
+				$l=\mecadoapp\model\Liste::where('url','=', $_GET['id'])->first();
+				if(!is_null($l)){
+					$i=$l->items()->get();
 					$liste= <<<EOT
 					<article>
-						<div>$l->titre</div><br>
-						<div>$l->description</div><br>
-						<div>$l->date_limite</div><br>
-						<div>$l->destinataire</div>
+						<h1>$l->titre</h1>
+						<label>Destinataire : <span>$l->destinataire</span></label><br>
+						<label>Date limite : <span>$l->date_limite</span></label><br>
+						<label>Description : <span>$l->description</span></label>
 					</article>
 EOT;
 					foreach($i as $d){
 						$liste.= <<<EOT
-						<div>$d->nom</div>
-						<div>$d->description</div>
-						<div>$d->tarif</div>
-						<div><a href='$d->url'>Petit lien au calme</a></div>
-						<div><img src='$d->image'></div>
-						<div></div>
+						<article>
+							<div>$d->nom</div>
+							<div>$d->description</div>
+							<div>$d->tarif</div>
 EOT;
+						if (!is_null($d->url)) {
+							$liste.= <<<EOT
+							<div><a href='$d->url' target = '_blank'>Lien du cadeau</a></div>
+EOT;
+						}
+						$liste.= <<<EOT
+						<div><img src='$d->image'></div>
+						</article>
+EOT;
+						if($d->reserver==0){
+							$liste.= <<<EOT
+							<form action='' method='post'>
+								<label for="reserviste">Votre nom : </label>
+								<input type="text" id="reserviste" >
+								<label for="message">Laisser lui un message : </label>
+								<input type="text" id="message" >
+								<input type="submit" id="send" value="Réserver"
+							</form>
+EOT;
+						}else{
+							$liste.= <<<EOT
+							<div>Réserver par $d->reserviste</div>							
+EOT;
+						}
 					}
-					
-
-
-return $liste;
+				return $liste;
 				}else{
-					var_dump('marchepas');
+					throw new \Exception("URL VIDE !");
 				}
 			}
 	}
