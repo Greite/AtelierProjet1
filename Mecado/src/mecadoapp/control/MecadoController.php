@@ -4,6 +4,7 @@ namespace mecadoapp\control;
 
 use mecadoapp\model\Item as Item;
 use mecadoapp\model\User as User;
+
 use mecadoapp\view\MecadoView as MecadoView;
 
 class MecadoController extends \mf\control\AbstractController {
@@ -102,8 +103,8 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewAjoutItem(){
-
-		$itm = Item::select()->WHERE("id_liste","=",$this->request->get["id"]);
+		$list = \mecadoapp\model\Liste::select()->where('url', '=', $this->request->get["id"])->first();
+		$itm = Item::select()->WHERE("id_liste","=",$list->id)->get();
 		$listeItem = new MecadoView($itm);
 
 		$v = new MecadoView('');
@@ -111,18 +112,26 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewSaveItem(){
-		//enregistre l'item dans la bdd et renvoie sur la meme page /ajoutitem/
-		$liste = 
 
+		$liste = new \mecadoapp\model\Liste();
+		$list = \mecadoapp\model\Liste::where("url","=",$this->request->get["id"])->first();
 		$cadeau = new Item;
-		$cadeau->nom = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$cadeau->description = filter_var($_POST['description'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$cadeau->image =filter_var($_POST['image'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$cadeau->url = filter_var($_POST['url'],FILTER_SANITIZE_SPECIAL_CHARS); 
-		$cadeau->tarif = filter_var($_POST['tarif'],FILTER_SANITIZE_SPECIAL_CHARS); 
-		$cadeau->save();
 
-		self::viewAjoutItem();
+		if(empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['url'])){
+			echo "tamer";
+		}
+
+		else{
+			$cadeau->nom = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
+			$cadeau->description = filter_var($_POST['description'],FILTER_SANITIZE_SPECIAL_CHARS);
+			$cadeau->image =filter_var($_POST['image'],FILTER_SANITIZE_SPECIAL_CHARS);
+			$cadeau->url = filter_var($_POST['url'],FILTER_SANITIZE_SPECIAL_CHARS); 
+			$cadeau->tarif = filter_var($_POST['tarif'],FILTER_SANITIZE_SPECIAL_CHARS); 
+			$cadeau->id_liste = $list->id;
+			$cadeau->save();
+		}
+
+		self::viewAffichageList();
 
 	}
 }

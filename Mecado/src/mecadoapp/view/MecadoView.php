@@ -118,10 +118,11 @@ EOT;
 	}
 
 	private function renderAffichageList(){
-			if(is_null($_GET['id'])){
+			$url = $_GET['id'];
+			if(is_null($url)){
 				throw new \Exception("URL invalide");
 			}else{
-				$l=\mecadoapp\model\Liste::where('url','=', $_GET['id'])->first();
+				$l=\mecadoapp\model\Liste::where('url','=', $url)->first();
 				if(!is_null($l)){
 					$i=$l->items()->get();
 					$liste= <<<EOT
@@ -130,6 +131,7 @@ EOT;
 						<label>Destinataire : <span>$l->destinataire</span></label><br>
 						<label>Date limite : <span>$l->date_limite</span></label><br>
 						<label>Description : <span>$l->description</span></label>
+						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item"></a>
 					</article>
 EOT;
 					foreach($i as $d){
@@ -187,7 +189,7 @@ EOT;
 	}
 
 	private function renderAjoutItem(){
-		
+		$url = $_GET['id'];
 		$ajoutItem = "<article>";
 
 		if(empty($this->data)){
@@ -208,13 +210,12 @@ EOT;
 
 		$ajoutItem .= <<<EOT
 					
-						<form action ='$this->script_name/saveitem/' method='post'>
+						<form action ='$this->script_name/saveitem/?id=$url' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
 							<input name='image' placeholder='Image' type='text'>
 							<input name='url' placeholder='URL' type='text'>
 							<input name='tarif' placeholder='Tarif' type='text'>
-							<a href="ajoutitem"><img src="$this->app_root/img/plus.jpg" height="20" width="20"><a>
 							<input type="submit" name="Envoyer">
 						</form>
 					</article>
