@@ -119,24 +119,31 @@ EOT;
 
 	private function renderAffichageList(){
 			$url = $_GET['id'];
+			$log = new \mecadoapp\auth\MecadoAuthentification();
 			if(is_null($url)){
 				throw new \Exception("URL invalide");
 			}else{
 
-				$l=\mecadoapp\model\Liste::where('url','=', $url)->first();
+				$list=\mecadoapp\model\Liste::where('url','=', $url)->first();
+				$user=\mecadoapp\model\User::where('mail','=', $_SESSION['user_login'])->first();
 
-				if(!is_null($l)){
-					$_SESSION['liste']=$l->id;
-					$i=$l->items()->get();
+				if(!is_null($list)){
+					$_SESSION['liste']=$list->id;
+					$i=$list->items()->get();
 					$liste= <<<EOT
 					<article>
-						<h1>$l->titre</h1>
-						<label>Destinataire : <p>$l->destinataire</p></label>
-						<label>Date limite : <p>$l->date_limite</p></label>
-						<label>Description : <p>$l->description</p></label>
-						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item"></a>
-					</article>
+						<h1>$list->titre</h1>
+						<label>Destinataire : <p>$list->destinataire</p></label>
+						<label>Date limite : <p>$list->date_limite</p></label>
+						<label>Description : <p>$list->description</p></label>
 EOT;
+					if ($log->logged_in && ($list->id_user == $user->id)) {
+						$liste.= <<<EOT
+							<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item" value="Ajouter un item"></a>
+EOT;
+					}	
+					$liste .= "</article>";
+
 					foreach($i as $d){
 						$liste.= <<<EOT
 						<article>
@@ -149,14 +156,34 @@ EOT;
 							<div><a href='$d->url' target = '_blank'>Lien du cadeau</a></div>
 EOT;
 						}
-						$liste.= <<<EOT
+						if (!is_null($d->image)) {
+							$liste.= <<<EOT
 						<div><img src='$d->image'></div>
 						</article>
 EOT;
-						if ($l->for_other) {
+						}
+						if ($list->for_other) {
 							if($d->reserver==0){
 							$liste.= <<<EOT
-							<form action='$this->script_name/reserve/' method='post'>
+							<form action='$this->script_name/reserve/?id=$url' method='post'>
+								<label for="reserviste">Votre nom : </label>
+								<input type="text" id="reserviste" name="reserviste">
+								<label for="message">Laisser lui un message : </label>
+								<input type="text" id="message" name="message">
+								<input type="hidden" id="id" name="id" value="$d->id">
+								<input type="submit" id="send" value="Réserver">
+							</form>
+EOT;
+							}else{
+								$liste.= <<<EOT
+								<div>Réserver par $d->reserviste</div>							
+EOT;
+							}
+						}
+						if (!$log->logged_in) {
+							if($d->reserver==0){
+							$liste.= <<<EOT
+							<form action='$this->script_name/reserve/?id=$url' method='post'>
 								<label for="reserviste">Votre nom : </label>
 								<input type="text" id="reserviste" name="reserviste">
 								<label for="message">Laisser lui un message : </label>
@@ -196,26 +223,8 @@ EOT;
 
 	private function renderAjoutItem(){
 		$url = $_GET['id'];
-		$ajoutItem = "<article>";
-
-		if(empty($this->data)){
-			$ajoutItem .="<p> Il n'y a pas encore de cadeau !<p>";
-		}
-
-		else{
-			foreach($this->data as $value){
-						$ajoutItem .="
-						<div>$value->nom</div>
-						<div>$value->description</div>
-						<div>$value->tarif</div>
-						<div><a href='$value->url'>Petit lien au calme</a></div>
-						<div><img src='$value->image'></div>
-						<div></div>";
-			}
-		}			
-
-		$ajoutItem .= <<<EOT
-					
+		$ajoutItem = <<<EOT
+					<article>	
 						<form action ='$this->script_name/saveitem/?id=$url' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
