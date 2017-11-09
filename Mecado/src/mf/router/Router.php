@@ -23,7 +23,7 @@ class Router extends AbstractRouter
 						$fonc=$value[1];
 						$obj->$fonc();
 					}
-					else{ 
+					else{
 						foreach (self::$routes as $key => $value) {
 							if ($key == "DEFAULT_ROUTE") {
 								$obj = new $value[0]();
@@ -35,7 +35,7 @@ class Router extends AbstractRouter
 				}	
 			}
 		}
-		else{ 
+		else{
 			foreach (self::$routes as $key => $value) {
 				if ($key == "DEFAULT_ROUTE") {
 					$obj = new $value[0]();
