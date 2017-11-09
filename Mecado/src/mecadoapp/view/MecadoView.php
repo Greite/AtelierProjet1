@@ -166,7 +166,7 @@ EOT;
 EOT;
 						}else{
 							$liste.= <<<EOT
-							<div>Réserver par $d->reserviste</div>							
+							<div>Réservé par $d->reserviste</div>							
 EOT;
 						}
 					}
