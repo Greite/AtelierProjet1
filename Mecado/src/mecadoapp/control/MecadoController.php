@@ -51,7 +51,7 @@ class MecadoController extends \mf\control\AbstractController {
 			unset($_SESSION['alerte']);
 		}
 		if($_POST['mail']==NULL || $_POST['password']==NULL || $_POST['nom']==NULL || $_POST['prenom']==NULL){
-			$_SESSION['alerte']="Veuillez remplir tout les champs";
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
 			self::viewSignUp();
 		}else{
 			$v = new \mecadoapp\auth\MecadoAuthentification();
@@ -76,7 +76,7 @@ class MecadoController extends \mf\control\AbstractController {
 			unset($_SESSION['alerte']);
 		}
 		if($_POST['titre']==NULL || $_POST['desc']==NULL || $_POST['validite']==NULL || $_POST['destinataire']==NULL){
-			$_SESSION['alerte']="Veuillez remplir tout les champs";
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
 			self::viewCreateList();
 		}else{
 			$list = new \mecadoapp\model\Liste();
@@ -107,13 +107,13 @@ class MecadoController extends \mf\control\AbstractController {
 			unset($_SESSION['alerte']);
 		}
 		if($_POST['mail']==NULL || $_POST['password']==NULL){
-			$_SESSION['alerte']="Veuillez remplir tout les champs";
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
 			self::viewLogin();
 		}else{
 			$v = new \mecadoapp\auth\MecadoAuthentification();
 			$v->login($_POST['mail'], $_POST['password']);
 			if($v->user_login==NULL){
-				$_SESSION['alerte']="Votre mail ou mot de passe est incorrecte";
+				$_SESSION['alerte']="Votre mail ou mot de passe est incorrect";
 				self::viewLogin();
 			}else{
 				self::viewHome();
@@ -142,7 +142,7 @@ class MecadoController extends \mf\control\AbstractController {
 			unset($_SESSION['alerte']);
 		}
 		if($_POST['nom']==NULL || $_POST['description']==NULL || $_POST['tarif']==NULL){
-			$_SESSION['alerte']="Veuillez remplir tout les champs";
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
 			self::viewAjoutItem();
 		}else{
 
