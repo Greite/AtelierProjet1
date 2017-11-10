@@ -91,7 +91,7 @@ EOT;
 			$namelist = $value->titre;
 			$profile .= <<<EOT
 						<li><a href='$urllist'>$namelist</a></li>
-						<li><input type='text' value='$_SERVER[SERVER_NAME]$this->script_name/affichagelist/?id=$value->url'></li>							
+						<li>URL : <input type='text' readonly='readonly' value='$_SERVER[SERVER_NAME]$this->script_name/affichagelist/?id=$value->url'></li>							
 EOT;
 		}
 		$profile .= "</ul></ul></article>";
