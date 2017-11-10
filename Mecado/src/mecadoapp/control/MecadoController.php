@@ -22,11 +22,6 @@ class MecadoController extends \mf\control\AbstractController {
 		$v ->render('home');  
 	}
 
-	function viewPost(){
-		$v = new MecadoView('');
-		$v ->render('post');  
-	}
-
 	function viewSendMessage() {
 		$message = new \mecadoapp\model\Message();
 		$liste = \mecadoapp\model\Liste::where('url', '=', $_GET['id'])->first();
@@ -52,9 +47,17 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewCreateUser() {
-		$v = new \mecadoapp\auth\MecadoAuthentification();
-		$v->createUser($_POST['mail'], $_POST['password'], $_POST['nom'], $_POST['prenom']);
-		self::viewHome();
+		if(isset($_SESSION['alerte'])){
+			unset($_SESSION['alerte']);
+		}
+		if($_POST['mail']==NULL || $_POST['password']==NULL || $_POST['nom']==NULL || $_POST['prenom']==NULL){
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
+			self::viewSignUp();
+		}else{
+			$v = new \mecadoapp\auth\MecadoAuthentification();
+			$v->createUser($_POST['mail'], $_POST['password'], $_POST['nom'], $_POST['prenom']);
+			self::viewHome();
+		}
 	}
 
 	function viewCreateList() {
@@ -69,21 +72,29 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewCheckCreateList() {
-		$list = new \mecadoapp\model\Liste();
-		$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
-		$list->titre = filter_var($_POST['titre'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$list->description = filter_var($_POST['desc'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$list->date_limite = $_POST['validite'];
-		$list->destinataire = filter_var($_POST['destinataire'],FILTER_SANITIZE_SPECIAL_CHARS);
-		if ($_POST['for_other']) {
-			$list->for_other = $_POST['for_other'];
-		}else{
-			$list->for_other = 0;
+		if(isset($_SESSION['alerte'])){
+			unset($_SESSION['alerte']);
 		}
-		$list->id_user = $user->id;
-		$list->url = bin2hex(random_bytes(5));
-		$list->save();
-		self::viewHome();
+		if($_POST['titre']==NULL || $_POST['desc']==NULL || $_POST['validite']==NULL || $_POST['destinataire']==NULL){
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
+			self::viewCreateList();
+		}else{
+			$list = new \mecadoapp\model\Liste();
+			$user = \mecadoapp\model\User::where('mail', '=', $_SESSION['user_login'])->first();
+			$list->titre = filter_var($_POST['titre'],FILTER_SANITIZE_SPECIAL_CHARS);
+			$list->description = filter_var($_POST['desc'],FILTER_SANITIZE_SPECIAL_CHARS);
+			$list->date_limite = $_POST['validite'];
+			$list->destinataire = filter_var($_POST['destinataire'],FILTER_SANITIZE_SPECIAL_CHARS);
+			if ($_POST['for_other']) {
+				$list->for_other = $_POST['for_other'];
+			}else{
+				$list->for_other = 0;
+			}
+			$list->id_user = $user->id;
+			$list->url = bin2hex(random_bytes(5));
+			$list->save();
+			self::viewHome();
+		}
 	}
 
 	function viewAffichageList(){
@@ -92,9 +103,22 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewCheckLogin() {
-		$v = new \mecadoapp\auth\MecadoAuthentification();
-		$v->login($_POST['mail'], $_POST['password']);
-		self::viewHome();
+		if(isset($_SESSION['alerte'])){
+			unset($_SESSION['alerte']);
+		}
+		if($_POST['mail']==NULL || $_POST['password']==NULL){
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
+			self::viewLogin();
+		}else{
+			$v = new \mecadoapp\auth\MecadoAuthentification();
+			$v->login($_POST['mail'], $_POST['password']);
+			if($v->user_login==NULL){
+				$_SESSION['alerte']="Votre mail ou mot de passe est incorrect";
+				self::viewLogin();
+			}else{
+				self::viewHome();
+			}	
+		}
 	}
 
 	function viewLogout() {
@@ -104,6 +128,7 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewAjoutItem(){
+		
 		$list = \mecadoapp\model\Liste::select()->where('url', '=', $this->request->get["id"])->first();
 		$itm = Item::select()->WHERE("id_liste","=",$list->id)->get();
 		$listeItem = new MecadoView($itm);
@@ -114,14 +139,19 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewSaveItem(){
 
-		$confirm=false;
-		$list = \mecadoapp\model\Liste::where("url","=",$this->request->get["id"])->first();
-		$user=  \mecadoapp\model\User::select()->get();
-		$cadeau = new Item;
-
-		if(empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['tarif'] || !is_int($_POST['tarif']))){
-			throw new \Exception("champ nom ou desc ou tarif invalide et vide");
+		if(isset($_SESSION['alerte'])){
+			unset($_SESSION['alerte']);
+		}
+		if($_POST['nom']==NULL || $_POST['description']==NULL || $_POST['tarif']==NULL){
+			$_SESSION['alerte']="Veuillez remplir tous les champs";
+			self::viewAjoutItem();
 		}else{
+
+			$liste = new \mecadoapp\model\Liste();
+			$list = \mecadoapp\model\Liste::where("url","=",$this->request->get["id"])->first();
+			
+			$cadeau = new Item;
+
 			$cadeau->nom = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
 			$cadeau->description = filter_var($_POST['description'],FILTER_SANITIZE_SPECIAL_CHARS);
 			if ($_POST['image'] == "") {
@@ -138,9 +168,8 @@ class MecadoController extends \mf\control\AbstractController {
 			$cadeau->tarif = filter_var($_POST['tarif'],FILTER_SANITIZE_SPECIAL_CHARS); 
 			$cadeau->id_liste = $list->id;
 			$cadeau->save();
+			self::viewAffichageList();
 		}
-		self::viewAffichageList();
-
 	}
 
 	function viewReserve(){

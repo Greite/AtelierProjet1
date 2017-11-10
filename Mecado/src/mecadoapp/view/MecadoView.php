@@ -1,17 +1,13 @@
 <?php
-
 namespace mecadoapp\view;
-
 class MecadoView extends \mf\view\AbstractView {
   
 	public function __construct( $data ){
 		parent::__construct($data);
 	}
-
 	private function renderHeader(){
 		return '<h1><img alt="Logo" src="/AtelierProjet1/Mecado/img/logo.png"></h1>';
 	}
-
 	private function renderNav(){
 		$linkhome=$this->script_name."/home/";
 		$linklogin=$this->script_name."/login/";
@@ -48,11 +44,10 @@ EOT;
 	private function renderFooter(){
 		return 'Application développée par le groupe Bernier Charles Painteaux Saint-Dizier Varnerot &copy;2017';
 	}
-
 	private function renderSignUp(){
 		$linklogin=$this->script_name."/login/";
 		$signup = <<<EOT
-			<article>
+			<article class="aligncenter">
 				<h2>Créez votre compte</h2>
 				<form action='$this->script_name/check_signup/' method='post'>
 					<input name='nom' placeholder='Nom' type='text'>
@@ -64,16 +59,21 @@ EOT;
 				<h2>Vous avez déjà un compte ?</h2>
 				<h2><a href='$linklogin'>Connectez-vous ! </a></h2>
 			</article>
-
 EOT;
-	return $signup;
+		if(isset($_SESSION['alerte'])){
+			$alerte = $_SESSION['alerte'];
+			$signup .= <<<EOT
+				<div class='error'>
+					<p>$alerte</p>
+				</div>
+EOT;
+		}
+		return $signup;
 	}
-
 	private function renderProfile(){
-		$profile = "<article>";
+		$profile = "<article class='aligncenter'>";
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
-
 		$mail = $this->data->mail;
 		$userlists = $this->data->listes()->orderBy('date_limite','DESC')->get();
 		$profile .= <<<EOT
@@ -97,10 +97,9 @@ EOT;
 		$profile .= "</ul></ul></article>";
 		return $profile;
 	}
-
 	private function renderCreateList(){
 		$list = <<<EOT
-			<article>
+			<article class="aligncenter">
 				<h2>Créez votre liste : </h2>
 				<form action='$this->script_name/check_createlist/' method='post'>
 					<div>
@@ -115,11 +114,17 @@ EOT;
 					</div>
 				</form>
 			</article>
-
 EOT;
+		if(isset($_SESSION['alerte'])){
+			$alerte = $_SESSION['alerte'];
+			$list .= <<<EOT
+				<div class='error'>
+					<p>$alerte</p>
+				</div>
+EOT;
+		}
 		return $list;
 	}
-
 	private function renderAffichageList(){
 		$url = $_GET['id'];
 		$log = new \mecadoapp\auth\MecadoAuthentification();
@@ -130,7 +135,6 @@ EOT;
 			$liste = "";
 
 			date_default_timezone_set('UTC');
-
 			$list=\mecadoapp\model\Liste::where('url','=', $url)->first();
 			$user=\mecadoapp\model\User::where('mail','=', $_SESSION['user_login'])->first();
 			
@@ -141,7 +145,6 @@ EOT;
 
 				$message = \mecadoapp\model\Message::select()->where([["id_liste","=",$list->id],["type","=",0]])->get();
 				$item= \mecadoapp\model\Item::where([["id_liste","=",$list->id],["reserver","=",1]])->get();
-
 				foreach($message as $value){
 
 					$author=$value->auteur;
@@ -267,7 +270,7 @@ EOT;
 	}
 
 	private function renderLogin(){
-		$login='<article>';
+		$login='<article class="aligncenter">';
 		
 		$login .= <<<EOT
 				<form action='$this->script_name/check_login/' method='post'>
@@ -275,16 +278,22 @@ EOT;
 					<input name='password' placeholder='Mot de passe' type='password'>
 					<button name='login_button' type='submit'>Se connecter</button>
 				</form>
+			</article>
 EOT;
-		$login.='</article>';
+		if(isset($_SESSION['alerte'])){
+			$alerte = $_SESSION['alerte'];
+			$login .= <<<EOT
+				<div class='error'>
+					<p>$alerte</p>
+				</div>
+EOT;
+		}
 		return $login;
 	}
-
 	private function renderAjoutItem(){
-
 		$url = $_GET['id'];
 		$ajoutItem = <<<EOT
-					<article>	
+					<article class="aligncenter">	
 						<form action ='$this->script_name/saveitem/?id=$url' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
@@ -295,15 +304,21 @@ EOT;
 						</form>
 					</article>
 EOT;
+		if(isset($_SESSION['alerte'])){
+			$alerte = $_SESSION['alerte'];
+			$ajoutItem .= <<<EOT
+				<div class='error'>
+					<p>$alerte</p>
+				</div>
+EOT;
+		}
 		return $ajoutItem;
 	}
-
 	private function renderHome(){
-		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+		$home="<article class='aligncenter'><h2>Bienvenue sur Mecado.net</h2>";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		$linkcreatelist = $this->script_name."/createlist/";
 		if ($log->logged_in) {
-
 			$home.= <<<EOT
 				<div>
 					<p>Ce site vous propose la création d'une liste de cadeau pour vous ou un proche</p>
@@ -321,7 +336,6 @@ EOT;
 		$home.="</article>";
 		return $home;
 	}
-
 	protected function renderBody($selector=null){
 		
 		$header = $this->renderHeader();
@@ -331,44 +345,37 @@ EOT;
 			case 'home':
 				$main = $this->renderHome();
 				break;
-
 			case 'signup':
 				$main = $this->renderSignUp();
 				break;
-
 			case 'login':
 				$main = $this->renderLogin();
 				break;
-
 			case 'post':
 				$main = $this->renderPost();
 				break;
-
 			case 'createlist':
 				$main = $this->renderCreateList();
 				break;
-
+			case 'createurl':
+				$main = $this->renderCreateUrl();
+				break;
 			case 'profile':
 				$main = $this->renderProfile();
 				break;
-
 			case 'ajout_item':
 				$main =$this->renderAjoutItem();
 				break;
-
 			case 'affichage_list':
 				$main = $this->renderAffichageList();
 				break;
-
 			case 'messages':
 				$main = $this->renderMessages();
 				break;
-
 			default:
 				$main = $this->renderHome();
 				break;
 		}
-
 		$html = <<<EOT
 		<div class="conteneur">
 		<header>
@@ -387,5 +394,4 @@ EOT;
 		return $html;
 		
 	}
-
 }
