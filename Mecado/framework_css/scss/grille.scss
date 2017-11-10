@@ -12,14 +12,13 @@
 		@include grille(8, 10%, 0, 8);
 		display:flex;
 		flex-wrap: wrap;
-		overflow: auto;
 		padding-top: 10px;
+		padding-bottom: 10px;
 	}
 	article:nth-child(1) {
 		@include grille(8, 10%, 0, 8);
 		text-align: center;
 		padding-top: 10px;
-		padding-bottom: 10px;
 	}
 	article:nth-child(2) {
 		@include grille(8, 10%, 0, 6);
@@ -37,7 +36,6 @@
 		padding: 10px;
 		p {
 			overflow: auto;
-
 		}
 	}	
 	footer {
@@ -46,4 +44,67 @@
 }
 
 
+
+
+
+@media screen and (min-width: 1000px) and (max-width: 1215px){
+	header img {
+		width: 40%;
+	}
+}
+
+@media screen and (min-width: 800px) and (max-width: 1000px){
+
+	header img {
+		width: 30%;
+	}		
+}
+
+@media screen and (max-width: 800px) {
+	header img {
+		width: 30%;
+	}	
+
+	nav ul li
+	{
+		width: 100%;
+	}
+
+	p {
+		font-size: 0.9em;
+	}
+	.conteneur article:nth-child(2) {
+		width: 100%;
+	}
+
+	.conteneur article:nth-child(3) {
+		width: 100%;
+	}
+
+	.thumb {	
+		@include grille(8, 10%, 0, 8);
+	}
+
+	input {
+		width: 70%;
+	}
+
+}
+
+@media screen and (max-width: 500px) {
+	
+	nav ul li
+	{
+		width: 100%;
+		font-size: 0.75em;
+	}
+
+	h2 {
+		font-size: 1em;
+	}
+
+	p {
+		font-size: 0.6em;
+	}
+}
 

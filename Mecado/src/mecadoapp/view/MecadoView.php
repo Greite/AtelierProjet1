@@ -176,13 +176,13 @@ EOT;
 						$liste= <<<EOT
 						<article>
 						<h1>$list->titre</h1>
-						<label>Destinataire : <p>$list->destinataire</p></label>
-						<label>Date limite : <p>$list->date_limite</p></label>
-						<label>Description : <p>$list->description</p></label>
+						<p>Destinataire : $list->destinataire</p>
+						<p>Date limite : $list->date_limite</p>
+						<p>Description : $list->description</p>
 EOT;
 						if ($log->logged_in && ($list->id_user == $user->id)) {
 							$liste.= <<<EOT
-							<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item" value="Ajouter un item"></a>
+							<a alt="Image cadeau" href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item" value="Ajouter un item"></a>
 EOT;
 						}	
 						$liste .= "</article>";

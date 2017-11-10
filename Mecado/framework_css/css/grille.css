@@ -10,14 +10,13 @@
     margin-left: 2.2222222222%;
     display: flex;
     flex-wrap: wrap;
-    overflow: auto;
-    padding-top: 10px; }
+    padding-top: 10px;
+    padding-bottom: 10px; }
   .conteneur article:nth-child(1) {
     width: 95.5555555556%;
     margin-left: 2.2222222222%;
     text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px; }
+    padding-top: 10px; }
   .conteneur article:nth-child(2) {
     width: 71.1111111111%;
     margin-left: 2.2222222222%;
@@ -38,5 +37,44 @@
   .conteneur footer {
     width: 95.5555555556%;
     margin-left: 2.2222222222%; }
+
+@media screen and (min-width: 1000px) and (max-width: 1215px) {
+  header img {
+    width: 40%; } }
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  header img {
+    width: 30%; } }
+@media screen and (max-width: 800px) {
+  header img {
+    width: 30%; }
+
+  nav ul li {
+    width: 100%; }
+
+  p {
+    font-size: 0.9em; }
+
+  .conteneur article:nth-child(2) {
+    width: 100%; }
+
+  .conteneur article:nth-child(3) {
+    width: 100%; }
+
+  .thumb {
+    width: 95.5555555556%;
+    margin-left: 2.2222222222%; }
+
+  input {
+    width: 70%; } }
+@media screen and (max-width: 500px) {
+  nav ul li {
+    width: 100%;
+    font-size: 0.75em; }
+
+  h2 {
+    font-size: 1em; }
+
+  p {
+    font-size: 0.6em; } }
 
 /*# sourceMappingURL=grille.css.map */
