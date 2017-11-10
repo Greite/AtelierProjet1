@@ -138,6 +138,7 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewSaveItem(){
+
 		if(isset($_SESSION['alerte'])){
 			unset($_SESSION['alerte']);
 		}
@@ -148,7 +149,9 @@ class MecadoController extends \mf\control\AbstractController {
 
 			$liste = new \mecadoapp\model\Liste();
 			$list = \mecadoapp\model\Liste::where("url","=",$this->request->get["id"])->first();
+			
 			$cadeau = new Item;
+
 			$cadeau->nom = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
 			$cadeau->description = filter_var($_POST['description'],FILTER_SANITIZE_SPECIAL_CHARS);
 			if ($_POST['image'] == "") {

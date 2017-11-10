@@ -133,28 +133,35 @@ EOT;
 		}
 		else{
 			$liste = "";
+
 			date_default_timezone_set('UTC');
 			$list=\mecadoapp\model\Liste::where('url','=', $url)->first();
 			$user=\mecadoapp\model\User::where('mail','=', $_SESSION['user_login'])->first();
-			if(date('Y-m-d')==$list->date_limite){
+			
+			$time_expire = strtotime($list->date_limite);
+			$today=strtotime(date('Y-m-d'));
+
+			if($today >= $time_expire){
+
 				$message = \mecadoapp\model\Message::select()->where([["id_liste","=",$list->id],["type","=",0]])->get();
 				$item= \mecadoapp\model\Item::where([["id_liste","=",$list->id],["reserver","=",1]])->get();
 				foreach($message as $value){
+
 					$author=$value->auteur;
 					$text=$value->description;
 					$liste .=<<<EOT
 					<div>
-						<label>$author</label><p>$text</p>
-						<p>salut</p>
+					<label>$author</label><p>$text</p>
+					<p>salut</p>
 					</div>
 EOT;
 				}
 				foreach ($item as $v){
 					$liste .="
 					<div>
-						<p>".$v->nom."</p>
-						<p>Offert par : ".$v->reserviste." </p>
-						<img src=".$v->image.">
+					<p>".$v->nom."</p>
+					<p>Offert par : ".$v->reserviste." </p>
+					<img src=".$v->image.">
 					</div>";
 				}
 				return $liste;
