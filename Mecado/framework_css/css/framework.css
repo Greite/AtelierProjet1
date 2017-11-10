@@ -231,15 +231,21 @@ pre {
   padding: 3%;
   border: 2px solid grey;
   box-sizing: border-box;
+  border-radius: 15px;
+  box-shadow: 10px;
+  margin-bottom: 3%;
   background-color: #5271ff; }
   .thumb img {
-    max-width: 75%; }
+    max-width: 35%;
+    text-align: center; }
   .thumb h3 {
     margin: 3%;
     font-size: 1.5em;
     font-weight: normal; }
   .thumb p {
-    width: 100%; }
+    width: 100%;
+    overflow: auto;
+    max-height: 15%; }
     .thumb p a {
       margin: 1%;
       width: 100%;
@@ -276,7 +282,8 @@ html, body {
     width: 95.5555555556%;
     margin-left: 2.2222222222%;
     display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    max-height: 10%; }
   .conteneur article:nth-child(1) {
     width: 95.5555555556%;
     margin-left: 2.2222222222%; }
@@ -284,15 +291,24 @@ html, body {
     width: 71.1111111111%;
     margin-left: 2.2222222222%;
     display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    max-height: 50%;
+    overflow: auto; }
   .conteneur article:nth-child(3) {
     width: 22.2222222222%;
-    margin-left: 2.2222222222%; }
+    margin-left: 2.2222222222%;
+    max-height: 50%;
+    overflow: auto; }
   .conteneur .thumb {
     border: 1px solid black;
     box-sizing: border-box;
-    width: 22.2222222222%;
-    margin-left: 2.2222222222%; }
+    width: 46.6666666667%;
+    margin-left: 2.2222222222%;
+    max-height: 55%;
+    overflow: auto; }
+    .conteneur .thumb p {
+      overflow: auto;
+      max-height: 50px; }
   .conteneur footer {
     width: 95.5555555556%;
     margin-left: 2.2222222222%; }

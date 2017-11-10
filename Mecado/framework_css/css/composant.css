@@ -4,15 +4,21 @@
   padding: 3%;
   border: 2px solid grey;
   box-sizing: border-box;
+  border-radius: 15px;
+  box-shadow: 10px;
+  margin-bottom: 3%;
   background-color: #5271ff; }
   .thumb img {
-    max-width: 75%; }
+    max-width: 35%;
+    text-align: center; }
   .thumb h3 {
     margin: 3%;
     font-size: 1.5em;
     font-weight: normal; }
   .thumb p {
-    width: 100%; }
+    width: 100%;
+    overflow: auto;
+    max-height: 15%; }
     .thumb p a {
       margin: 1%;
       width: 100%;

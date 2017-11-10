@@ -83,7 +83,7 @@ EOT;
 					<li>Prénom : $prenom</li>
 					<li>Mail : $mail</li>
 					<li>Listes : </li>
-					<ul>
+				</ul>
 EOT;
 		$userlists = $this->data->listes()->orderBy('date_limite', 'ASC')->get();
 		foreach ($userlists as $key => $value) {
@@ -199,9 +199,11 @@ EOT;
 EOT;
 							}
 							$liste.= <<<EOT
+							<div>
 							<h2>$d->nom</h2>
-							<span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
-							<label>Description : <p>$d->description</p></label>
+							<p>Prix : $d->tarif €</p>
+							<p>Description : $d->description</p>
+							</div>
 EOT;
 							
 							if (!is_null($d->url)) {
@@ -214,9 +216,9 @@ EOT;
 								if($d->reserver==0){
 								$liste.= <<<EOT
 								<form action='$this->script_name/reserve/?id=$url' method='post'>
-									<label for="reserviste">Votre nom : </label>
+									<p>Votre nom : </p>
 									<input type="text" id="reserviste" name="reserviste">
-									<label for="message">Laisser lui un message : </label>
+									<p>Laisser lui un message : </p>
 									<input type="text" id="message" name="message">
 									<input type="hidden" id="id" name="id" value="$d->id">
 									<input type="submit" id="send" value="Réserver">

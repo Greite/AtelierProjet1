@@ -15,6 +15,7 @@ html, body {
 		@include grille(8, 10%, 0, 8);
 		display:flex;
 		flex-wrap: wrap;
+		max-height: 10%;
 	}
 	article:nth-child(1) {
 		@include grille(8, 10%, 0, 8);
@@ -23,15 +24,25 @@ html, body {
 		@include grille(8, 10%, 0, 6);
 		display:flex;
 		flex-wrap: wrap;
+		max-height: 50%;
+		overflow: auto;
 	}
 	article:nth-child(3) {
 		@include grille(8, 10%, 0, 2);
+		max-height: 50%;
+		overflow: auto;
 	}
 	.thumb {
 		border: 1px solid black;
 		box-sizing: border-box;	
-		@include grille(8, 10%, 0, 2);	
-	}
+		@include grille(8, 10%, 0, 4);
+		max-height: 55%;
+		overflow: auto;
+		p {
+			overflow: auto;
+			max-height: 50px;
+		}
+	}	
 	footer {
 		@include grille(8, 10%, 0, 8);
 	}

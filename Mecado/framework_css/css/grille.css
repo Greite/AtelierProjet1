@@ -11,7 +11,8 @@ html, body {
     width: 95.5555555556%;
     margin-left: 2.2222222222%;
     display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    max-height: 10%; }
   .conteneur article:nth-child(1) {
     width: 95.5555555556%;
     margin-left: 2.2222222222%; }
@@ -19,15 +20,24 @@ html, body {
     width: 71.1111111111%;
     margin-left: 2.2222222222%;
     display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    max-height: 50%;
+    overflow: auto; }
   .conteneur article:nth-child(3) {
     width: 22.2222222222%;
-    margin-left: 2.2222222222%; }
+    margin-left: 2.2222222222%;
+    max-height: 50%;
+    overflow: auto; }
   .conteneur .thumb {
     border: 1px solid black;
     box-sizing: border-box;
-    width: 22.2222222222%;
-    margin-left: 2.2222222222%; }
+    width: 46.6666666667%;
+    margin-left: 2.2222222222%;
+    max-height: 55%;
+    overflow: auto; }
+    .conteneur .thumb p {
+      overflow: auto;
+      max-height: 50px; }
   .conteneur footer {
     width: 95.5555555556%;
     margin-left: 2.2222222222%; }
