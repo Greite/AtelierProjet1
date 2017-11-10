@@ -129,50 +129,42 @@ EOT;
 		}
 		else{
 			$liste = "";
-			date_default_timezone_set('UTC');
-
 			$list=\mecadoapp\model\Liste::where('url','=', $url)->first();
 			$user=\mecadoapp\model\User::where('mail','=', $_SESSION['user_login'])->first();
 
-			if(date('Y-m-d')==$list->date_limite){
-				$message = \mecadoapp\model\Message::select()->where([["id_liste","=",$list->id],["type","=",0]])->get();
-				$item= \mecadoapp\model\Item::where([["id_liste","=",$list->id],["reserver","=",1]])->get();
+			if(!is_null($list)){
+				date_default_timezone_set('UTC');
 
-				foreach($message as $value){
-					$author=$value->auteur;
-					$text=$value->description;
+				$time_expire = strtotime($list->date_limite);
+				$today=strtotime(date('Y-m-d'));
 
-					$liste .=<<<EOT
-					<div>
+				if($today >= $time_expire){
+					$message = \mecadoapp\model\Message::select()->where([["id_liste","=",$list->id],["type","=",0]])->get();
+					$item= \mecadoapp\model\Item::where([["id_liste","=",$list->id],["reserver","=",1]])->get();
+
+					foreach($message as $value){
+						$author=$value->auteur;
+						$text=$value->description;
+
+						$liste .=<<<EOT
+						<div>
 						<label>$author</label><p>$text</p>
 						<p>salut</p>
-					</div>
+						</div>
 EOT;
-				}
+					}
 
-				foreach ($item as $v){
-					$liste .="
-					<div>
+					foreach ($item as $v){
+						$liste .="
+						<div>
 						<p>".$v->nom."</p>
 						<p>Offert par : ".$v->reserviste." </p>
 						<img src=".$v->image.">
-					</div>";
-				}
+						</div>";
+					}
 				return $liste;
-			}else{
-				if(!is_null($list)){
-					if(date('Y-m-d')==$list->liste){
-						foreach($message as $value){
-							$author=$value->auteur;
-							$text=$value->description;
-							$liste .= <<<EOT
-							<div>
-							<label>$author</label><p>$text</p>
-							<p>salut</p>
-							</div>
-EOT;
-						}
-					}else{
+					
+				}else{
 						$_SESSION['liste']=$list->id;
 						$i=$list->items()->get();
 						$liste= <<<EOT
@@ -181,7 +173,7 @@ EOT;
 						<label>Destinataire : <p>$list->destinataire</p></label>
 						<label>Date limite : <p>$list->date_limite</p></label>
 						<label>Description : <p>$list->description</p></label>
-						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" placeholder="Ajouter un item"></a>
+						<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item"></a>
 						</article>
 
 EOT;
@@ -191,30 +183,30 @@ EOT;
 EOT;
 						}	
 
-					$liste .= "</article>";
-					$messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
-					$liste.="<article><h2>Derniers messages</h2>";
-					foreach ($messages as $key => $value) {
-						$author=$value->auteur;
-						$text=$value->description;
-						$date=$value->date_create;
-						$liste .= <<<EOT
-										<div>
-											<span>$author : </span><span>$text</span><br>
-										</div>
+						$liste .= "</article>";
+						$messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
+						$liste.="<article><h2>Derniers messages</h2>";
+						foreach ($messages as $key => $value) {
+							$author=$value->auteur;
+							$text=$value->description;
+							$date=$value->date_create;
+							$liste .= <<<EOT
+							<div>
+							<span>$author : </span><span>$text</span><br>
+							</div>
 EOT;
-					}
-					$liste.= <<<EOT
-							<form action='$this->script_name/send/?id=$url' method='post'>
-								<input type="text" name="nom" placeholder="Votre nom">
-								<input type="text" name="message" placeholder="Votre message">
-								<input type="submit" id="send" value="Envoyer">
-							</form>
-EOT;
-					$liste.="</article>";
-					foreach($i as $d){
+						}
 						$liste.= <<<EOT
-						<article>
+						<form action='$this->script_name/send/?id=$url' method='post'>
+						<input type="text" name="nom" placeholder="Votre nom">
+						<input type="text" name="message" placeholder="Votre message">
+						<input type="submit" id="send" value="Envoyer">
+						</form>
+EOT;
+						$liste.="</article>";
+						foreach($i as $d){
+							$liste.= <<<EOT
+							<article>
 							<h2>$d->nom</h2>
 							<span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
 							<label>Description : <p>$d->description</p></label>
@@ -230,17 +222,17 @@ EOT;
 								</article>
 EOT;
 							}
-						if ($list->for_other || !$log->logged_in) {
-							if($d->reserver==0){
-							$liste.= <<<EOT
-							<form action='$this->script_name/reserve/?id=$url' method='post'>
-								<label for="reserviste">Votre nom : </label>
-								<input type="text" id="reserviste" name="reserviste">
-								<label for="message">Laisser lui un message : </label>
-								<input type="text" id="message" name="message">
-								<input type="hidden" id="id" name="id" value="$d->id">
-								<input type="submit" id="send" value="Réserver">
-							</form>
+							if ($list->for_other || !$log->logged_in) {
+								if($d->reserver==0){
+									$liste.= <<<EOT
+									<form action='$this->script_name/reserve/?id=$url' method='post'>
+									<label for="reserviste">Votre nom : </label>
+									<input type="text" id="reserviste" name="reserviste">
+									<label for="message">Laisser lui un message : </label>
+									<input type="text" id="message" name="message">
+									<input type="hidden" id="id" name="id" value="$d->id">
+									<input type="submit" id="send" value="Réserver">
+									</form>
 EOT;
 								}else{
 									$liste.= <<<EOT
@@ -251,12 +243,12 @@ EOT;
 						}
 					}
 					return $liste;
-				}else{
+			}else{
 					throw new \Exception("URL VIDE !");
-				}
-			}	
-		}
+			}
+		}	
 	}
+
 
 
 

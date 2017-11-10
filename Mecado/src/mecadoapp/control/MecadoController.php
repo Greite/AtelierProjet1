@@ -109,14 +109,14 @@ class MecadoController extends \mf\control\AbstractController {
 
 	function viewSaveItem(){
 
-		$liste = new \mecadoapp\model\Liste();
+		$confirm=false;
 		$list = \mecadoapp\model\Liste::where("url","=",$this->request->get["id"])->first();
+		$user=  \mecadoapp\model\User::select()->get();
 		$cadeau = new Item;
 
-		if(empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['tarif'])){
-			echo "tamer";
-		}
-		else{
+		if(empty($_POST['nom']) || empty($_POST['description']) || empty($_POST['tarif'] || !is_int($_POST['tarif']))){
+			throw new \Exception("champ nom ou desc ou tarif invalide et vide");
+		}else{
 			$cadeau->nom = filter_var($_POST['nom'],FILTER_SANITIZE_SPECIAL_CHARS);
 			$cadeau->description = filter_var($_POST['description'],FILTER_SANITIZE_SPECIAL_CHARS);
 			if ($_POST['image'] == "") {
