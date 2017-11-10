@@ -18,6 +18,7 @@ class MecadoView extends \mf\view\AbstractView {
 		$linksignup=$this->script_name."/signup/";
 		$linklogout=$this->script_name."/logout/";
 		$linkprofile=$this->script_name."/profile/";
+		$linkcreatelist=$this->script_name."/createlist/";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		if ($log->logged_in) {
 			$nav = <<<EOT
@@ -25,6 +26,7 @@ class MecadoView extends \mf\view\AbstractView {
 				<ul>
 					<li><a href='$linkhome'>Accueil</a></li>
 					<li><a href='$linklogout'>Se déconnecter</a></li>
+					<li><a href='$linkcreatelist'>Créer une liste</a></li>
 					<li><a href='$linkprofile'>Mon Profil</a></li>
 				</ul>
 				</nav>
@@ -73,7 +75,7 @@ EOT;
 		$prenom = $this->data->prenom;
 
 		$mail = $this->data->mail;
-		$userlists = $this->data->listes()->orderBy('date_limite', 'DESC')->get();
+		$userlists = $this->data->listes()->orderBy('date_limite','DESC')->get();
 		$profile .= <<<EOT
 				<h2>Profil</h2>	
 				<ul>
@@ -117,83 +119,148 @@ EOT;
 		return $list;
 	}
 
-	private function renderAffichageList(){
-			$url = $_GET['id'];
-			$log = new \mecadoapp\auth\MecadoAuthentification();
-			if(is_null($url)){
-				throw new \Exception("URL invalide");
-			}else{
+private function renderAffichageList(){
 
-				$list=\mecadoapp\model\Liste::where('url','=', $url)->first();
-				$user=\mecadoapp\model\User::where('mail','=', $_SESSION['user_login'])->first();
+        $url = $_GET['id'];
 
-				if(!is_null($list)){
-					$_SESSION['liste']=$list->id;
-					$i=$list->items()->get();
-					$liste= <<<EOT
-					<article>
-						<h1>$list->titre</h1>
-						<label>Destinataire : <p>$list->destinataire</p></label>
-						<label>Date limite : <p>$list->date_limite</p></label>
-						<label>Description : <p>$list->description</p></label>
+        $log = new \mecadoapp\auth\MecadoAuthentification();
+        if(is_null($url)){
+            throw new \Exception("URL invalide");
+        }
+        else{
+            $liste = "";
+            date_default_timezone_set('UTC');
+
+            $list=\mecadoapp\model\Liste::where('url','=', $url)->first();
+            $user=\mecadoapp\model\User::where('mail','=', $_SESSION['user_login'])->first();
+
+            if(date('Y-m-d')==$list->date_limite){
+                $message = \mecadoapp\model\Message::select()->where([["id_liste","=",$list->id],["type","=",0]])->get();
+                $item= \mecadoapp\model\Item::where([["id_liste","=",$list->id],["reserver","=",1]])->get();
+
+                foreach($message as $value){
+                    $author=$value->auteur;
+                    $text=$value->description;
+
+                    $liste .=<<<EOT
+                    <div>
+                        <label>$author</label><p>$text</p>
+                        <p>salut</p>
+                    </div>
 EOT;
-					if ($log->logged_in && ($list->id_user == $user->id)) {
-						$liste.= <<<EOT
-							<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item" value="Ajouter un item"></a>
+                }
+
+                foreach ($item as $v){
+                    $liste .="
+                    <div>
+                        <p>".$v->nom."</p>
+                        <p>Offert par : ".$v->reserviste." </p>
+                        <img src=".$v->image.">
+                    </div>";
+                }
+                return $liste;
+            }else{
+                if(!is_null($list)){
+                    if(date('Y-m-d')==$list->liste){
+                        foreach($message as $value){
+                            $author=$value->auteur;
+                            $text=$value->description;
+                            $liste .= <<<EOT
+                            <div>
+                            <label>$author</label><p>$text</p>
+                            <p>salut</p>
+                            </div>
 EOT;
-					}	
-					$liste .= "</article>";
-					$liste .= "<article>";
-					foreach($i as $d){
-						$liste .= "<div class='thumb'>";
-						if (!is_null($d->image)) {
-							$liste.= <<<EOT
-						<img src='$d->image'>
+                        }
+                    }else{
+                        $_SESSION['liste']=$list->id;
+                        $i=$list->items()->get();
+                        $liste= <<<EOT
+                        <article>
+                        <h1>$list->titre</h1>
+                        <label>Destinataire : <p>$list->destinataire</p></label>
+                        <label>Date limite : <p>$list->date_limite</p></label>
+                        <label>Description : <p>$list->description</p></label>
+
 EOT;
-						}
-						$liste.= <<<EOT
-							<h2>$d->nom</h2>
-							<label for='tarif'>Prix : </label>
-							<span id='tarif'>$d->tarif €</span>
-							<br>
-							<label for='description'>Description : </label>
-							<span id='description'>$d->description</span>
-							<br>
+                        if ($log->logged_in && ($list->id_user == $user->id)) {
+                            $liste.= <<<EOT
+                            <a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item" value="Ajouter un item"></a>
 EOT;
-						if (!is_null($d->url)) {
-							$liste.= <<<EOT
-							<a href='$d->url' target = '_blank'>Lien du cadeau</a>
+                        }    
+
+                    $liste .= "</article>";
+                    if ($list->for_other || !$log->logged_in) {
+                        $messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
+                        $liste.="<article><h2>Derniers messages</h2>";
+                        foreach ($messages as $key => $value) {
+                            $author=$value->auteur;
+                            $text=$value->description;
+                            $date=$value->date_create;
+                            $liste .= <<<EOT
+                                            <div>
+                                                <span>$author : </span><span>$text</span><br>
+                                            </div>
 EOT;
-						}
-						
-						if ($list->for_other || !$log->logged_in) {
-							if($d->reserver==0){
-							$liste.= <<<EOT
-							<form action='$this->script_name/reserve/?id=$url' method='post'>
-								<p>Votre nom : </p>
-								<input type="text" id="reserviste" name="reserviste">
-								<br>
-								<p>Laissez lui un message : </p>
-								<input type="text" id="message" name="message">
-								<input type="hidden" id="id" name="id" value="$d->id">
-								<br>
-								<input type="submit" id="send" value="Réserver">
-							</form>
+                        }
+                        $liste.= <<<EOT
+                                <form action='$this->script_name/send/?id=$url' method='post'>
+                                    <input type="text" name="nom" placeholder="Votre nom">
+                                    <input type="text" name="message" placeholder="Votre message">
+                                    <input type="submit" id="send" value="Envoyer">
+                                </form>
 EOT;
-							}else{
-								$liste.= <<<EOT
-								<p>Réservé par $d->reserviste</p>
+                    }
+                    $liste.="</article>";
+                    foreach($i as $d){
+                        $liste.= <<<EOT
+                        <article>
+                            <h2>$d->nom</h2>
+                            <span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
+                            <label>Description : <p>$d->description</p></label>
 EOT;
-							}
-						}
-						$liste .= "</div>";
-					}
-				return $liste;
-				}else{
-					throw new \Exception("URL VIDE !");
-				}
-			}
-	}
+                            if (!is_null($d->url)) {
+                                $liste.= <<<EOT
+                                <div><a href='$d->url' target = '_blank'>Lien du cadeau</a></div>
+EOT;
+                            }
+                            if (!is_null($d->image)) {
+                                $liste.= <<<EOT
+                                <div><img src='$d->image'></div>
+                                </article>
+EOT;
+                            }
+                        if ($list->for_other || !$log->logged_in) {
+                            if($d->reserver==0){
+                            $liste.= <<<EOT
+                            <form action='$this->script_name/reserve/?id=$url' method='post'>
+                                <label for="reserviste">Votre nom : </label>
+                                <input type="text" id="reserviste" name="reserviste">
+                                <label for="message">Laisser lui un message : </label>
+                                <input type="text" id="message" name="message">
+                                <input type="hidden" id="id" name="id" value="$d->id">
+                                <input type="submit" id="send" value="Réserver">
+                            </form>
+EOT;
+                                }else{
+                                    $liste.= <<<EOT
+                                    <div>Réserver par $d->reserviste</div>                            
+EOT;
+                                }
+                            }
+                        }
+                    }
+                    return $liste;
+                }else{
+                    throw new \Exception("URL VIDE !");
+                }
+            }    
+        }
+    }
+
+
+
+
 
 	private function renderLogin(){
 		$login='<article>';
@@ -210,6 +277,7 @@ EOT;
 	}
 
 	private function renderAjoutItem(){
+
 		$url = $_GET['id'];
 		$ajoutItem = <<<EOT
 					<article>	
@@ -224,38 +292,6 @@ EOT;
 					</article>
 EOT;
 		return $ajoutItem;
-	}
-
-
-	private function renderMessages() {
-		$messages="<article><h2>Derniers messages</h2>";
-		foreach ($this->data as $key => $value) {
-			$author = $_POST['auteur'];
-			$text=$value->description;
-			$date=$value->date_create;
-		   
-			$messages .= <<<EOT
-				<div>
-					<label>$author</label><p>$text</p>
-				</div>
-EOT;
-		}
-		return $messages;
-	}
-	
-	private function renderCheckedCreatedList(){
-			$list = <<<EOT
-			<article>
-				<h2></h2>
-				<ul>
-				<li>aaaaaaa</li>
-				<li>bbbbbbb</li>
-				<li>ccccccc</li>
-				</ul>
-			</article>
-
-EOT;
-		return $list;
 	}
 
 	private function renderHome(){
