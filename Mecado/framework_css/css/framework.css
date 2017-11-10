@@ -231,9 +231,9 @@ pre {
   padding: 3%;
   border: 2px solid grey;
   box-sizing: border-box;
-  display: inline-block; }
+  background-color: #5271ff; }
   .thumb img {
-    max-width: 100%; }
+    max-width: 75%; }
   .thumb h3 {
     margin: 3%;
     font-size: 1.5em;
@@ -302,18 +302,14 @@ html, body {
 .conteneur {
   display: flex;
   flex-wrap: wrap; }
-  .conteneur section {
+  .conteneur header {
+    width: 95.5555555556%;
+    margin-left: 2.2222222222%; }
+  .conteneur .thumb {
     border: 1px solid black;
-    box-sizing: border-box; }
-    .conteneur section:nth-child(1) {
-      width: 71.1111111111%;
-      margin-left: 26.6666666667%; }
-    .conteneur section:nth-child(2) {
-      width: 58.8888888889%;
-      margin-left: 38.8888888889%; }
-    .conteneur section:nth-child(3) {
-      width: 46.6666666667%;
-      margin-left: 51.1111111111%; }
+    box-sizing: border-box;
+    width: 22.2222222222%;
+    margin-left: 2.2222222222%; }
 
 .info, .success, .warning, .error {
   border: 1px solid;

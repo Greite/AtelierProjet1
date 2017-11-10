@@ -42,13 +42,18 @@ html, body {
 .conteneur {
 	display:flex;
 	flex-wrap: wrap;
-	header {
-		@include grille(8, 10%, 0, 8);
-	}
-	.thumb {
+	section {
 		border: 1px solid black;
-		box-sizing: border-box;	
-		@include grille(8, 10%, 0, 2);	
+		box-sizing: border-box;
+		&:nth-child(1) {
+			@include grille(8, 10%, 2, 6);
+		}
+		&:nth-child(2) {
+			@include grille(8, 10%, 3, 5);
+		}
+		&:nth-child(3) {
+			@include grille(8, 10%, 4, 4);
+		}
 	}
 }
 

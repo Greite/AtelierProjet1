@@ -143,43 +143,50 @@ EOT;
 EOT;
 					}	
 					$liste .= "</article>";
-
+					$liste .= "<article>";
 					foreach($i as $d){
+						$liste .= "<div class='thumb'>";
+						if (!is_null($d->image)) {
+							$liste.= <<<EOT
+						<img src='$d->image'>
+EOT;
+						}
 						$liste.= <<<EOT
-						<article>
 							<h2>$d->nom</h2>
-							<span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
-							<label>Description : <p>$d->description</p></label>
+							<label for='tarif'>Prix : </label>
+							<span id='tarif'>$d->tarif €</span>
+							<br>
+							<label for='description'>Description : </label>
+							<span id='description'>$d->description</span>
+							<br>
 EOT;
 						if (!is_null($d->url)) {
 							$liste.= <<<EOT
-							<div><a href='$d->url' target = '_blank'>Lien du cadeau</a></div>
+							<a href='$d->url' target = '_blank'>Lien du cadeau</a>
 EOT;
 						}
-						if (!is_null($d->image)) {
-							$liste.= <<<EOT
-						<div><img src='$d->image'></div>
-						</article>
-EOT;
-						}
+						
 						if ($list->for_other || !$log->logged_in) {
 							if($d->reserver==0){
 							$liste.= <<<EOT
 							<form action='$this->script_name/reserve/?id=$url' method='post'>
-								<label for="reserviste">Votre nom : </label>
+								<p>Votre nom : </p>
 								<input type="text" id="reserviste" name="reserviste">
-								<label for="message">Laisser lui un message : </label>
+								<br>
+								<p>Laissez lui un message : </p>
 								<input type="text" id="message" name="message">
 								<input type="hidden" id="id" name="id" value="$d->id">
+								<br>
 								<input type="submit" id="send" value="Réserver">
 							</form>
 EOT;
 							}else{
 								$liste.= <<<EOT
-								<div>Réserver par $d->reserviste</div>							
+								<p>Réservé par $d->reserviste</p>
 EOT;
 							}
 						}
+						$liste .= "</div>";
 					}
 				return $liste;
 				}else{
@@ -189,17 +196,16 @@ EOT;
 	}
 
 	private function renderLogin(){
-		$login = <<<EOT
-			<article>
+		$login='<article>';
+		
+		$login .= <<<EOT
 				<form action='$this->script_name/check_login/' method='post'>
 					<input name='mail' placeholder='E-mail' type='text'>
 					<input name='password' placeholder='Mot de passe' type='password'>
 					<button name='login_button' type='submit'>Se connecter</button>
 				</form>
-			</article>
-
 EOT;
-
+		$login.='</article>';
 		return $login;
 	}
 
@@ -302,10 +308,6 @@ EOT;
 				$main = $this->renderCreateList();
 				break;
 
-			case 'createurl':
-				$main = $this->renderCreateUrl();
-				break;
-
 			case 'profile':
 				$main = $this->renderProfile();
 				break;
@@ -328,16 +330,29 @@ EOT;
 		}
 
 		$html = <<<EOT
+		<div class="fond">
+			<section></section>
+			<section></section>
+			<section></section>
+			<section></section>
+			<section></section>
+			<section></section>
+			<section></section>
+			<section></section>
+		</div>
+		<div class="conteneur">
 		<header>
 			${header}
 			${nav}
 		</header>
-		<section class='aligncenter'>
+		<section>
 			${main}
 		</section>
 		<footer class='aligncenter'>
 			${footer}
 		</footer>
+		</div>
+		
 EOT;
 		return $html;
 		
