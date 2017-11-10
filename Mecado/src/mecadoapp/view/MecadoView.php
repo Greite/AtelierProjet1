@@ -52,7 +52,7 @@ EOT;
 	private function renderSignUp(){
 		$linklogin=$this->script_name."/login/";
 		$signup = <<<EOT
-			<article>
+			<article class="aligncenter">
 				<h2>Créez votre compte</h2>
 				<form action='$this->script_name/check_signup/' method='post'>
 					<input name='nom' placeholder='Nom' type='text'>
@@ -70,7 +70,7 @@ EOT;
 	}
 
 	private function renderProfile(){
-		$profile = "<article>";
+		$profile = "<article class='aligncenter'>";
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
 
@@ -100,7 +100,7 @@ EOT;
 
 	private function renderCreateList(){
 		$list = <<<EOT
-			<article>
+			<article class="aligncenter">
 				<h2>Créez votre liste : </h2>
 				<form action='$this->script_name/check_createlist/' method='post'>
 					<div>
@@ -268,7 +268,7 @@ EOT;
 	}
 
 	private function renderLogin(){
-		$login='<article>';
+		$login='<article class="aligncenter">';
 		
 		$login .= <<<EOT
 				<form action='$this->script_name/check_login/' method='post'>
@@ -285,7 +285,7 @@ EOT;
 
 		$url = $_GET['id'];
 		$ajoutItem = <<<EOT
-					<article>	
+					<article class="aligncenter">	
 						<form action ='$this->script_name/saveitem/?id=$url' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
@@ -300,7 +300,7 @@ EOT;
 	}
 
 	private function renderHome(){
-		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+		$home="<article class='aligncenter'><h2>Bienvenue sur Mecado.net</h2>";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		$linkcreatelist = $this->script_name."/createlist/";
 		if ($log->logged_in) {
