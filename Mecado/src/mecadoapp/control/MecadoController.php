@@ -22,11 +22,6 @@ class MecadoController extends \mf\control\AbstractController {
 		$v ->render('home');  
 	}
 
-	function viewPost(){
-		$v = new MecadoView('');
-		$v ->render('post');  
-	}
-
 	function viewSendMessage() {
 		$message = new \mecadoapp\model\Message();
 		$liste = \mecadoapp\model\Liste::where('url', '=', $_GET['id'])->first();
