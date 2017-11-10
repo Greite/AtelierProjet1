@@ -128,6 +128,7 @@ EOT;
 				$user=\mecadoapp\model\User::where('mail','=', $_SESSION['user_login'])->first();
 
 				if(!is_null($list)){
+					
 					$_SESSION['liste']=$list->id;
 					$i=$list->items()->get();
 					$liste= <<<EOT
@@ -141,7 +142,7 @@ EOT;
 						$liste.= <<<EOT
 							<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item" value="Ajouter un item"></a>
 EOT;
-					}	
+					}
 					$liste .= "</article>";
 
 					foreach($i as $d){
