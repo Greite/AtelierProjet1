@@ -369,16 +369,6 @@ EOT;
 		}
 
 		$html = <<<EOT
-		<div class="fond">
-			<section></section>
-			<section></section>
-			<section></section>
-			<section></section>
-			<section></section>
-			<section></section>
-			<section></section>
-			<section></section>
-		</div>
 		<div class="conteneur">
 		<header>
 			${header}
