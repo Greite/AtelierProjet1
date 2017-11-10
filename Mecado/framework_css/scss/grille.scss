@@ -19,12 +19,12 @@ html, body {
 	article:nth-child(1) {
 		@include grille(8, 10%, 0, 8);
 	}
-	article:nth-child(3) {
+	article:nth-child(2) {
 		@include grille(8, 10%, 0, 6);
 		display:flex;
 		flex-wrap: wrap;
 	}
-	article:nth-child(2) {
+	article:nth-child(3) {
 		@include grille(8, 10%, 0, 2);
 	}
 	.thumb {
