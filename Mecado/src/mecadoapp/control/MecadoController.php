@@ -46,6 +46,7 @@ class MecadoController extends \mf\control\AbstractController {
 	}
 
 	function viewLogin(){
+
 		$v = new MecadoView('');
 		$v ->render('login');  
 	}

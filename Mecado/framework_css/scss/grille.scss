@@ -1,59 +1,39 @@
 @import "mixingrille";
 
 html, body {
-	height: 100%;
-}
-
-.fond {
-	display: flex;
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	z-index: -1;
-	section {
-		background-color: lightgrey;
-	}
-	section:nth-child(1){
-		@include grille(8, 10%, 0, 1);
-	}
-	section:nth-child(2){
-		@include grille(8, 10%, 0, 1);
-	}
-	section:nth-child(3){
-		@include grille(8, 10%, 0, 1);
-	}
-	section:nth-child(4){
-		@include grille(8, 10%, 0, 1);
-	}
-	section:nth-child(5){
-		@include grille(8, 10%, 0, 1);
-	}
-	section:nth-child(6){
-		@include grille(8, 10%, 0, 1);
-	}
-	section:nth-child(7){
-		@include grille(8, 10%, 0, 1);
-	}
-	section:nth-child(8){
-		@include grille(8, 10%, 0, 1);
-	}
+	min-height: 100%;
 }
 
 .conteneur {
 	display:flex;
 	flex-wrap: wrap;
+	header {
+		@include grille(8, 10%, 0, 8);
+	}
+
 	section {
+		@include grille(8, 10%, 0, 8);
+		display:flex;
+		flex-wrap: wrap;
+	}
+	article:nth-child(1) {
+		@include grille(8, 10%, 0, 8);
+	}
+	article:nth-child(2) {
+		@include grille(8, 10%, 0, 6);
+		display:flex;
+		flex-wrap: wrap;
+	}
+	article:nth-child(3) {
+		@include grille(8, 10%, 0, 2);
+	}
+	.thumb {
 		border: 1px solid black;
-		box-sizing: border-box;
-		&:nth-child(1) {
-			@include grille(8, 10%, 2, 6);
-		}
-		&:nth-child(2) {
-			@include grille(8, 10%, 3, 5);
-		}
-		&:nth-child(3) {
-			@include grille(8, 10%, 4, 4);
-		}
+		box-sizing: border-box;	
+		@include grille(8, 10%, 0, 2);	
+	}
+	footer {
+		@include grille(8, 10%, 0, 8);
 	}
 }
 

@@ -47,7 +47,7 @@ EOT;
 	private function renderSignUp(){
 		$linklogin=$this->script_name."/login/";
 		$signup = <<<EOT
-			<article>
+			<article class="aligncenter">
 				<h2>Créez votre compte</h2>
 				<form action='$this->script_name/check_signup/' method='post'>
 					<input name='nom' placeholder='Nom' type='text'>
@@ -71,7 +71,7 @@ EOT;
 		return $signup;
 	}
 	private function renderProfile(){
-		$profile = "<article>";
+		$profile = "<article class='aligncenter'>";
 		$nom = $this->data->nom;
 		$prenom = $this->data->prenom;
 		$mail = $this->data->mail;
@@ -90,7 +90,8 @@ EOT;
 			$urllist = $this->script_name."/affichagelist/?id=".$value->url;
 			$namelist = $value->titre;
 			$profile .= <<<EOT
-						<li><a href='$urllist'>$namelist</a></li>							
+						<li><a href='$urllist'>$namelist</a></li>
+						<li>URL : <input type='text' readonly='readonly' value='$_SERVER[SERVER_NAME]$this->script_name/affichagelist/?id=$value->url'></li>							
 EOT;
 		}
 		$profile .= "</ul></ul></article>";
@@ -98,7 +99,7 @@ EOT;
 	}
 	private function renderCreateList(){
 		$list = <<<EOT
-			<article>
+			<article class="aligncenter">
 				<h2>Créez votre liste : </h2>
 				<form action='$this->script_name/check_createlist/' method='post'>
 					<div>
@@ -185,66 +186,73 @@ EOT;
 							<a href="$this->script_name/ajoutitem/?id=$url"><input type="button" name="Ajouter un item" value="Ajouter un item"></a>
 EOT;
 						}	
-					$liste .= "</article>";
-					if ($list->for_other || !$log->logged_in) {
-						$messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
-						$liste.="<article><h2>Derniers messages</h2>";
-						foreach ($messages as $key => $value) {
-							$author=$value->auteur;
-							$text=$value->description;
-							$date=$value->date_create;
-							$liste .= <<<EOT
-											<div>
-												<span>$author : </span><span>$text</span><br>
-											</div>
+						$liste .= "</article>";
+						
+						$liste.="<article>";
+						foreach($i as $d){
+							$liste.= <<<EOT
+								<div class="thumb">
 EOT;
+							if (!is_null($d->image)) {
+								$liste.= <<<EOT
+								<img src='$d->image'>
+EOT;
+							}
+							$liste.= <<<EOT
+							<h2>$d->nom</h2>
+							<span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
+							<label>Description : <p>$d->description</p></label>
+EOT;
+							
+							if (!is_null($d->url)) {
+								$liste.= <<<EOT
+								<a href='$d->url' target = '_blank'>Lien du cadeau</a>
+EOT;
+							}
+							
+							if ($list->for_other || !$log->logged_in) {
+								if($d->reserver==0){
+								$liste.= <<<EOT
+								<form action='$this->script_name/reserve/?id=$url' method='post'>
+									<label for="reserviste">Votre nom : </label>
+									<input type="text" id="reserviste" name="reserviste">
+									<label for="message">Laisser lui un message : </label>
+									<input type="text" id="message" name="message">
+									<input type="hidden" id="id" name="id" value="$d->id">
+									<input type="submit" id="send" value="Réserver">
+								</form>
+EOT;
+								}else{
+									$liste.= <<<EOT
+									<p>Réservé par $d->reserviste</p>							
+EOT;
+								}
+							}
+							$liste .= "</div>";
 						}
-						$liste.= <<<EOT
+						$liste .= "</article>";
+						if ($list->for_other || !$log->logged_in) {
+							$messages = \mecadoapp\model\Message::where([['id_liste', '=', $list->id],['type', '=', 1]])->orderBy('date_create', 'DESC')->get();
+							$liste.="<article><h2>Derniers messages</h2>";
+							foreach ($messages as $key => $value) {
+								$author=$value->auteur;
+								$text=$value->description;
+								$date=$value->date_create;
+								$liste .= <<<EOT
+									<div>
+									<span>$author : </span><span>$text</span><br>
+									</div>
+EOT;
+							}
+							$liste.= <<<EOT
 								<form action='$this->script_name/send/?id=$url' method='post'>
 									<input type="text" name="nom" placeholder="Votre nom">
 									<input type="text" name="message" placeholder="Votre message">
 									<input type="submit" id="send" value="Envoyer">
 								</form>
 EOT;
-					}
-					$liste.="</article>";
-					foreach($i as $d){
-						$liste.= <<<EOT
-						<article>
-							<h2>$d->nom</h2>
-							<span><h3>Prix : </h3><h3>$d->tarif €</h3></span>
-							<label>Description : <p>$d->description</p></label>
-EOT;
-							if (!is_null($d->url)) {
-								$liste.= <<<EOT
-								<div><a href='$d->url' target = '_blank'>Lien du cadeau</a></div>
-EOT;
-							}
-							if (!is_null($d->image)) {
-								$liste.= <<<EOT
-								<div><img src='$d->image'></div>
-								</article>
-EOT;
-							}
-						if ($list->for_other || !$log->logged_in) {
-							if($d->reserver==0){
-							$liste.= <<<EOT
-							<form action='$this->script_name/reserve/?id=$url' method='post'>
-								<label for="reserviste">Votre nom : </label>
-								<input type="text" id="reserviste" name="reserviste">
-								<label for="message">Laisser lui un message : </label>
-								<input type="text" id="message" name="message">
-								<input type="hidden" id="id" name="id" value="$d->id">
-								<input type="submit" id="send" value="Réserver">
-							</form>
-EOT;
-								}else{
-									$liste.= <<<EOT
-									<div>Réserver par $d->reserviste</div>							
-EOT;
-								}
-							}
 						}
+						$liste.="</article>";
 					}
 					return $liste;
 				}else{
@@ -253,30 +261,11 @@ EOT;
 			}	
 		}
 	}
-	private function renderLogin(){
-		$login = <<<EOT
-			<article>
-				<form action='$this->script_name/check_login/' method='post'>
-					<input name='mail' placeholder='E-mail' type='text'>
-					<input name='password' placeholder='Mot de passe' type='password'>
-					<button name='login_button' type='submit'>Se connecter</button>
-				</form>
-			</article>
-EOT;
-		if(isset($_SESSION['alerte'])){
-			$alerte = $_SESSION['alerte'];
-			$login .= <<<EOT
-				<div class='error'>
-					<p>$alerte</p>
-				</div>
-EOT;
-		}
-		return $login;
-	}
+	
 	private function renderAjoutItem(){
 		$url = $_GET['id'];
 		$ajoutItem = <<<EOT
-					<article>	
+					<article class="aligncenter">	
 						<form action ='$this->script_name/saveitem/?id=$url' method='post'>
 							<input name='nom' placeholder='Nom' type='text'>
 							<input name='description' placeholder='Description' type='textarea'>
@@ -298,7 +287,7 @@ EOT;
 		return $ajoutItem;
 	}
 	private function renderHome(){
-		$home="<article><h2>Bienvenue sur Mecado.net</h2>";
+		$home="<article class='aligncenter'><h2>Bienvenue sur Mecado.net</h2>";
 		$log = new \mecadoapp\auth\MecadoAuthentification();
 		$linkcreatelist = $this->script_name."/createlist/";
 		if ($log->logged_in) {
@@ -360,16 +349,19 @@ EOT;
 				break;
 		}
 		$html = <<<EOT
+		<div class="conteneur">
 		<header>
 			${header}
 			${nav}
 		</header>
-		<section class='aligncenter'>
+		<section>
 			${main}
 		</section>
 		<footer class='aligncenter'>
 			${footer}
 		</footer>
+		</div>
+		
 EOT;
 		return $html;
 		
