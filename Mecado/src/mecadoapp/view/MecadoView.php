@@ -261,7 +261,28 @@ EOT;
 			}	
 		}
 	}
-	
+
+	private function renderLogin(){
+		$login='<article class="aligncenter">';
+		
+		$login .= <<<EOT
+				<form action='$this->script_name/check_login/' method='post'>
+					<input name='mail' placeholder='E-mail' type='text'>
+					<input name='password' placeholder='Mot de passe' type='password'>
+					<button name='login_button' type='submit'>Se connecter</button>
+				</form>
+			</article>
+EOT;
+		if(isset($_SESSION['alerte'])){
+			$alerte = $_SESSION['alerte'];
+			$login .= <<<EOT
+				<div class='error'>
+					<p>$alerte</p>
+				</div>
+EOT;
+		}
+		return $login;
+	}
 	private function renderAjoutItem(){
 		$url = $_GET['id'];
 		$ajoutItem = <<<EOT
