@@ -234,6 +234,7 @@ pre {
   border-radius: 15px;
   box-shadow: 10px;
   margin-bottom: 3%;
+  margin-top: 3%;
   background-color: #5271ff; }
   .thumb img {
     max-width: 35%;
@@ -243,9 +244,7 @@ pre {
     font-size: 1.5em;
     font-weight: normal; }
   .thumb p {
-    width: 100%;
-    overflow: auto;
-    max-height: 15%; }
+    width: 100%; }
     .thumb p a {
       margin: 1%;
       width: 100%;
@@ -269,10 +268,8 @@ header h1 {
   text-align: center;
   padding: 25px; }
 
-html, body {
-  min-height: 100%; }
-
 .conteneur {
+  display: block;
   display: flex;
   flex-wrap: wrap; }
   .conteneur header {
@@ -283,32 +280,31 @@ html, body {
     margin-left: 2.2222222222%;
     display: flex;
     flex-wrap: wrap;
-    max-height: 10%; }
+    overflow: auto;
+    padding-top: 10px; }
   .conteneur article:nth-child(1) {
     width: 95.5555555556%;
-    margin-left: 2.2222222222%; }
+    margin-left: 2.2222222222%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px; }
   .conteneur article:nth-child(2) {
     width: 71.1111111111%;
     margin-left: 2.2222222222%;
     display: flex;
-    flex-wrap: wrap;
-    max-height: 50%;
-    overflow: auto; }
+    flex-wrap: wrap; }
   .conteneur article:nth-child(3) {
     width: 22.2222222222%;
-    margin-left: 2.2222222222%;
-    max-height: 50%;
-    overflow: auto; }
+    margin-left: 2.2222222222%; }
   .conteneur .thumb {
     border: 1px solid black;
     box-sizing: border-box;
     width: 46.6666666667%;
     margin-left: 2.2222222222%;
-    max-height: 55%;
-    overflow: auto; }
+    margin-bottom: 50px;
+    padding: 10px; }
     .conteneur .thumb p {
-      overflow: auto;
-      max-height: 50px; }
+      overflow: auto; }
   .conteneur footer {
     width: 95.5555555556%;
     margin-left: 2.2222222222%; }
